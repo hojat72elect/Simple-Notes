@@ -13,7 +13,8 @@ import com.simplemobiletools.notes.pro.helpers.NOTE_ID
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 
-class NotesPagerAdapter(fm: FragmentManager, val notes: List<Note>, val activity: Activity) : FragmentStatePagerAdapter(fm) {
+class NotesPagerAdapter(fm: FragmentManager, val notes: List<Note>, val activity: Activity) :
+    FragmentStatePagerAdapter(fm) {
     private var fragments: HashMap<Int, NoteFragment> = LinkedHashMap()
 
     override fun getCount() = notes.size
@@ -51,21 +52,26 @@ class NotesPagerAdapter(fm: FragmentManager, val notes: List<Note>, val activity
 
     fun getCurrentNotesView(position: Int) = (fragments[position] as? TextFragment)?.getNotesView()
 
-    fun getCurrentNoteViewText(position: Int) = (fragments[position] as? TextFragment)?.getCurrentNoteViewText()
+    fun getCurrentNoteViewText(position: Int) =
+        (fragments[position] as? TextFragment)?.getCurrentNoteViewText()
 
-    fun appendText(position: Int, text: String) = (fragments[position] as? TextFragment)?.getNotesView()?.append(text)
+    fun appendText(position: Int, text: String) =
+        (fragments[position] as? TextFragment)?.getNotesView()?.append(text)
 
-    fun saveCurrentNote(position: Int, force: Boolean) = (fragments[position] as? TextFragment)?.saveText(force)
+    fun saveCurrentNote(position: Int, force: Boolean) =
+        (fragments[position] as? TextFragment)?.saveText(force)
 
     fun focusEditText(position: Int) = (fragments[position] as? TextFragment)?.focusEditText()
 
-    fun anyHasUnsavedChanges() = fragments.values.any { (it as? TextFragment)?.hasUnsavedChanges() == true }
+    fun anyHasUnsavedChanges() =
+        fragments.values.any { (it as? TextFragment)?.hasUnsavedChanges() == true }
 
     fun saveAllFragmentTexts() = fragments.values.forEach { (it as? TextFragment)?.saveText(false) }
 
     fun getNoteChecklistRawItems(position: Int) = (fragments[position] as? ChecklistFragment)?.items
 
-    fun getNoteChecklistItems(position: Int) = (fragments[position] as? ChecklistFragment)?.getChecklistItems()
+    fun getNoteChecklistItems(position: Int) =
+        (fragments[position] as? ChecklistFragment)?.getChecklistItems()
 
     fun undo(position: Int) = (fragments[position] as? TextFragment)?.undo()
 

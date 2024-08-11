@@ -40,10 +40,12 @@ class MyMovementMethod : ArrowKeyMovementMethod() {
             if (links.isNotEmpty()) {
                 if (action == MotionEvent.ACTION_UP) {
                     links[0].onClick(widget)
-                } else if (action == MotionEvent.ACTION_DOWN) {
-                    Selection.setSelection(buffer,
-                            buffer.getSpanStart(links[0]),
-                            buffer.getSpanEnd(links[0]))
+                } else {
+                    Selection.setSelection(
+                        buffer,
+                        buffer.getSpanStart(links[0]),
+                        buffer.getSpanEnd(links[0])
+                    )
                 }
                 return true
             }

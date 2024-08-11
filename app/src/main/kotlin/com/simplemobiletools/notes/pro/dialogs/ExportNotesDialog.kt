@@ -1,7 +1,12 @@
 package com.simplemobiletools.notes.pro.dialogs
 
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
+import com.simplemobiletools.commons.extensions.getCurrentFormattedDateTime
+import com.simplemobiletools.commons.extensions.isAValidFilename
+import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogExportNotesBinding
@@ -19,7 +24,9 @@ class ExportNotesDialog(val activity: SimpleActivity, callback: (filename: Strin
             )
         }
 
-        activity.getAlertDialogBuilder().setPositiveButton(com.simplemobiletools.commons.R.string.ok, null).setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null).apply {
+        activity.getAlertDialogBuilder()
+            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
+            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null).apply {
             activity.setupDialogStuff(binding.root, this, R.string.export_notes) { alertDialog ->
                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
 

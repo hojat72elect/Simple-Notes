@@ -24,11 +24,20 @@ class MyWidgetProvider : AppWidgetProvider() {
     private fun setupAppOpenIntent(context: Context, views: RemoteViews, id: Int, widget: Widget) {
         val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
         intent.putExtra(OPEN_NOTE_ID, widget.noteId)
-        val pendingIntent = PendingIntent.getActivity(context, widget.widgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            widget.widgetId,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
         views.setOnClickPendingIntent(id, pendingIntent)
     }
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         ensureBackgroundThread {
             for (widgetId in appWidgetIds) {
@@ -48,14 +57,26 @@ class MyWidgetProvider : AppWidgetProvider() {
                     views.setRemoteAdapter(R.id.notes_widget_listview, this)
                 }
 
-                val startActivityIntent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
+                val startActivityIntent =
+                    context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
                 startActivityIntent.putExtra(OPEN_NOTE_ID, widget.noteId)
                 val startActivityPendingIntent =
-                    PendingIntent.getActivity(context, widgetId, startActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-                views.setPendingIntentTemplate(R.id.notes_widget_listview, startActivityPendingIntent)
+                    PendingIntent.getActivity(
+                        context,
+                        widgetId,
+                        startActivityIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                views.setPendingIntentTemplate(
+                    R.id.notes_widget_listview,
+                    startActivityPendingIntent
+                )
 
                 appWidgetManager.updateAppWidget(widgetId, views)
-                appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, R.id.notes_widget_listview)
+                appWidgetManager.notifyAppWidgetViewDataChanged(
+                    widgetId,
+                    R.id.notes_widget_listview
+                )
             }
         }
     }

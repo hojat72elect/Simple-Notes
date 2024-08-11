@@ -12,10 +12,10 @@ import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.notesDB
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.io.File
 import java.io.OutputStream
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class NotesHelper(val context: Context) {
     fun getNotes(callback: (notes: List<Note>) -> Unit) {
@@ -79,7 +79,10 @@ class NotesHelper(val context: Context) {
         }
     }
 
-    fun insertOrUpdateNotes(notes: List<Note>, callback: ((newNoteIds: List<Long>) -> Unit)? = null) {
+    fun insertOrUpdateNotes(
+        notes: List<Note>,
+        callback: ((newNoteIds: List<Long>) -> Unit)? = null
+    ) {
         ensureBackgroundThread {
             val noteIds = context.notesDB.insertOrUpdate(notes)
             Handler(Looper.getMainLooper()).post {
@@ -88,7 +91,11 @@ class NotesHelper(val context: Context) {
         }
     }
 
-    fun importNotes(activity: BaseSimpleActivity, notes: List<Note>, callback: (ImportResult) -> Unit) {
+    fun importNotes(
+        activity: BaseSimpleActivity,
+        notes: List<Note>,
+        callback: (ImportResult) -> Unit
+    ) {
         ensureBackgroundThread {
             val currentNotes = activity.notesDB.getNotes()
             if (currentNotes.isEmpty()) {

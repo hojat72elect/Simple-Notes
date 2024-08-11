@@ -1,5 +1,6 @@
 package com.simplemobiletools.notes.pro.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
@@ -14,7 +15,20 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.adjustAlpha
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beGoneIf
+import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getContrastColor
+import com.simplemobiletools.commons.extensions.getProperBackgroundColor
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
+import com.simplemobiletools.commons.extensions.performSecurityCheck
+import com.simplemobiletools.commons.extensions.setBackgroundColor
+import com.simplemobiletools.commons.extensions.setFillWithStroke
+import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.extensions.viewBinding
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.commons.helpers.PROTECTION_NONE
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -25,12 +39,20 @@ import com.simplemobiletools.notes.pro.databinding.WidgetConfigBinding
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getPercentageFontSize
 import com.simplemobiletools.notes.pro.extensions.widgetsDB
-import com.simplemobiletools.notes.pro.helpers.*
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_BG_COLOR
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_ID
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_KEY_ID
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_NOTE_ID
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_SHOW_TITLE
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_TEXT_COLOR
+import com.simplemobiletools.notes.pro.helpers.MyWidgetProvider
+import com.simplemobiletools.notes.pro.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.models.ChecklistItem
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 import com.simplemobiletools.notes.pro.models.Widget
 
+@SuppressLint("RemoteViewLayout")
 class WidgetConfigureActivity : SimpleActivity() {
     private var mBgAlpha = 0f
     private var mWidgetId = 0
@@ -50,7 +72,8 @@ class WidgetConfigureActivity : SimpleActivity() {
         setContentView(binding.root)
         initVariables()
 
-        mWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID) ?: AppWidgetManager.INVALID_APPWIDGET_ID
+        mWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID)
+            ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
         if (mWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID && !mIsCustomizingColors) {
             finish()
@@ -89,12 +112,14 @@ class WidgetConfigureActivity : SimpleActivity() {
         }
 
         if (mTextColor == resources.getColor(com.simplemobiletools.commons.R.color.default_widget_text_color) && config.isUsingSystemTheme) {
-            mTextColor = resources.getColor(com.simplemobiletools.commons.R.color.you_primary_color, theme)
+            mTextColor =
+                resources.getColor(com.simplemobiletools.commons.R.color.you_primary_color, theme)
         }
 
         mBgAlpha = Color.alpha(mBgColor) / 255.toFloat()
 
-        mBgColorWithoutTransparency = Color.rgb(Color.red(mBgColor), Color.green(mBgColor), Color.blue(mBgColor))
+        mBgColorWithoutTransparency =
+            Color.rgb(Color.red(mBgColor), Color.green(mBgColor), Color.blue(mBgColor))
         binding.configBgSeekbar.apply {
             progress = (mBgAlpha * 100).toInt()
 
@@ -141,7 +166,8 @@ class WidgetConfigureActivity : SimpleActivity() {
 
         RadioGroupDialog(this, items, mCurrentNoteId.toInt()) {
             val selectedId = it as Int
-            val note = mNotes.firstOrNull { it.id!!.toInt() == selectedId } ?: return@RadioGroupDialog
+            val note =
+                mNotes.firstOrNull { it.id!!.toInt() == selectedId } ?: return@RadioGroupDialog
             if (note.protectionType == PROTECTION_NONE || note.shouldBeUnlocked(this)) {
                 updateCurrentNote(note)
             } else {
@@ -160,7 +186,8 @@ class WidgetConfigureActivity : SimpleActivity() {
         binding.textNoteViewTitle.text = note.title
         if (note.type == NoteType.TYPE_CHECKLIST) {
             val checklistItemType = object : TypeToken<List<ChecklistItem>>() {}.type
-            val items = Gson().fromJson<ArrayList<ChecklistItem>>(note.value, checklistItemType) ?: ArrayList(1)
+            val items = Gson().fromJson<ArrayList<ChecklistItem>>(note.value, checklistItemType)
+                ?: ArrayList(1)
             items.apply {
                 if (isEmpty()) {
                     add(ChecklistItem(0, System.currentTimeMillis(), "Milk", true))
@@ -178,13 +205,16 @@ class WidgetConfigureActivity : SimpleActivity() {
             binding.textNoteView.beGone()
             binding.checklistNoteView.beVisible()
         } else {
-            val sampleValue = if (note.value.isEmpty() || mIsCustomizingColors) getString(R.string.widget_config) else note.value
+            val sampleValue =
+                if (note.value.isEmpty() || mIsCustomizingColors) getString(R.string.widget_config) else note.value
             binding.textNoteView.text = sampleValue
-            binding.textNoteView.typeface = if (config.monospacedFont) Typeface.MONOSPACE else Typeface.DEFAULT
+            binding.textNoteView.typeface =
+                if (config.monospacedFont) Typeface.MONOSPACE else Typeface.DEFAULT
             binding.textNoteView.beVisible()
             binding.checklistNoteView.beGone()
         }
     }
+
 
     private fun saveConfig() {
         if (mCurrentNoteId == 0L) {
@@ -198,9 +228,12 @@ class WidgetConfigureActivity : SimpleActivity() {
         AppWidgetManager.getInstance(this)?.updateAppWidget(mWidgetId, views) ?: return
 
         val extras = intent.extras
-        val id = if (extras?.containsKey(CUSTOMIZED_WIDGET_KEY_ID) == true) extras.getLong(CUSTOMIZED_WIDGET_KEY_ID) else null
+        val id = if (extras?.containsKey(CUSTOMIZED_WIDGET_KEY_ID) == true) extras.getLong(
+            CUSTOMIZED_WIDGET_KEY_ID
+        ) else null
         mWidgetId = extras?.getInt(CUSTOMIZED_WIDGET_ID, mWidgetId) ?: mWidgetId
-        mCurrentNoteId = extras?.getLong(CUSTOMIZED_WIDGET_NOTE_ID, mCurrentNoteId) ?: mCurrentNoteId
+        mCurrentNoteId =
+            extras?.getLong(CUSTOMIZED_WIDGET_NOTE_ID, mCurrentNoteId) ?: mCurrentNoteId
         val widget = Widget(id, mWidgetId, mCurrentNoteId, mBgColor, mTextColor, mShowTitle)
         ensureBackgroundThread {
             widgetsDB.insertOrUpdate(widget)
@@ -224,7 +257,12 @@ class WidgetConfigureActivity : SimpleActivity() {
     }
 
     private fun requestWidgetUpdate() {
-        Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, MyWidgetProvider::class.java).apply {
+        Intent(
+            AppWidgetManager.ACTION_APPWIDGET_UPDATE,
+            null,
+            this,
+            MyWidgetProvider::class.java
+        ).apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(mWidgetId))
             sendBroadcast(this)
         }

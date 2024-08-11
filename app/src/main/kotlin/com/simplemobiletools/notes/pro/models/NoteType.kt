@@ -9,7 +9,7 @@ enum class NoteType(val value: Int) {
 
     companion object {
         fun fromValue(value: Int): NoteType {
-            return values().find { it.value == value } ?: TYPE_TEXT
+            return entries.find { it.value == value } ?: TYPE_TEXT
         }
     }
 }

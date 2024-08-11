@@ -16,21 +16,34 @@ import com.simplemobiletools.notes.pro.R.id.widget_text_holder
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getPercentageFontSize
 import com.simplemobiletools.notes.pro.extensions.notesDB
-import com.simplemobiletools.notes.pro.helpers.*
+import com.simplemobiletools.notes.pro.helpers.DEFAULT_WIDGET_TEXT_COLOR
+import com.simplemobiletools.notes.pro.helpers.DONE_CHECKLIST_ITEM_ALPHA
+import com.simplemobiletools.notes.pro.helpers.GRAVITY_CENTER
+import com.simplemobiletools.notes.pro.helpers.GRAVITY_END
+import com.simplemobiletools.notes.pro.helpers.NOTE_ID
+import com.simplemobiletools.notes.pro.helpers.OPEN_NOTE_ID
 import com.simplemobiletools.notes.pro.models.ChecklistItem
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
-class WidgetAdapter(val context: Context, val intent: Intent) : RemoteViewsService.RemoteViewsFactory {
+class WidgetAdapter(val context: Context, val intent: Intent) :
+    RemoteViewsService.RemoteViewsFactory {
     private val textIds = arrayOf(
-        R.id.widget_text_left, R.id.widget_text_center, R.id.widget_text_right,
-        R.id.widget_text_left_monospace, R.id.widget_text_center_monospace, R.id.widget_text_right_monospace
+        R.id.widget_text_left,
+        R.id.widget_text_center,
+        R.id.widget_text_right,
+        R.id.widget_text_left_monospace,
+        R.id.widget_text_center_monospace,
+        R.id.widget_text_right_monospace
     )
     private val checklistIds = arrayOf(
-        R.id.checklist_text_left, R.id.checklist_text_center, R.id.checklist_text_right,
-        R.id.checklist_text_left_monospace, R.id.checklist_text_center_monospace, R.id.checklist_text_right_monospace
+        R.id.checklist_text_left,
+        R.id.checklist_text_center,
+        R.id.checklist_text_right,
+        R.id.checklist_text_left_monospace,
+        R.id.checklist_text_center_monospace,
+        R.id.checklist_text_right_monospace
     )
     private var widgetTextColor = DEFAULT_WIDGET_TEXT_COLOR
     private var note: Note? = null
@@ -48,8 +61,10 @@ class WidgetAdapter(val context: Context, val intent: Intent) : RemoteViewsServi
         if (note!!.type == NoteType.TYPE_CHECKLIST) {
             remoteView = RemoteViews(context.packageName, R.layout.item_checklist_widget).apply {
                 val checklistItem = checklistItems.getOrNull(position) ?: return@apply
-                val widgetNewTextColor = if (checklistItem.isDone) widgetTextColor.adjustAlpha(DONE_CHECKLIST_ITEM_ALPHA) else widgetTextColor
-                val paintFlags = if (checklistItem.isDone) Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG else Paint.ANTI_ALIAS_FLAG
+                val widgetNewTextColor =
+                    if (checklistItem.isDone) widgetTextColor.adjustAlpha(DONE_CHECKLIST_ITEM_ALPHA) else widgetTextColor
+                val paintFlags =
+                    if (checklistItem.isDone) Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG else Paint.ANTI_ALIAS_FLAG
 
                 for (id in checklistIds) {
                     setText(id, checklistItem.title)
@@ -126,14 +141,15 @@ class WidgetAdapter(val context: Context, val intent: Intent) : RemoteViewsServi
         val noteId = intent.getLongExtra(NOTE_ID, 0L)
         note = context.notesDB.getNoteWithId(noteId)
         if (note?.type == NoteType.TYPE_CHECKLIST) {
-            checklistItems = note!!.getNoteStoredValue(context)?.ifEmpty { "[]" }?.let { Json.decodeFromString(it) } ?: mutableListOf()
+            checklistItems = note!!.getNoteStoredValue(context)?.ifEmpty { "[]" }
+                ?.let { Json.decodeFromString(it) } ?: mutableListOf()
 
             // checklist title can be null only because of the glitch in upgrade to 6.6.0, remove this check in the future
-            checklistItems = checklistItems.filter { it.title != null }.toMutableList() as ArrayList<ChecklistItem>
-            val sorting = context.config?.sorting ?: 0
+            checklistItems = checklistItems.toMutableList() as ArrayList<ChecklistItem>
+            val sorting = context.config.sorting
             if (sorting and SORT_BY_CUSTOM == 0) {
                 checklistItems.sort()
-                if (context?.config?.moveDoneChecklistItems == true) {
+                if (context.config.moveDoneChecklistItems) {
                     checklistItems.sortBy { it.isDone }
                 }
             }

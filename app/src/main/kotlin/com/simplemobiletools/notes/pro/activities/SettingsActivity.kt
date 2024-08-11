@@ -2,29 +2,67 @@ package com.simplemobiletools.notes.pro.activities
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.text.TextUtilsCompat
 import androidx.core.view.ViewCompat
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.extensions.showErrorToast
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.extensions.viewBinding
+import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
+import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.helpers.isRPlus
+import com.simplemobiletools.commons.helpers.isTiramisuPlus
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.ActivitySettingsBinding
 import com.simplemobiletools.notes.pro.dialogs.ExportNotesDialog
 import com.simplemobiletools.notes.pro.dialogs.ManageAutoBackupsDialog
-import com.simplemobiletools.notes.pro.extensions.*
-import com.simplemobiletools.notes.pro.helpers.*
+import com.simplemobiletools.notes.pro.extensions.cancelScheduledAutomaticBackup
+import com.simplemobiletools.notes.pro.extensions.config
+import com.simplemobiletools.notes.pro.extensions.requestUnlockNotes
+import com.simplemobiletools.notes.pro.extensions.scheduleNextAutomaticBackup
+import com.simplemobiletools.notes.pro.extensions.updateWidgets
+import com.simplemobiletools.notes.pro.extensions.widgetsDB
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_BG_COLOR
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_ID
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_KEY_ID
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_NOTE_ID
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_SHOW_TITLE
+import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_TEXT_COLOR
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_100_PERCENT
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_125_PERCENT
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_150_PERCENT
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_175_PERCENT
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_200_PERCENT
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_250_PERCENT
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_300_PERCENT
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_50_PERCENT
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_60_PERCENT
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_75_PERCENT
+import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_90_PERCENT
+import com.simplemobiletools.notes.pro.helpers.GRAVITY_CENTER
+import com.simplemobiletools.notes.pro.helpers.GRAVITY_END
+import com.simplemobiletools.notes.pro.helpers.GRAVITY_START
+import com.simplemobiletools.notes.pro.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.Widget
+import java.util.Locale
+import kotlin.system.exitProcess
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.util.Locale
-import kotlin.system.exitProcess
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class SettingsActivity : SimpleActivity() {
     private val notesFileType = "application/json"
     private val binding by viewBinding(ActivitySettingsBinding::inflate)
@@ -34,7 +72,12 @@ class SettingsActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        updateMaterialActivityViews(binding.settingsCoordinator, binding.settingsHolder, useTransparentNavigation = true, useTopSearchMenu = false)
+        updateMaterialActivityViews(
+            binding.settingsCoordinator,
+            binding.settingsHolder,
+            useTransparentNavigation = true,
+            useTopSearchMenu = false
+        )
         setupMaterialScrollListener(binding.settingsNestedScrollview, binding.settingsToolbar)
     }
 
@@ -82,25 +125,27 @@ class SettingsActivity : SimpleActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        if (uri != null) {
-            toast(com.simplemobiletools.commons.R.string.importing)
-            importNotes(uri)
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            if (uri != null) {
+                toast(com.simplemobiletools.commons.R.string.importing)
+                importNotes(uri)
+            }
         }
-    }
 
-    private val saveDocument = registerForActivityResult(ActivityResultContracts.CreateDocument(notesFileType)) { uri ->
-        if (uri != null) {
-            toast(com.simplemobiletools.commons.R.string.exporting)
-            NotesHelper(this).getNotes { notes ->
-                requestUnlockNotes(notes) { unlockedNotes ->
-                    val notLockedNotes = notes.filterNot { it.isLocked() }
-                    val notesToExport = unlockedNotes + notLockedNotes
-                    exportNotes(notesToExport, uri)
+    private val saveDocument =
+        registerForActivityResult(ActivityResultContracts.CreateDocument(notesFileType)) { uri ->
+            if (uri != null) {
+                toast(com.simplemobiletools.commons.R.string.exporting)
+                NotesHelper(this).getNotes { notes ->
+                    requestUnlockNotes(notes) { unlockedNotes ->
+                        val notLockedNotes = notes.filterNot { it.isLocked() }
+                        val notesToExport = unlockedNotes + notLockedNotes
+                        exportNotes(notesToExport, uri)
+                    }
                 }
             }
         }
-    }
 
     private fun setupCustomizeColors() {
         binding.settingsColorCustomizationHolder.setOnClickListener {
@@ -117,6 +162,7 @@ class SettingsActivity : SimpleActivity() {
             exitProcess(0)
         }
     }
+
 
     private fun setupLanguage() {
         binding.settingsLanguage.text = Locale.getDefault().displayLanguage
@@ -225,7 +271,12 @@ class SettingsActivity : SimpleActivity() {
     private fun setupGravity() {
         binding.settingsGravity.text = getGravityText()
         binding.settingsGravityHolder.setOnClickListener {
-            val items = listOf(GRAVITY_START, GRAVITY_CENTER, GRAVITY_END).map { RadioItem(it, getGravityOptionLabel(it)) }
+            val items = listOf(GRAVITY_START, GRAVITY_CENTER, GRAVITY_END).map {
+                RadioItem(
+                    it,
+                    getGravityOptionLabel(it)
+                )
+            }
             RadioGroupDialog(this@SettingsActivity, ArrayList(items), config.gravity) {
                 config.gravity = it as Int
                 binding.settingsGravity.text = getGravityText()
@@ -235,7 +286,8 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun getGravityOptionLabel(gravity: Int): String {
-        val leftToRightDirection = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_LTR
+        val leftToRightDirection =
+            TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_LTR
         val leftRightLabels = listOf(R.string.left, R.string.right)
         val startEndLabels = if (leftToRightDirection) {
             leftRightLabels

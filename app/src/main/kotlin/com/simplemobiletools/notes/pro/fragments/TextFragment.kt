@@ -3,6 +3,7 @@ package com.simplemobiletools.notes.pro.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
@@ -18,10 +19,17 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.viewbinding.ViewBinding
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.adjustAlpha
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getProperBackgroundColor
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.extensions.getProperTextColor
+import com.simplemobiletools.commons.extensions.onGlobalLayout
+import com.simplemobiletools.commons.extensions.removeBit
+import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.views.MyEditText
-import com.simplemobiletools.commons.views.MyTextView
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.MainActivity
 import com.simplemobiletools.notes.pro.databinding.FragmentTextBinding
@@ -36,26 +44,35 @@ import com.simplemobiletools.notes.pro.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.models.TextHistory
 import com.simplemobiletools.notes.pro.models.TextHistoryItem
 import java.io.File
+import kotlin.math.abs
 
 // text history handling taken from https://gist.github.com/zeleven/0cfa738c1e8b65b23ff7df1fc30c9f7e
+@SuppressLint("ClickableViewAccessibility", "RestrictedApi")
+@RequiresApi(Build.VERSION_CODES.O)
 class TextFragment : NoteFragment() {
-    private val TEXT = "text"
+    private val text = "text"
 
     private var textHistory = TextHistory()
     private var isUndoOrRedo = false
     private var skipTextUpdating = false
     private var noteId = 0L
     private var touchDownX = 0f
-    private var moveXThreshold = 0      // make sure swiping across notes works well, do not swallow the gestures
+    private var moveXThreshold =
+        0      // make sure swiping across notes works well, do not swallow the gestures
 
     private lateinit var binding: FragmentTextBinding
     private lateinit var innerBinding: ViewBinding
     private lateinit var noteEditText: MyEditText
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentTextBinding.inflate(inflater, container, false)
         noteId = requireArguments().getLong(NOTE_ID, 0L)
-        moveXThreshold = resources.getDimension(com.simplemobiletools.commons.R.dimen.activity_margin).toInt()
+        moveXThreshold =
+            resources.getDimension(com.simplemobiletools.commons.R.dimen.activity_margin).toInt()
         retainInstance = true
 
         innerBinding = if (config!!.enableLineWrap) {
@@ -63,9 +80,10 @@ class TextFragment : NoteFragment() {
                 noteEditText = textNoteView
             }
         } else {
-            NoteViewHorizScrollableBinding.inflate(inflater, binding.notesRelativeLayout, true).apply {
-                noteEditText = textNoteView
-            }
+            NoteViewHorizScrollableBinding.inflate(inflater, binding.notesRelativeLayout, true)
+                .apply {
+                    noteEditText = textNoteView
+                }
         }
         if (config!!.clickableLinks) {
             noteEditText.apply {
@@ -114,7 +132,11 @@ class TextFragment : NoteFragment() {
         if (menuVisible && noteId != 0L) {
             val currentText = getCurrentNoteViewText()
             if (currentText != null) {
-                (activity as MainActivity).currentNoteTextChanged(currentText, isUndoAvailable(), isRedoAvailable())
+                (activity as MainActivity).currentNoteTextChanged(
+                    currentText,
+                    isUndoAvailable(),
+                    isRedoAvailable()
+                )
             }
         }
     }
@@ -122,20 +144,21 @@ class TextFragment : NoteFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if (note != null) {
-            outState.putString(TEXT, getCurrentNoteViewText())
+            outState.putString(text, getCurrentNoteViewText())
         }
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState != null && note != null && savedInstanceState.containsKey(TEXT)) {
+        if (savedInstanceState != null && note != null && savedInstanceState.containsKey(text)) {
             skipTextUpdating = true
-            val newText = savedInstanceState.getString(TEXT) ?: ""
+            val newText = savedInstanceState.getString(text) ?: ""
             innerBinding.root.findViewById<TextView>(R.id.text_note_view).text = newText
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+
+
     private fun setupFragment() {
         val config = config ?: return
         noteEditText.apply {
@@ -148,7 +171,11 @@ class TextFragment : NoteFragment() {
             }
 
             val adjustedPrimaryColor = context.getProperPrimaryColor()
-            setColors(context.getProperTextColor(), adjustedPrimaryColor, context.getProperBackgroundColor())
+            setColors(
+                context.getProperTextColor(),
+                adjustedPrimaryColor,
+                context.getProperBackgroundColor()
+            )
             setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getPercentageFontSize())
             highlightColor = adjustedPrimaryColor.adjustAlpha(.4f)
 
@@ -167,7 +194,8 @@ class TextFragment : NoteFragment() {
                 onGlobalLayout {
                     if (activity?.isDestroyed == false) {
                         requestFocus()
-                        val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        val inputManager =
+                            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                         inputManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
                     }
                 }
@@ -180,11 +208,11 @@ class TextFragment : NoteFragment() {
             }
         }
 
-        noteEditText.setOnTouchListener { v, event ->
+        noteEditText.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> touchDownX = event.x
                 MotionEvent.ACTION_MOVE -> {
-                    val diffX = Math.abs(event.x - touchDownX)
+                    val diffX = abs(event.x - touchDownX)
                     if (diffX > moveXThreshold) {
                         binding.root.requestDisallowInterceptTouchEvent(false)
                     }
@@ -247,7 +275,8 @@ class TextFragment : NoteFragment() {
         }
     }
 
-    fun hasUnsavedChanges() = note != null && getCurrentNoteViewText() != note!!.getNoteStoredValue(requireContext())
+    fun hasUnsavedChanges() =
+        note != null && getCurrentNoteViewText() != note!!.getNoteStoredValue(requireContext())
 
     fun focusEditText() {
         noteEditText.requestFocus()
@@ -338,7 +367,11 @@ class TextFragment : NoteFragment() {
         override fun afterTextChanged(editable: Editable) {
             val text = editable.toString()
             setWordCounter(text)
-            (activity as MainActivity).currentNoteTextChanged(text, isUndoAvailable(), isRedoAvailable())
+            (activity as MainActivity).currentNoteTextChanged(
+                text,
+                isUndoAvailable(),
+                isRedoAvailable()
+            )
         }
     }
 

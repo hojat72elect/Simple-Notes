@@ -61,23 +61,31 @@ class Config(context: Context) : BaseConfig(context) {
 
     var lastUsedExtension: String
         get() = prefs.getString(LAST_USED_EXTENSION, "txt")!!
-        set(lastUsedExtension) = prefs.edit().putString(LAST_USED_EXTENSION, lastUsedExtension).apply()
+        set(lastUsedExtension) = prefs.edit().putString(LAST_USED_EXTENSION, lastUsedExtension)
+            .apply()
 
     var lastUsedSavePath: String
-        get() = prefs.getString(LAST_USED_SAVE_PATH, Environment.getExternalStorageDirectory().toString())!!
-        set(lastUsedSavePath) = prefs.edit().putString(LAST_USED_SAVE_PATH, lastUsedSavePath).apply()
+        get() = prefs.getString(
+            LAST_USED_SAVE_PATH,
+            Environment.getExternalStorageDirectory().toString()
+        )!!
+        set(lastUsedSavePath) = prefs.edit().putString(LAST_USED_SAVE_PATH, lastUsedSavePath)
+            .apply()
 
     var useIncognitoMode: Boolean
         get() = prefs.getBoolean(USE_INCOGNITO_MODE, false)
-        set(useIncognitoMode) = prefs.edit().putBoolean(USE_INCOGNITO_MODE, useIncognitoMode).apply()
+        set(useIncognitoMode) = prefs.edit().putBoolean(USE_INCOGNITO_MODE, useIncognitoMode)
+            .apply()
 
     var lastCreatedNoteType: Int
         get() = prefs.getInt(LAST_CREATED_NOTE_TYPE, NoteType.TYPE_TEXT.value)
-        set(lastCreatedNoteType) = prefs.edit().putInt(LAST_CREATED_NOTE_TYPE, lastCreatedNoteType).apply()
+        set(lastCreatedNoteType) = prefs.edit().putInt(LAST_CREATED_NOTE_TYPE, lastCreatedNoteType)
+            .apply()
 
     var moveDoneChecklistItems: Boolean
         get() = prefs.getBoolean(MOVE_DONE_CHECKLIST_ITEMS, false)
-        set(moveDoneChecklistItems) = prefs.edit().putBoolean(MOVE_DONE_CHECKLIST_ITEMS, moveDoneChecklistItems).apply()
+        set(moveDoneChecklistItems) = prefs.edit()
+            .putBoolean(MOVE_DONE_CHECKLIST_ITEMS, moveDoneChecklistItems).apply()
 
     fun getTextGravity() = when (gravity) {
         GRAVITY_CENTER -> Gravity.CENTER_HORIZONTAL
@@ -87,9 +95,11 @@ class Config(context: Context) : BaseConfig(context) {
 
     var fontSizePercentage: Int
         get() = prefs.getInt(FONT_SIZE_PERCENTAGE, 100)
-        set(fontSizePercentage) = prefs.edit().putInt(FONT_SIZE_PERCENTAGE, fontSizePercentage).apply()
+        set(fontSizePercentage) = prefs.edit().putInt(FONT_SIZE_PERCENTAGE, fontSizePercentage)
+            .apply()
 
     var addNewChecklistItemsTop: Boolean
         get() = prefs.getBoolean(ADD_NEW_CHECKLIST_ITEMS_TOP, false)
-        set(addNewCheckListItemsTop) = prefs.edit().putBoolean(ADD_NEW_CHECKLIST_ITEMS_TOP, addNewCheckListItemsTop).apply()
+        set(addNewCheckListItemsTop) = prefs.edit()
+            .putBoolean(ADD_NEW_CHECKLIST_ITEMS_TOP, addNewCheckListItemsTop).apply()
 }

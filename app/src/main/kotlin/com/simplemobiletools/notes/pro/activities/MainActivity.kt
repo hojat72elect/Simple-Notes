@@ -11,6 +11,7 @@ import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.graphics.drawable.LayerDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
@@ -27,10 +28,41 @@ import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.viewpager.widget.ViewPager
-import com.simplemobiletools.commons.dialogs.*
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
+import com.simplemobiletools.commons.dialogs.FilePickerDialog
+import com.simplemobiletools.commons.dialogs.RadioGroupDialog
+import com.simplemobiletools.commons.dialogs.SecurityDialog
+import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.clearBackgroundSpans
+import com.simplemobiletools.commons.extensions.convertToBitmap
+import com.simplemobiletools.commons.extensions.getContrastColor
+import com.simplemobiletools.commons.extensions.getDocumentFile
+import com.simplemobiletools.commons.extensions.getFilenameFromPath
+import com.simplemobiletools.commons.extensions.getProperBackgroundColor
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.extensions.getProperStatusBarColor
+import com.simplemobiletools.commons.extensions.highlightText
+import com.simplemobiletools.commons.extensions.isMediaFile
+import com.simplemobiletools.commons.extensions.needsStupidWritePermissions
+import com.simplemobiletools.commons.extensions.onPageChangeListener
+import com.simplemobiletools.commons.extensions.onTextChangeListener
+import com.simplemobiletools.commons.extensions.performSecurityCheck
+import com.simplemobiletools.commons.extensions.searchMatches
+import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.extensions.value
+import com.simplemobiletools.commons.extensions.viewBinding
+import com.simplemobiletools.commons.helpers.LICENSE_RTL
+import com.simplemobiletools.commons.helpers.PERMISSION_READ_STORAGE
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
+import com.simplemobiletools.commons.helpers.PROTECTION_NONE
+import com.simplemobiletools.commons.helpers.REAL_FILE_PATH
+import com.simplemobiletools.commons.helpers.SHOW_ALL_TABS
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isNougatMR1Plus
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.RadioItem
@@ -41,25 +73,57 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.adapters.NotesPagerAdapter
 import com.simplemobiletools.notes.pro.databases.NotesDatabase
 import com.simplemobiletools.notes.pro.databinding.ActivityMainBinding
-import com.simplemobiletools.notes.pro.dialogs.*
-import com.simplemobiletools.notes.pro.extensions.*
+import com.simplemobiletools.notes.pro.dialogs.DeleteNoteDialog
+import com.simplemobiletools.notes.pro.dialogs.ExportFileDialog
+import com.simplemobiletools.notes.pro.dialogs.ImportFolderDialog
+import com.simplemobiletools.notes.pro.dialogs.NewNoteDialog
+import com.simplemobiletools.notes.pro.dialogs.OpenFileDialog
+import com.simplemobiletools.notes.pro.dialogs.OpenNoteDialog
+import com.simplemobiletools.notes.pro.dialogs.RenameNoteDialog
+import com.simplemobiletools.notes.pro.dialogs.SortChecklistDialog
+import com.simplemobiletools.notes.pro.extensions.appLaunched
+import com.simplemobiletools.notes.pro.extensions.baseConfig
+import com.simplemobiletools.notes.pro.extensions.beVisibleIf
+import com.simplemobiletools.notes.pro.extensions.checkWhatsNew
+import com.simplemobiletools.notes.pro.extensions.config
+import com.simplemobiletools.notes.pro.extensions.deleteFile
+import com.simplemobiletools.notes.pro.extensions.fadeIn
+import com.simplemobiletools.notes.pro.extensions.fadeOut
+import com.simplemobiletools.notes.pro.extensions.getCurrentFormattedDateTime
+import com.simplemobiletools.notes.pro.extensions.getFilenameFromContentUri
+import com.simplemobiletools.notes.pro.extensions.getPercentageFontSize
+import com.simplemobiletools.notes.pro.extensions.getRealPathFromURI
+import com.simplemobiletools.notes.pro.extensions.hasPermission
+import com.simplemobiletools.notes.pro.extensions.hideKeyboard
+import com.simplemobiletools.notes.pro.extensions.isPackageInstalled
+import com.simplemobiletools.notes.pro.extensions.launchMoreAppsFromUsIntent
+import com.simplemobiletools.notes.pro.extensions.notesDB
+import com.simplemobiletools.notes.pro.extensions.onGlobalLayout
+import com.simplemobiletools.notes.pro.extensions.parseChecklistItems
+import com.simplemobiletools.notes.pro.extensions.shortcutManager
+import com.simplemobiletools.notes.pro.extensions.showErrorToast
+import com.simplemobiletools.notes.pro.extensions.showKeyboard
+import com.simplemobiletools.notes.pro.extensions.toast
+import com.simplemobiletools.notes.pro.extensions.updateWidgets
+import com.simplemobiletools.notes.pro.extensions.widgetsDB
 import com.simplemobiletools.notes.pro.fragments.TextFragment
-import com.simplemobiletools.notes.pro.helpers.*
+import com.simplemobiletools.notes.pro.helpers.MIME_TEXT_PLAIN
+import com.simplemobiletools.notes.pro.helpers.MyMovementMethod
+import com.simplemobiletools.notes.pro.helpers.NEW_CHECKLIST
+import com.simplemobiletools.notes.pro.helpers.NEW_TEXT_NOTE
+import com.simplemobiletools.notes.pro.helpers.NotesHelper
+import com.simplemobiletools.notes.pro.helpers.OPEN_NOTE_ID
+import com.simplemobiletools.notes.pro.helpers.SHORTCUT_NEW_CHECKLIST
+import com.simplemobiletools.notes.pro.helpers.SHORTCUT_NEW_TEXT_NOTE
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 import java.io.File
 import java.nio.charset.Charset
-import java.util.*
+import java.util.Arrays
 
+@RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : SimpleActivity() {
-    private val EXPORT_FILE_SYNC = 1
-    private val EXPORT_FILE_NO_SYNC = 2
 
-    private val IMPORT_FILE_SYNC = 1
-    private val IMPORT_FILE_NO_SYNC = 2
-
-    private val PICK_OPEN_FILE_INTENT = 1
-    private val PICK_EXPORT_FILE_INTENT = 2
 
     private lateinit var mCurrentNote: Note
     private var mNotes = listOf<Note>()
@@ -91,7 +155,12 @@ class MainActivity : SimpleActivity() {
         setupOptionsMenu()
         refreshMenuItems()
 
-        updateMaterialActivityViews(binding.mainCoordinator, null, useTransparentNavigation = false, useTopSearchMenu = false)
+        updateMaterialActivityViews(
+            binding.mainCoordinator,
+            null,
+            useTransparentNavigation = false,
+            useTopSearchMenu = false
+        )
 
         searchQueryET = findViewById(com.simplemobiletools.commons.R.id.search_query)
         searchPrevBtn = findViewById(com.simplemobiletools.commons.R.id.search_previous)
@@ -123,8 +192,16 @@ class MainActivity : SimpleActivity() {
         setupSearchButtons()
 
         if (isPackageInstalled("com.simplemobiletools.notes")) {
-            val dialogText = getString(com.simplemobiletools.commons.R.string.upgraded_from_free_notes)
-            ConfirmationDialog(this, dialogText, 0, com.simplemobiletools.commons.R.string.ok, 0, false) {}
+            val dialogText =
+                getString(com.simplemobiletools.commons.R.string.upgraded_from_free_notes)
+            ConfirmationDialog(
+                this,
+                dialogText,
+                0,
+                com.simplemobiletools.commons.R.string.ok,
+                0,
+                false
+            ) {}
         }
     }
 
@@ -199,9 +276,12 @@ class MainActivity : SimpleActivity() {
             findItem(R.id.remove_done_items).isVisible = isCurrentItemChecklist
             findItem(R.id.sort_checklist).isVisible = isCurrentItemChecklist
             findItem(R.id.import_folder).isVisible = !isQPlus()
-            findItem(R.id.lock_note).isVisible = mNotes.isNotEmpty() && (::mCurrentNote.isInitialized && !mCurrentNote.isLocked())
-            findItem(R.id.unlock_note).isVisible = mNotes.isNotEmpty() && (::mCurrentNote.isInitialized && mCurrentNote.isLocked())
-            findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)
+            findItem(R.id.lock_note).isVisible =
+                mNotes.isNotEmpty() && (::mCurrentNote.isInitialized && !mCurrentNote.isLocked())
+            findItem(R.id.unlock_note).isVisible =
+                mNotes.isNotEmpty() && (::mCurrentNote.isInitialized && mCurrentNote.isLocked())
+            findItem(R.id.more_apps_from_us).isVisible =
+                !resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)
 
             saveNoteButton = findItem(R.id.save_note)
             saveNoteButton!!.isVisible =
@@ -299,13 +379,18 @@ class MainActivity : SimpleActivity() {
         if (requestCode == PICK_OPEN_FILE_INTENT && resultCode == RESULT_OK && resultData != null && resultData.data != null) {
             importUri(resultData.data!!)
         } else if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null && mNotes.isNotEmpty()) {
-            val takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-            applicationContext.contentResolver.takePersistableUriPermission(resultData.data!!, takeFlags)
+            val takeFlags =
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            applicationContext.contentResolver.takePersistableUriPermission(
+                resultData.data!!,
+                takeFlags
+            )
             showExportFilePickUpdateDialog(resultData.dataString!!, getCurrentNoteValue())
         }
     }
 
-    private fun isCurrentItemChecklist() = if (::mCurrentNote.isInitialized) mCurrentNote.type == NoteType.TYPE_CHECKLIST else false
+    private fun isCurrentItemChecklist() =
+        if (::mCurrentNote.isInitialized) mCurrentNote.type == NoteType.TYPE_CHECKLIST else false
 
     @SuppressLint("NewApi")
     private fun checkShortcuts() {
@@ -327,7 +412,8 @@ class MainActivity : SimpleActivity() {
         val shortLabel = getString(R.string.text_note)
         val longLabel = getString(R.string.new_text_note)
         val drawable = resources.getDrawable(com.simplemobiletools.commons.R.drawable.shortcut_plus)
-        (drawable as LayerDrawable).findDrawableByLayerId(R.id.shortcut_plus_background).applyColorFilter(appIconColor)
+        (drawable as LayerDrawable).findDrawableByLayerId(R.id.shortcut_plus_background)
+            .applyColorFilter(appIconColor)
         val bmp = drawable.convertToBitmap()
 
         val intent = Intent(this, MainActivity::class.java)
@@ -346,7 +432,8 @@ class MainActivity : SimpleActivity() {
         val shortLabel = getString(R.string.checklist)
         val longLabel = getString(R.string.new_checklist)
         val drawable = resources.getDrawable(R.drawable.shortcut_check)
-        (drawable as LayerDrawable).findDrawableByLayerId(R.id.shortcut_plus_background).applyColorFilter(appIconColor)
+        (drawable as LayerDrawable).findDrawableByLayerId(R.id.shortcut_plus_background)
+            .applyColorFilter(appIconColor)
         val bmp = drawable.convertToBitmap()
 
         val intent = Intent(this, MainActivity::class.java)
@@ -377,10 +464,26 @@ class MainActivity : SimpleActivity() {
                         val file = File(realPath)
                         handleUri(Uri.fromFile(file))
                     } else if (intent.getBooleanExtra(NEW_TEXT_NOTE, false)) {
-                        val newTextNote = Note(null, getCurrentFormattedDateTime(), "", NoteType.TYPE_TEXT, "", PROTECTION_NONE, "")
+                        val newTextNote = Note(
+                            null,
+                            getCurrentFormattedDateTime(),
+                            "",
+                            NoteType.TYPE_TEXT,
+                            "",
+                            PROTECTION_NONE,
+                            ""
+                        )
                         addNewNote(newTextNote)
                     } else if (intent.getBooleanExtra(NEW_CHECKLIST, false)) {
-                        val newChecklist = Note(null, getCurrentFormattedDateTime(), "", NoteType.TYPE_CHECKLIST, "", PROTECTION_NONE, "")
+                        val newChecklist = Note(
+                            null,
+                            getCurrentFormattedDateTime(),
+                            "",
+                            NoteType.TYPE_CHECKLIST,
+                            "",
+                            PROTECTION_NONE,
+                            ""
+                        )
                         addNewNote(newChecklist)
                     } else {
                         handleUri(data!!)
@@ -461,6 +564,7 @@ class MainActivity : SimpleActivity() {
             refreshMenuItems()
         }
     }
+
 
     private fun setupSearchButtons() {
         searchQueryET.onTextChangeListener {
@@ -583,7 +687,8 @@ class MainActivity : SimpleActivity() {
 
     private fun getWantedNoteIndex(wantedNoteId: Long?): Int {
         intent.removeExtra(OPEN_NOTE_ID)
-        val noteIdToOpen = if (wantedNoteId == null || wantedNoteId == -1L) config.currentNoteId else wantedNoteId
+        val noteIdToOpen =
+            if (wantedNoteId == null || wantedNoteId == -1L) config.currentNoteId else wantedNoteId
         return getNoteIndexWithId(noteIdToOpen)
     }
 
@@ -614,7 +719,12 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun displayNewNoteDialog(value: String = "", title: String? = null, path: String = "", setChecklistAsDefault: Boolean = false) {
+    private fun displayNewNoteDialog(
+        value: String = "",
+        title: String? = null,
+        path: String = "",
+        setChecklistAsDefault: Boolean = false
+    ) {
         NewNoteDialog(this, title, setChecklistAsDefault) {
             it.value = value
             it.path = path
@@ -645,15 +755,38 @@ class MainActivity : SimpleActivity() {
         val licenses = LICENSE_RTL
 
         val faqItems = arrayListOf(
-            FAQItem(com.simplemobiletools.commons.R.string.faq_1_title_commons, com.simplemobiletools.commons.R.string.faq_1_text_commons),
+            FAQItem(
+                com.simplemobiletools.commons.R.string.faq_1_title_commons,
+                com.simplemobiletools.commons.R.string.faq_1_text_commons
+            ),
             FAQItem(R.string.faq_1_title, R.string.faq_1_text)
         )
 
         if (!resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)) {
-            faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_2_title_commons, com.simplemobiletools.commons.R.string.faq_2_text_commons))
-            faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_6_title_commons, com.simplemobiletools.commons.R.string.faq_6_text_commons))
-            faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_7_title_commons, com.simplemobiletools.commons.R.string.faq_7_text_commons))
-            faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_10_title_commons, com.simplemobiletools.commons.R.string.faq_10_text_commons))
+            faqItems.add(
+                FAQItem(
+                    com.simplemobiletools.commons.R.string.faq_2_title_commons,
+                    com.simplemobiletools.commons.R.string.faq_2_text_commons
+                )
+            )
+            faqItems.add(
+                FAQItem(
+                    com.simplemobiletools.commons.R.string.faq_6_title_commons,
+                    com.simplemobiletools.commons.R.string.faq_6_text_commons
+                )
+            )
+            faqItems.add(
+                FAQItem(
+                    com.simplemobiletools.commons.R.string.faq_7_title_commons,
+                    com.simplemobiletools.commons.R.string.faq_7_text_commons
+                )
+            )
+            faqItems.add(
+                FAQItem(
+                    com.simplemobiletools.commons.R.string.faq_10_title_commons,
+                    com.simplemobiletools.commons.R.string.faq_10_text_commons
+                )
+            )
         }
 
         startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
@@ -673,7 +806,10 @@ class MainActivity : SimpleActivity() {
                     putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
                     startActivityForResult(this, PICK_OPEN_FILE_INTENT)
                 } catch (e: ActivityNotFoundException) {
-                    toast(com.simplemobiletools.commons.R.string.system_service_disabled, Toast.LENGTH_LONG)
+                    toast(
+                        com.simplemobiletools.commons.R.string.system_service_disabled,
+                        Toast.LENGTH_LONG
+                    )
                 } catch (e: Exception) {
                     showErrorToast(e)
                 }
@@ -689,10 +825,23 @@ class MainActivity : SimpleActivity() {
                     val checklistItems = fileText.parseChecklistItems()
                     if (checklistItems != null) {
                         val title = it.absolutePath.getFilenameFromPath().substringBeforeLast('.')
-                        val note = Note(null, title, fileText, NoteType.TYPE_CHECKLIST, "", PROTECTION_NONE, "")
+                        val note = Note(
+                            null,
+                            title,
+                            fileText,
+                            NoteType.TYPE_CHECKLIST,
+                            "",
+                            PROTECTION_NONE,
+                            ""
+                        )
                         runOnUiThread {
                             OpenFileDialog(this, it.path) {
-                                displayNewNoteDialog(note.value, title = it.title, it.path, setChecklistAsDefault = true)
+                                displayNewNoteDialog(
+                                    note.value,
+                                    title = it.title,
+                                    it.path,
+                                    setChecklistAsDefault = true
+                                )
                             }
                         }
                     } else {
@@ -769,7 +918,9 @@ class MainActivity : SimpleActivity() {
     private fun addNoteFromUri(uri: Uri, filename: String? = null) {
         val noteTitle = when {
             filename?.isEmpty() == false -> filename
-            uri.toString().startsWith("content://") -> getFilenameFromContentUri(uri) ?: getNewNoteTitle()
+            uri.toString().startsWith("content://") -> getFilenameFromContentUri(uri)
+                ?: getNewNoteTitle()
+
             else -> getNewNoteTitle()
         }
 
@@ -783,7 +934,8 @@ class MainActivity : SimpleActivity() {
             true
         } else {
             try {
-                val takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                val takeFlags =
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                 applicationContext.contentResolver.takePersistableUriPermission(uri, takeFlags)
                 true
             } catch (e: Exception) {
@@ -817,7 +969,15 @@ class MainActivity : SimpleActivity() {
                 val fileText = it.readText().trim()
                 val checklistItems = fileText.parseChecklistItems()
                 val note = if (checklistItems != null) {
-                    Note(null, title.substringBeforeLast('.'), fileText, NoteType.TYPE_CHECKLIST, "", PROTECTION_NONE, "")
+                    Note(
+                        null,
+                        title.substringBeforeLast('.'),
+                        fileText,
+                        NoteType.TYPE_CHECKLIST,
+                        "",
+                        PROTECTION_NONE,
+                        ""
+                    )
                 } else {
                     Note(null, title, "", NoteType.TYPE_TEXT, path, PROTECTION_NONE, "")
                 }
@@ -878,7 +1038,10 @@ class MainActivity : SimpleActivity() {
                 try {
                     startActivityForResult(this, PICK_EXPORT_FILE_INTENT)
                 } catch (e: ActivityNotFoundException) {
-                    toast(com.simplemobiletools.commons.R.string.system_service_disabled, Toast.LENGTH_LONG)
+                    toast(
+                        com.simplemobiletools.commons.R.string.system_service_disabled,
+                        Toast.LENGTH_LONG
+                    )
                 } catch (e: NetworkErrorException) {
                     toast(getString(R.string.cannot_load_over_internet), Toast.LENGTH_LONG)
                 } catch (e: Exception) {
@@ -890,7 +1053,8 @@ class MainActivity : SimpleActivity() {
 
     private fun exportAsFile() {
         ExportFileDialog(this, mCurrentNote) {
-            val textToExport = if (mCurrentNote.type == NoteType.TYPE_TEXT) getCurrentNoteText() else mCurrentNote.value
+            val textToExport =
+                if (mCurrentNote.type == NoteType.TYPE_TEXT) getCurrentNoteText() else mCurrentNote.value
             if (textToExport == null || textToExport.isEmpty()) {
                 toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
             } else if (mCurrentNote.type == NoteType.TYPE_TEXT) {
@@ -909,7 +1073,12 @@ class MainActivity : SimpleActivity() {
 
         RadioGroupDialog(this, items) {
             val syncFile = it as Int == EXPORT_FILE_SYNC
-            tryExportNoteValueToFile(exportPath, mCurrentNote.title, textToExport, true) { exportedSuccessfully ->
+            tryExportNoteValueToFile(
+                exportPath,
+                mCurrentNote.title,
+                textToExport,
+                true
+            ) { exportedSuccessfully ->
                 if (exportedSuccessfully) {
                     if (syncFile) {
                         mCurrentNote.path = exportPath
@@ -919,14 +1088,24 @@ class MainActivity : SimpleActivity() {
                         mCurrentNote.value = textToExport
                     }
 
-                    getPagerAdapter().updateCurrentNoteData(binding.viewPager.currentItem, mCurrentNote.path, mCurrentNote.value)
+                    getPagerAdapter().updateCurrentNoteData(
+                        binding.viewPager.currentItem,
+                        mCurrentNote.path,
+                        mCurrentNote.value
+                    )
                     NotesHelper(this).insertOrUpdateNote(mCurrentNote)
                 }
             }
         }
     }
 
-    fun tryExportNoteValueToFile(path: String, title: String, content: String, showSuccessToasts: Boolean, callback: ((success: Boolean) -> Unit)? = null) {
+    fun tryExportNoteValueToFile(
+        path: String,
+        title: String,
+        content: String,
+        showSuccessToasts: Boolean,
+        callback: ((success: Boolean) -> Unit)? = null
+    ) {
         if (path.startsWith("content://")) {
             exportNoteValueToUri(Uri.parse(path), title, content, showSuccessToasts, callback)
         } else {
@@ -938,7 +1117,12 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun exportNoteValueToFile(path: String, content: String, showSuccessToasts: Boolean, callback: ((success: Boolean) -> Unit)? = null) {
+    private fun exportNoteValueToFile(
+        path: String,
+        content: String,
+        showSuccessToasts: Boolean,
+        callback: ((success: Boolean) -> Unit)? = null
+    ) {
         try {
             if (File(path).isDirectory) {
                 toast(com.simplemobiletools.commons.R.string.name_taken)
@@ -981,7 +1165,13 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun exportNoteValueToUri(uri: Uri, title: String, content: String, showSuccessToasts: Boolean, callback: ((success: Boolean) -> Unit)? = null) {
+    private fun exportNoteValueToUri(
+        uri: Uri,
+        title: String,
+        content: String,
+        showSuccessToasts: Boolean,
+        callback: ((success: Boolean) -> Unit)? = null
+    ) {
         try {
             val outputStream = contentResolver.openOutputStream(uri, "rwt")
             outputStream!!.bufferedWriter().use { out ->
@@ -1013,7 +1203,8 @@ class MainActivity : SimpleActivity() {
         try {
             val webView = WebView(this)
             webView.webViewClient = object : WebViewClient() {
-                override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest) = false
+                override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest) =
+                    false
 
                 override fun onPageFinished(view: WebView, url: String) {
                     createWebPrintJob(view)
@@ -1041,7 +1232,8 @@ class MainActivity : SimpleActivity() {
 
     private fun getPagerAdapter() = binding.viewPager.adapter as NotesPagerAdapter
 
-    private fun getCurrentNoteText() = getPagerAdapter().getCurrentNoteViewText(binding.viewPager.currentItem)
+    private fun getCurrentNoteText() =
+        getPagerAdapter().getCurrentNoteViewText(binding.viewPager.currentItem)
 
     private fun getCurrentNoteValue(): String {
         return if (mCurrentNote.type == NoteType.TYPE_TEXT) {
@@ -1063,12 +1255,14 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun addTextToCurrentNote(text: String) = getPagerAdapter().appendText(binding.viewPager.currentItem, text)
+    private fun addTextToCurrentNote(text: String) =
+        getPagerAdapter().appendText(binding.viewPager.currentItem, text)
 
     private fun saveCurrentNote(force: Boolean) {
         getPagerAdapter().saveCurrentNote(binding.viewPager.currentItem, force)
         if (mCurrentNote.type == NoteType.TYPE_CHECKLIST) {
-            mCurrentNote.value = getPagerAdapter().getNoteChecklistItems(binding.viewPager.currentItem) ?: ""
+            mCurrentNote.value =
+                getPagerAdapter().getNoteChecklistItems(binding.viewPager.currentItem) ?: ""
         }
     }
 
@@ -1095,7 +1289,8 @@ class MainActivity : SimpleActivity() {
     private fun doDeleteNote(note: Note, deleteFile: Boolean) {
         ensureBackgroundThread {
             val currentNoteIndex = mNotes.indexOf(note)
-            val noteToRefresh = mNotes[if (currentNoteIndex > 0) currentNoteIndex - 1 else currentNoteIndex + 1]
+            val noteToRefresh =
+                mNotes[if (currentNoteIndex > 0) currentNoteIndex - 1 else currentNoteIndex + 1]
 
             notesDB.deleteNote(note)
             widgetsDB.deleteNoteWidgets(note.id!!)
@@ -1165,7 +1360,8 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun shareText() {
-        val text = if (mCurrentNote.type == NoteType.TYPE_TEXT) getCurrentNoteText() else mCurrentNote.value
+        val text =
+            if (mCurrentNote.type == NoteType.TYPE_TEXT) getCurrentNoteText() else mCurrentNote.value
         if (text.isNullOrEmpty()) {
             toast(R.string.cannot_share_empty_text)
             return
@@ -1189,12 +1385,14 @@ class MainActivity : SimpleActivity() {
             val note = mCurrentNote
             val drawable = resources.getDrawable(R.drawable.shortcut_note).mutate()
             val appIconColor = baseConfig.appIconColor
-            (drawable as LayerDrawable).findDrawableByLayerId(R.id.shortcut_plus_background).applyColorFilter(appIconColor)
+            (drawable as LayerDrawable).findDrawableByLayerId(R.id.shortcut_plus_background)
+                .applyColorFilter(appIconColor)
 
             val intent = Intent(this, SplashActivity::class.java)
             intent.action = Intent.ACTION_VIEW
             intent.putExtra(OPEN_NOTE_ID, note.id)
-            intent.flags = intent.flags or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
+            intent.flags =
+                intent.flags or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
 
             val shortcut = ShortcutInfo.Builder(this, note.hashCode().toString())
                 .setShortLabel(mCurrentNote.title)
@@ -1207,7 +1405,13 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun lockNote() {
-        ConfirmationDialog(this, "", R.string.locking_warning, com.simplemobiletools.commons.R.string.ok, com.simplemobiletools.commons.R.string.cancel) {
+        ConfirmationDialog(
+            this,
+            "",
+            R.string.locking_warning,
+            com.simplemobiletools.commons.R.string.ok,
+            com.simplemobiletools.commons.R.string.cancel
+        ) {
             SecurityDialog(this, "", SHOW_ALL_TABS) { hash, type, success ->
                 if (success) {
                     mCurrentNote.protectionHash = hash
@@ -1296,5 +1500,14 @@ class MainActivity : SimpleActivity() {
             getPagerAdapter().refreshChecklist(binding.viewPager.currentItem)
             updateWidgets()
         }
+    }
+
+    companion object {
+        private const val EXPORT_FILE_SYNC = 1
+        private const val EXPORT_FILE_NO_SYNC = 2
+        private const val IMPORT_FILE_SYNC = 1
+        private const val IMPORT_FILE_NO_SYNC = 2
+        private const val PICK_OPEN_FILE_INTENT = 1
+        private const val PICK_EXPORT_FILE_INTENT = 2
     }
 }

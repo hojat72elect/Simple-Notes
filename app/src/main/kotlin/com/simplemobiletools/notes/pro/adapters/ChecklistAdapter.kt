@@ -1,5 +1,6 @@
 package com.simplemobiletools.notes.pro.adapters
 
+import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
@@ -30,9 +31,14 @@ import com.simplemobiletools.notes.pro.interfaces.ChecklistItemsListener
 import com.simplemobiletools.notes.pro.models.ChecklistItem
 import java.util.Collections
 
+@SuppressLint("ClickableViewAccessibility")
 class ChecklistAdapter(
-    activity: BaseSimpleActivity, var items: MutableList<ChecklistItem>, val listener: ChecklistItemsListener?,
-    recyclerView: MyRecyclerView, val showIcons: Boolean, itemClick: (Any) -> Unit
+    activity: BaseSimpleActivity,
+    var items: MutableList<ChecklistItem>,
+    val listener: ChecklistItemsListener?,
+    recyclerView: MyRecyclerView,
+    val showIcons: Boolean,
+    itemClick: (Any) -> Unit
 ) :
     MyRecyclerViewAdapter(activity, recyclerView, itemClick), ItemTouchHelperContract {
 
@@ -191,7 +197,9 @@ class ChecklistAdapter(
 
     private fun getItemWithKey(key: Int): ChecklistItem? = items.firstOrNull { it.id == key }
 
-    private fun getSelectedItems() = items.filter { selectedKeys.contains(it.id) } as ArrayList<ChecklistItem>
+    private fun getSelectedItems() =
+        items.filter { selectedKeys.contains(it.id) } as ArrayList<ChecklistItem>
+
 
     private fun setupView(view: View, checklistItem: ChecklistItem, holder: ViewHolder) {
         val isSelected = selectedKeys.contains(checklistItem.id)

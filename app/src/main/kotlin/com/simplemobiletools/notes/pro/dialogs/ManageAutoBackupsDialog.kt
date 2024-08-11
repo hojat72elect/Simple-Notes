@@ -2,7 +2,13 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
+import com.simplemobiletools.commons.extensions.hideKeyboard
+import com.simplemobiletools.commons.extensions.humanizePath
+import com.simplemobiletools.commons.extensions.isAValidFilename
+import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogManageAutomaticBackupsBinding
@@ -41,7 +47,11 @@ class ManageAutoBackupsDialog(private val activity: SimpleActivity, onSuccess: (
             .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
             .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(view, this, com.simplemobiletools.commons.R.string.manage_automatic_backups) { dialog ->
+                activity.setupDialogStuff(
+                    view,
+                    this,
+                    com.simplemobiletools.commons.R.string.manage_automatic_backups
+                ) { dialog ->
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         val filename = binding.backupNotesFilename.value
                         when {

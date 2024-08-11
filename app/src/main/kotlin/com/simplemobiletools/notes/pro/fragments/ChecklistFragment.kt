@@ -8,7 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getContrastColor
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.extensions.getProperTextColor
+import com.simplemobiletools.commons.extensions.hideKeyboard
+import com.simplemobiletools.commons.extensions.underlineText
 import com.simplemobiletools.commons.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
@@ -32,7 +37,11 @@ class ChecklistFragment : NoteFragment(), ChecklistItemsListener {
 
     var items = mutableListOf<ChecklistItem>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentChecklistBinding.inflate(inflater, container, false)
         noteId = requireArguments().getLong(NOTE_ID, 0L)
         setupFragmentColors()
@@ -61,10 +70,12 @@ class ChecklistFragment : NoteFragment(), ChecklistItemsListener {
 
                 try {
                     val checklistItemType = object : TypeToken<List<ChecklistItem>>() {}.type
-                    items = Gson().fromJson<ArrayList<ChecklistItem>>(storedNote.getNoteStoredValue(requireActivity()), checklistItemType) ?: ArrayList(1)
+                    items = Gson().fromJson<ArrayList<ChecklistItem>>(
+                        storedNote.getNoteStoredValue(requireActivity()), checklistItemType
+                    ) ?: ArrayList(1)
 
                     // checklist title can be null only because of the glitch in upgrade to 6.6.0, remove this check in the future
-                    items = items.filter { it.title != null }.toMutableList() as ArrayList<ChecklistItem>
+                    items = items.toMutableList() as ArrayList<ChecklistItem>
                     val sorting = config?.sorting ?: 0
                     if (sorting and SORT_BY_CUSTOM == 0 && config?.moveDoneChecklistItems == true) {
                         items.sortBy { it.isDone }
@@ -81,15 +92,16 @@ class ChecklistFragment : NoteFragment(), ChecklistItemsListener {
     private fun migrateCheckListOnFailure(note: Note) {
         items.clear()
 
-        note.getNoteStoredValue(requireActivity())?.split("\n")?.map { it.trim() }?.filter { it.isNotBlank() }?.forEachIndexed { index, value ->
-            items.add(
-                ChecklistItem(
-                    id = index,
-                    title = value,
-                    isDone = false
+        note.getNoteStoredValue(requireActivity())?.split("\n")?.map { it.trim() }
+            ?.filter { it.isNotBlank() }?.forEachIndexed { index, value ->
+                items.add(
+                    ChecklistItem(
+                        id = index,
+                        title = value,
+                        isDone = false
+                    )
                 )
-            )
-        }
+            }
 
         saveChecklist()
     }
@@ -148,7 +160,14 @@ class ChecklistFragment : NoteFragment(), ChecklistItemsListener {
 
             titles.forEach { title ->
                 title.split("\n").map { it.trim() }.filter { it.isNotBlank() }.forEach { row ->
-                    newItems.add(ChecklistItem(currentMaxId + 1, System.currentTimeMillis(), row, false))
+                    newItems.add(
+                        ChecklistItem(
+                            currentMaxId + 1,
+                            System.currentTimeMillis(),
+                            row,
+                            false
+                        )
+                    )
                     currentMaxId++
                 }
             }
@@ -234,7 +253,7 @@ class ChecklistFragment : NoteFragment(), ChecklistItemsListener {
         }
     }
 
-    fun getChecklistItems() = Gson().toJson(items)
+    fun getChecklistItems(): String = Gson().toJson(items)
 
     override fun saveChecklist(callback: () -> Unit) {
         saveNote(callback = callback)

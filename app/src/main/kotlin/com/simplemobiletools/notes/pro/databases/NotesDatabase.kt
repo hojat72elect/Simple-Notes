@@ -28,11 +28,16 @@ abstract class NotesDatabase : RoomDatabase() {
         private var defaultWidgetBgColor = 0
 
         fun getInstance(context: Context): NotesDatabase {
-            defaultWidgetBgColor = context.resources.getColor(com.simplemobiletools.commons.R.color.default_widget_bg_color)
+            defaultWidgetBgColor =
+                context.resources.getColor(com.simplemobiletools.commons.R.color.default_widget_bg_color)
             if (db == null) {
                 synchronized(NotesDatabase::class) {
                     if (db == null) {
-                        db = Room.databaseBuilder(context.applicationContext, NotesDatabase::class.java, "notes.db")
+                        db = Room.databaseBuilder(
+                            context.applicationContext,
+                            NotesDatabase::class.java,
+                            "notes.db"
+                        )
                             .addCallback(object : Callback() {
                                 override fun onCreate(db: SupportSQLiteDatabase) {
                                     super.onCreate(db)

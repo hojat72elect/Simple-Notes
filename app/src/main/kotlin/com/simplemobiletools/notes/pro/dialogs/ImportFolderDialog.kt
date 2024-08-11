@@ -1,7 +1,11 @@
 package com.simplemobiletools.notes.pro.dialogs
 
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
+import com.simplemobiletools.commons.extensions.getFilenameFromPath
+import com.simplemobiletools.commons.extensions.humanizePath
+import com.simplemobiletools.commons.extensions.isMediaFile
+import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.PROTECTION_NONE
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.R
@@ -14,7 +18,8 @@ import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 import java.io.File
 
-class ImportFolderDialog(val activity: SimpleActivity, val path: String, val callback: () -> Unit) : AlertDialog.Builder(activity) {
+class ImportFolderDialog(val activity: SimpleActivity, val path: String, val callback: () -> Unit) :
+    AlertDialog.Builder(activity) {
     private var dialog: AlertDialog? = null
 
     init {
@@ -26,10 +31,15 @@ class ImportFolderDialog(val activity: SimpleActivity, val path: String, val cal
             .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
             .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(binding.root, this, R.string.import_folder) { alertDialog ->
+                activity.setupDialogStuff(
+                    binding.root,
+                    this,
+                    R.string.import_folder
+                ) { alertDialog ->
                     dialog = alertDialog
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        val updateFilesOnEdit = binding.openFileType.checkedRadioButtonId == R.id.open_file_update_file
+                        val updateFilesOnEdit =
+                            binding.openFileType.checkedRadioButtonId == R.id.open_file_update_file
                         ensureBackgroundThread {
                             saveFolder(updateFilesOnEdit)
                         }

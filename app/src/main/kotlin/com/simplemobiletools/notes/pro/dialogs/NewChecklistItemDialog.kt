@@ -6,7 +6,16 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatEditText
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
+import com.simplemobiletools.commons.extensions.getContrastColor
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.extensions.isWhiteTheme
+import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.commons.extensions.showKeyboard
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.commons.helpers.DARK_GREY
 import com.simplemobiletools.commons.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.notes.pro.R
@@ -14,7 +23,10 @@ import com.simplemobiletools.notes.pro.databinding.DialogNewChecklistItemBinding
 import com.simplemobiletools.notes.pro.databinding.ItemAddChecklistBinding
 import com.simplemobiletools.notes.pro.extensions.config
 
-class NewChecklistItemDialog(val activity: Activity, callback: (titles: ArrayList<String>) -> Unit) {
+class NewChecklistItemDialog(
+    val activity: Activity,
+    callback: (titles: ArrayList<String>) -> Unit
+) {
     private val titles = mutableListOf<AppCompatEditText>()
     private val binding = DialogNewChecklistItemBinding.inflate(activity.layoutInflater)
     private val view = binding.root
@@ -40,14 +52,21 @@ class NewChecklistItemDialog(val activity: Activity, callback: (titles: ArrayLis
             .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
             .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(view, this, R.string.add_new_checklist_items) { alertDialog ->
+                activity.setupDialogStuff(
+                    view,
+                    this,
+                    R.string.add_new_checklist_items
+                ) { alertDialog ->
                     alertDialog.showKeyboard(titles.first())
                     alertDialog.getButton(BUTTON_POSITIVE).setOnClickListener {
-                        activity.config.addNewChecklistItemsTop = binding.settingsAddChecklistTop.isChecked
+                        activity.config.addNewChecklistItemsTop =
+                            binding.settingsAddChecklistTop.isChecked
                         when {
                             titles.all { it.text!!.isEmpty() } -> activity.toast(com.simplemobiletools.commons.R.string.empty_name)
                             else -> {
-                                val titles = titles.map { it.text.toString() }.filter { it.isNotEmpty() }.toMutableList() as ArrayList<String>
+                                val titles =
+                                    titles.map { it.text.toString() }.filter { it.isNotEmpty() }
+                                        .toMutableList() as ArrayList<String>
                                 callback(titles)
                                 alertDialog.dismiss()
                             }

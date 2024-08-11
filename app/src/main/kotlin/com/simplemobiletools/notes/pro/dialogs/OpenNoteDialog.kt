@@ -12,14 +12,18 @@ import com.simplemobiletools.notes.pro.databinding.DialogOpenNoteBinding
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.models.Note
 
-class OpenNoteDialog(val activity: BaseSimpleActivity, val callback: (checkedId: Long, newNote: Note?) -> Unit) {
+class OpenNoteDialog(
+    val activity: BaseSimpleActivity,
+    val callback: (checkedId: Long, newNote: Note?) -> Unit
+) {
     private var dialog: AlertDialog? = null
 
     init {
         val binding = DialogOpenNoteBinding.inflate(activity.layoutInflater)
 
         val noteItemWidth = activity.resources.getDimensionPixelSize(R.dimen.grid_note_item_width)
-        binding.dialogOpenNoteList.layoutManager = AutoStaggeredGridLayoutManager(noteItemWidth, StaggeredGridLayoutManager.VERTICAL)
+        binding.dialogOpenNoteList.layoutManager =
+            AutoStaggeredGridLayoutManager(noteItemWidth, StaggeredGridLayoutManager.VERTICAL)
 
         NotesHelper(activity).getNotes {
             initDialog(it, binding)
@@ -27,11 +31,12 @@ class OpenNoteDialog(val activity: BaseSimpleActivity, val callback: (checkedId:
     }
 
     private fun initDialog(notes: List<Note>, binding: DialogOpenNoteBinding) {
-        binding.dialogOpenNoteList.adapter = OpenNoteAdapter(activity, notes, binding.dialogOpenNoteList) {
-            it as Note
-            callback(it.id!!, null)
-            dialog?.dismiss()
-        }
+        binding.dialogOpenNoteList.adapter =
+            OpenNoteAdapter(activity, notes, binding.dialogOpenNoteList) {
+                it as Note
+                callback(it.id!!, null)
+                dialog?.dismiss()
+            }
 
         binding.newNoteFab.setOnClickListener {
             NewNoteDialog(activity, setChecklistAsDefault = false) {

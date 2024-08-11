@@ -10,7 +10,10 @@ class AutomaticBackupReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        val wakelock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "simplenotes:automaticbackupreceiver")
+        val wakelock = powerManager.newWakeLock(
+            PowerManager.PARTIAL_WAKE_LOCK,
+            "simplenotes:automaticbackupreceiver"
+        )
         wakelock.acquire(3000)
         context.backupNotes()
     }

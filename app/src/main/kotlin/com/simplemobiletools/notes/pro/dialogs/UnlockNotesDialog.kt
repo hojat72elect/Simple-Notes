@@ -3,13 +3,21 @@ package com.simplemobiletools.notes.pro.dialogs
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
+import com.simplemobiletools.commons.extensions.performSecurityCheck
+import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.DialogUnlockNotesBinding
 import com.simplemobiletools.notes.pro.databinding.ItemLockedNoteBinding
 import com.simplemobiletools.notes.pro.models.Note
 
-class UnlockNotesDialog(val activity: BaseSimpleActivity, val notes: List<Note>, callback: (unlockedNotes: List<Note>) -> Unit) {
+class UnlockNotesDialog(
+    val activity: BaseSimpleActivity,
+    val notes: List<Note>,
+    callback: (unlockedNotes: List<Note>) -> Unit
+) {
     private var dialog: AlertDialog? = null
     private val binding = DialogUnlockNotesBinding.inflate(activity.layoutInflater)
     private val view = binding.root
@@ -26,7 +34,12 @@ class UnlockNotesDialog(val activity: BaseSimpleActivity, val notes: List<Note>,
             .setPositiveButton(com.simplemobiletools.commons.R.string.skip, null)
             .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(view, this, R.string.unlock_notes, cancelOnTouchOutside = false) { alertDialog ->
+                activity.setupDialogStuff(
+                    view,
+                    this,
+                    R.string.unlock_notes,
+                    cancelOnTouchOutside = false
+                ) { alertDialog ->
                     dialog = alertDialog
                     alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
                         callback(unlockedNoteIds.mapNotNull { id -> notes.firstOrNull { it.id == id } })
@@ -69,10 +82,11 @@ class UnlockNotesDialog(val activity: BaseSimpleActivity, val notes: List<Note>,
     }
 
     private fun updatePositiveButton() {
-        dialog?.getButton(DialogInterface.BUTTON_POSITIVE)?.text = if (unlockedNoteIds.isNotEmpty()) {
-            activity.getString(com.simplemobiletools.commons.R.string.ok)
-        } else {
-            activity.getString(com.simplemobiletools.commons.R.string.skip)
-        }
+        dialog?.getButton(DialogInterface.BUTTON_POSITIVE)?.text =
+            if (unlockedNoteIds.isNotEmpty()) {
+                activity.getString(com.simplemobiletools.commons.R.string.ok)
+            } else {
+                activity.getString(com.simplemobiletools.commons.R.string.skip)
+            }
     }
 }

@@ -13,7 +13,11 @@ import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 import java.io.File
 
-class OpenFileDialog(val activity: SimpleActivity, val path: String, val callback: (note: Note) -> Unit) : AlertDialog.Builder(activity) {
+class OpenFileDialog(
+    val activity: SimpleActivity,
+    val path: String,
+    val callback: (note: Note) -> Unit
+) : AlertDialog.Builder(activity) {
     private var dialog: AlertDialog? = null
 
     init {
@@ -28,7 +32,8 @@ class OpenFileDialog(val activity: SimpleActivity, val path: String, val callbac
                 activity.setupDialogStuff(binding.root, this, R.string.open_file) { alertDialog ->
                     dialog = alertDialog
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        val updateFileOnEdit = binding.openFileType.checkedRadioButtonId == binding.openFileUpdateFile.id
+                        val updateFileOnEdit =
+                            binding.openFileType.checkedRadioButtonId == binding.openFileUpdateFile.id
                         val storePath = if (updateFileOnEdit) path else ""
                         val storeContent = if (updateFileOnEdit) "" else File(path).readText()
 
@@ -46,7 +51,8 @@ class OpenFileDialog(val activity: SimpleActivity, val path: String, val callbac
 
     private fun saveNote(storeContent: String, storePath: String) {
         val filename = path.getFilenameFromPath()
-        val note = Note(null, filename, storeContent, NoteType.TYPE_TEXT, storePath, PROTECTION_NONE, "")
+        val note =
+            Note(null, filename, storeContent, NoteType.TYPE_TEXT, storePath, PROTECTION_NONE, "")
         callback(note)
         dialog?.dismiss()
     }

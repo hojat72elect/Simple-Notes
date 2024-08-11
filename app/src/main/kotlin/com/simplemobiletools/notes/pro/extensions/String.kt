@@ -9,7 +9,7 @@ fun String.parseChecklistItems(): ArrayList<ChecklistItem>? {
         try {
             val checklistItemType = object : TypeToken<List<ChecklistItem>>() {}.type
             return Gson().fromJson<ArrayList<ChecklistItem>>(this, checklistItemType) ?: null
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
     return null

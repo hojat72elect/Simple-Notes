@@ -2,7 +2,13 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.content.DialogInterface.BUTTON_POSITIVE
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
+import com.simplemobiletools.commons.extensions.isAValidFilename
+import com.simplemobiletools.commons.extensions.renameFile
+import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.commons.extensions.showKeyboard
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
@@ -14,7 +20,12 @@ import com.simplemobiletools.notes.pro.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.models.Note
 import java.io.File
 
-class RenameNoteDialog(val activity: SimpleActivity, val note: Note, val currentNoteText: String?, val callback: (note: Note) -> Unit) {
+class RenameNoteDialog(
+    val activity: SimpleActivity,
+    val note: Note,
+    private val currentNoteText: String?,
+    val callback: (note: Note) -> Unit
+) {
 
     init {
         val binding = DialogRenameNoteBinding.inflate(activity.layoutInflater)
@@ -67,7 +78,11 @@ class RenameNoteDialog(val activity: SimpleActivity, val note: Note, val current
                         return
                     }
 
-                    activity.renameFile(file.absolutePath, newFile.absolutePath, false) { success, useAndroid30Way ->
+                    activity.renameFile(
+                        file.absolutePath,
+                        newFile.absolutePath,
+                        false
+                    ) { success, _ ->
                         if (success) {
                             note.path = newFile.absolutePath
                             NotesHelper(activity).insertOrUpdateNote(note) {

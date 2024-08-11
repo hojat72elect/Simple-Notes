@@ -5,7 +5,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.extensions.getProperTextColor
+import com.simplemobiletools.commons.extensions.performSecurityCheck
+import com.simplemobiletools.commons.extensions.underlineText
 import com.simplemobiletools.commons.helpers.PROTECTION_NONE
 import com.simplemobiletools.notes.pro.activities.MainActivity
 import com.simplemobiletools.notes.pro.extensions.config
@@ -23,11 +28,17 @@ abstract class NoteFragment : Fragment() {
             noteLockedImage.applyColorFilter(requireContext().getProperTextColor())
 
             noteLockedLabel.setTextColor(requireContext().getProperTextColor())
-            noteLockedLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, binding.root.context.getPercentageFontSize())
+            noteLockedLabel.setTextSize(
+                TypedValue.COMPLEX_UNIT_PX,
+                binding.root.context.getPercentageFontSize()
+            )
 
             noteLockedShow.underlineText()
             noteLockedShow.setTextColor(requireContext().getProperPrimaryColor())
-            noteLockedShow.setTextSize(TypedValue.COMPLEX_UNIT_PX, binding.root.context.getPercentageFontSize())
+            noteLockedShow.setTextSize(
+                TypedValue.COMPLEX_UNIT_PX,
+                binding.root.context.getPercentageFontSize()
+            )
             noteLockedShow.setOnClickListener {
                 handleUnlocking()
             }
@@ -42,7 +53,12 @@ abstract class NoteFragment : Fragment() {
         } else {
             if (content != null) {
                 val displaySuccess = activity?.config?.displaySuccess ?: false
-                (activity as? MainActivity)?.tryExportNoteValueToFile(note.path, note.title, content, displaySuccess)
+                (activity as? MainActivity)?.tryExportNoteValueToFile(
+                    note.path,
+                    note.title,
+                    content,
+                    displaySuccess
+                )
             }
         }
     }

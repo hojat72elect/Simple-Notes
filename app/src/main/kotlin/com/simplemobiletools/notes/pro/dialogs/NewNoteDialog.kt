@@ -2,7 +2,11 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.app.Activity
 import android.content.DialogInterface.BUTTON_POSITIVE
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
+import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.commons.extensions.showKeyboard
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.commons.helpers.PROTECTION_NONE
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.R
@@ -12,7 +16,12 @@ import com.simplemobiletools.notes.pro.extensions.notesDB
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 
-class NewNoteDialog(val activity: Activity, title: String? = null, val setChecklistAsDefault: Boolean, callback: (note: Note) -> Unit) {
+class NewNoteDialog(
+    val activity: Activity,
+    title: String? = null,
+    val setChecklistAsDefault: Boolean,
+    callback: (note: Note) -> Unit
+) {
     init {
         val binding = DialogNewNoteBinding.inflate(activity.layoutInflater).apply {
             val defaultType = when {
@@ -37,16 +46,21 @@ class NewNoteDialog(val activity: Activity, title: String? = null, val setCheckl
                         ensureBackgroundThread {
                             when {
                                 newTitle.isEmpty() -> activity.toast(R.string.no_title)
-                                activity.notesDB.getNoteIdWithTitle(newTitle) != null -> activity.toast(R.string.title_taken)
+                                activity.notesDB.getNoteIdWithTitle(newTitle) != null -> activity.toast(
+                                    R.string.title_taken
+                                )
+
                                 else -> {
-                                    val type = if (binding.newNoteType.checkedRadioButtonId == binding.typeChecklist.id) {
-                                        NoteType.TYPE_CHECKLIST
-                                    } else {
-                                        NoteType.TYPE_TEXT
-                                    }
+                                    val type =
+                                        if (binding.newNoteType.checkedRadioButtonId == binding.typeChecklist.id) {
+                                            NoteType.TYPE_CHECKLIST
+                                        } else {
+                                            NoteType.TYPE_TEXT
+                                        }
 
                                     activity.config.lastCreatedNoteType = type.value
-                                    val newNote = Note(null, newTitle, "", type, "", PROTECTION_NONE, "")
+                                    val newNote =
+                                        Note(null, newTitle, "", type, "", PROTECTION_NONE, "")
                                     callback(newNote)
                                     alertDialog.dismiss()
                                 }

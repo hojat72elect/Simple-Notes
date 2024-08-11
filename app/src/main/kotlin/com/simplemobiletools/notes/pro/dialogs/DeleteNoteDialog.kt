@@ -9,14 +9,20 @@ import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogDeleteNoteBinding
 import com.simplemobiletools.notes.pro.models.Note
 
-class DeleteNoteDialog(val activity: SimpleActivity, val note: Note, val callback: (deleteFile: Boolean) -> Unit) {
-    var dialog: AlertDialog? = null
+class DeleteNoteDialog(
+    val activity: SimpleActivity,
+    val note: Note,
+    val callback: (deleteFile: Boolean) -> Unit
+) {
+    private var dialog: AlertDialog? = null
 
     init {
-        val message = String.format(activity.getString(R.string.delete_note_prompt_message), note.title)
-        val binding = DialogDeleteNoteBinding.inflate(activity.layoutInflater).apply{
+        val message =
+            String.format(activity.getString(R.string.delete_note_prompt_message), note.title)
+        val binding = DialogDeleteNoteBinding.inflate(activity.layoutInflater).apply {
             if (note.path.isNotEmpty()) {
-                deleteNoteCheckbox.text = String.format(activity.getString(R.string.delete_file_itself), note.path)
+                deleteNoteCheckbox.text =
+                    String.format(activity.getString(R.string.delete_file_itself), note.path)
                 deleteNoteCheckboxHolder.beVisible()
                 deleteNoteCheckboxHolder.setOnClickListener {
                     deleteNoteCheckbox.toggle()
@@ -26,7 +32,11 @@ class DeleteNoteDialog(val activity: SimpleActivity, val note: Note, val callbac
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.delete) { dialog, which -> dialogConfirmed(binding.deleteNoteCheckbox.isChecked) }
+            .setPositiveButton(com.simplemobiletools.commons.R.string.delete) { _, _ ->
+                dialogConfirmed(
+                    binding.deleteNoteCheckbox.isChecked
+                )
+            }
             .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(binding.root, this)

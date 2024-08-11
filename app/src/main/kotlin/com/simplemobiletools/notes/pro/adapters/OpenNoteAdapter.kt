@@ -52,7 +52,7 @@ class OpenNoteAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.bindView(item, true, false) { itemView, layoutPosition ->
+        holder.bindView(item, true, false) { itemView, _ ->
             setupView(itemView, item)
         }
         bindViewHolder(holder)
@@ -70,7 +70,12 @@ class OpenNoteAdapter(
             val formattedText = note.getFormattedValue(root.context)
             openNoteItemText.beGoneIf(formattedText.isNullOrBlank() || note.isLocked())
             iconLock.beVisibleIf(note.isLocked())
-            iconLock.setImageDrawable(activity.resources.getColoredDrawableWithColor(com.simplemobiletools.commons.R.drawable.ic_lock_vector, properPrimaryColor))
+            iconLock.setImageDrawable(
+                activity.resources.getColoredDrawableWithColor(
+                    com.simplemobiletools.commons.R.drawable.ic_lock_vector,
+                    properPrimaryColor
+                )
+            )
             openNoteItemText.apply {
                 text = formattedText
                 setTextColor(textColor)
@@ -93,7 +98,11 @@ class OpenNoteAdapter(
                 com.simplemobiletools.commons.R.drawable.dialog_bg
             }
             background =
-                activity.resources.getColoredDrawableWithColor(cardBackground, cardBackgroundColor, LOWER_ALPHA_INT)
+                activity.resources.getColoredDrawableWithColor(
+                    cardBackground,
+                    cardBackgroundColor,
+                    LOWER_ALPHA_INT
+                )
         }
     }
 
@@ -102,8 +111,11 @@ class OpenNoteAdapter(
             NoteType.TYPE_TEXT -> getNoteStoredValue(context)
             NoteType.TYPE_CHECKLIST -> {
                 val checklistItemType = object : TypeToken<List<ChecklistItem>>() {}.type
-                var items = Gson().fromJson<List<ChecklistItem>>(getNoteStoredValue(context), checklistItemType) ?: listOf()
-                items = items.filter { it.title != null }.let {
+                var items = Gson().fromJson<List<ChecklistItem>>(
+                    getNoteStoredValue(context),
+                    checklistItemType
+                ) ?: listOf()
+                items = items.let {
                     val sorting = context.config.sorting
                     ChecklistItem.sorting = sorting
                     if (ChecklistItem.sorting and SORT_BY_CUSTOM == 0) {
@@ -128,7 +140,12 @@ class OpenNoteAdapter(
                 items.forEach { item ->
                     currentPos += linePrefix.length
                     if (item.isDone) {
-                        formattedText.setSpan(StrikethroughSpan(), currentPos, currentPos + item.title.length, 0)
+                        formattedText.setSpan(
+                            StrikethroughSpan(),
+                            currentPos,
+                            currentPos + item.title.length,
+                            0
+                        )
                     }
                     currentPos += item.title.length
                     currentPos += System.lineSeparator().length

@@ -1,6 +1,6 @@
 package com.simplemobiletools.notes.pro.models
 
-import java.util.*
+import java.util.LinkedList
 
 class TextHistory {
     var position = 0

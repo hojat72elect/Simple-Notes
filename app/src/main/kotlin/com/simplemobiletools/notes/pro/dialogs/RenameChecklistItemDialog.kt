@@ -2,10 +2,18 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.app.Activity
 import android.content.DialogInterface.BUTTON_POSITIVE
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
+import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.commons.extensions.showKeyboard
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.notes.pro.databinding.DialogRenameChecklistItemBinding
 
-class RenameChecklistItemDialog(val activity: Activity, val oldTitle: String, callback: (newTitle: String) -> Unit) {
+class RenameChecklistItemDialog(
+    val activity: Activity,
+    private val oldTitle: String,
+    callback: (newTitle: String) -> Unit
+) {
     init {
         val binding = DialogRenameChecklistItemBinding.inflate(activity.layoutInflater).apply {
             checklistItemTitle.setText(oldTitle)
