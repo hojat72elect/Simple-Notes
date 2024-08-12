@@ -21,22 +21,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.viewbinding.ViewBinding
-import com.simplemobiletools.commons.extensions.adjustAlpha
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.getProperBackgroundColor
-import com.simplemobiletools.commons.extensions.getProperPrimaryColor
-import com.simplemobiletools.commons.extensions.getProperTextColor
-import com.simplemobiletools.commons.extensions.onGlobalLayout
-import com.simplemobiletools.commons.extensions.removeBit
-import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.views.MyEditText
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.MainActivity
 import com.simplemobiletools.notes.pro.databinding.FragmentTextBinding
 import com.simplemobiletools.notes.pro.databinding.NoteViewHorizScrollableBinding
 import com.simplemobiletools.notes.pro.databinding.NoteViewStaticBinding
+import com.simplemobiletools.notes.pro.extensions.adjustAlpha
+import com.simplemobiletools.notes.pro.extensions.beVisibleIf
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getPercentageFontSize
+import com.simplemobiletools.notes.pro.extensions.getProperBackgroundColor
+import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
+import com.simplemobiletools.notes.pro.extensions.getProperTextColor
+import com.simplemobiletools.notes.pro.extensions.onGlobalLayout
+import com.simplemobiletools.notes.pro.extensions.removeBit
+import com.simplemobiletools.notes.pro.extensions.showErrorToast
 import com.simplemobiletools.notes.pro.extensions.updateWidgets
 import com.simplemobiletools.notes.pro.helpers.MyMovementMethod
 import com.simplemobiletools.notes.pro.helpers.NOTE_ID
@@ -156,7 +156,6 @@ class TextFragment : NoteFragment() {
             innerBinding.root.findViewById<TextView>(R.id.text_note_view).text = newText
         }
     }
-
 
 
     private fun setupFragment() {

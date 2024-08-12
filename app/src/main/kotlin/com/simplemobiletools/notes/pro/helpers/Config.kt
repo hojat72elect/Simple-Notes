@@ -3,7 +3,6 @@ package com.simplemobiletools.notes.pro.helpers
 import android.content.Context
 import android.os.Environment
 import android.view.Gravity
-import com.simplemobiletools.commons.helpers.BaseConfig
 import com.simplemobiletools.notes.pro.models.NoteType
 
 class Config(context: Context) : BaseConfig(context) {

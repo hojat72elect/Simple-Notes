@@ -2,7 +2,6 @@ package com.simplemobiletools.notes.pro.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import com.simplemobiletools.commons.activities.BaseSplashActivity
 import com.simplemobiletools.notes.pro.helpers.OPEN_NOTE_ID
 
 @SuppressLint("CustomSplashScreen")

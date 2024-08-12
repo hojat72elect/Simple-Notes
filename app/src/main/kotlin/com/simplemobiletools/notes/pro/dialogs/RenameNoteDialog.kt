@@ -2,21 +2,21 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.content.DialogInterface.BUTTON_POSITIVE
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.isAValidFilename
 import com.simplemobiletools.commons.extensions.renameFile
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.extensions.showKeyboard
-import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.extensions.value
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogRenameNoteBinding
 import com.simplemobiletools.notes.pro.extensions.config
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.isAValidFilename
 import com.simplemobiletools.notes.pro.extensions.notesDB
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.extensions.showKeyboard
+import com.simplemobiletools.notes.pro.extensions.toast
 import com.simplemobiletools.notes.pro.extensions.updateWidgets
+import com.simplemobiletools.notes.pro.extensions.value
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
+import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.models.Note
 import java.io.File
 

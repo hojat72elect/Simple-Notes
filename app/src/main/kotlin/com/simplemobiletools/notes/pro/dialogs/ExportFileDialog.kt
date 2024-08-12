@@ -2,13 +2,13 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.humanizePath
-import com.simplemobiletools.commons.extensions.isAValidFilename
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.extensions.showKeyboard
-import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.extensions.value
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.humanizePath
+import com.simplemobiletools.notes.pro.extensions.isAValidFilename
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.extensions.showKeyboard
+import com.simplemobiletools.notes.pro.extensions.toast
+import com.simplemobiletools.notes.pro.extensions.value
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogExportFileBinding

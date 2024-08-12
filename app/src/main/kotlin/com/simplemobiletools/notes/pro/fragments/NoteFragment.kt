@@ -5,16 +5,16 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.getProperPrimaryColor
-import com.simplemobiletools.commons.extensions.getProperTextColor
-import com.simplemobiletools.commons.extensions.performSecurityCheck
-import com.simplemobiletools.commons.extensions.underlineText
-import com.simplemobiletools.commons.helpers.PROTECTION_NONE
+import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
 import com.simplemobiletools.notes.pro.activities.MainActivity
+import com.simplemobiletools.notes.pro.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.extensions.beVisibleIf
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getPercentageFontSize
+import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
+import com.simplemobiletools.notes.pro.extensions.getProperTextColor
+import com.simplemobiletools.notes.pro.extensions.performSecurityCheck
+import com.simplemobiletools.notes.pro.extensions.underlineText
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.models.Note
 

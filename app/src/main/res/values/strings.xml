@@ -31,6 +31,7 @@
     <string name="new_text_note">New text note</string>
     <string name="new_checklist">New checklist</string>
     <string name="cannot_load_over_internet">The app cannot load files over the internet</string>
+    <string name="phone_storage_hidden">Phone storage (not visible by other apps)</string>
 
     <!-- File notes -->
     <string name="open_file">Open file</string>
@@ -42,6 +43,8 @@
     <string name="note_saved_successfully">Note \"%s\" saved successfully</string>
     <string name="note_exported_successfully">Note \"%s\" exported successfully</string>
     <string name="only_export_file_content">Only export the current file content\n(changing the note will not affect the file)</string>
+    <string name="could_not_create_folder">Could not create folder %s</string>
+    <string name="could_not_create_file">Could not create file %s</string>
 
     <!-- Settings -->
     <string name="display_success_message">Display save success messages</string>

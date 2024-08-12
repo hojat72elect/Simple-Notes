@@ -1,14 +1,14 @@
 package com.simplemobiletools.notes.pro.dialogs
 
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.getFilenameFromPath
-import com.simplemobiletools.commons.extensions.humanizePath
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.helpers.PROTECTION_NONE
+import com.simplemobiletools.notes.pro.extensions.getFilenameFromPath
+import com.simplemobiletools.notes.pro.extensions.humanizePath
+import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogOpenFileBinding
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 import java.io.File

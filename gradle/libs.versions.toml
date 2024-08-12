@@ -1,12 +1,23 @@
 [versions]
 #jetbrains
-kotlin = "1.9.0"
+kotlin = "1.9.10"
 #KSP
 kotlinxSerializationJson = "1.5.1"
-ksp = "1.9.0-1.0.12"
+ksp = "1.9.10-1.0.13"
 #AndroidX
 androidx-constraintlayout = "2.1.4"
 androidx-documentfile = "1.0.1"
+androidx-biometricKtx = "1.2.0-alpha05"
+androidx-customViewPooling = "1.0.0"
+androidx-customView = "1.2.0-alpha02"
+#Compose
+composeActivity = "1.8.0"
+compose = "1.6.0-alpha07"
+composeCompiler = "1.5.3"
+composeMaterial3 = "1.2.0-alpha09"
+#Glide
+glide = "4.16.0"
+glideCompose = "1.0.0-beta01"
 #Room
 room = "2.6.0-alpha02"
 #Simple tools
@@ -27,15 +38,51 @@ app-version-versionName = "6.17.0"
 #AndroidX
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-documentfile = { module = "androidx.documentfile:documentfile", version.ref = "androidx-documentfile" }
+androidx-biometric-ktx = { module = "androidx.biometric:biometric-ktx", version.ref = "androidx-biometricKtx" }
+androidx-customView = { module = "androidx.customview:customview", version.ref = "androidx-customView" }
+androidx-customViewPooling = { module = "androidx.customview:customview-poolingcontainer", version.ref = "androidx-customViewPooling" }
 #Room
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+#Compose
+compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "composeCompiler" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeMaterial3" }
+compose-material2 = { module = "androidx.compose.material:material", version.ref = "compose" }
+compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
+compose-animation = { module = "androidx.compose.animation:animation", version.ref = "compose" }
+compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
+compose-uiTooling-debug = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-uiTooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-view-binding = { module = "androidx.compose.ui:ui-viewbinding", version.ref = "compose" }
+#Glide
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glideCompose" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 #Simple Mobile Tools
 simple-tools-commons = { module = "com.github.SimpleMobileTools:Simple-Commons", version.ref = "simple-commons" }
 #Kotlin
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 [bundles]
+compose = [
+    "compose-activity",
+    "compose-animation",
+    "compose-compiler",
+    "compose-foundation",
+    "compose-material-icons",
+    "compose-material3",
+    "compose-runtime",
+    "compose-ui",
+    "compose-uiTooling-preview",
+]
+compose-preview = [
+    "androidx-customView",
+    "androidx-customViewPooling",
+    "compose-uiTooling-debug",
+]
 room = [
     "androidx-room-ktx",
     "androidx-room-runtime",

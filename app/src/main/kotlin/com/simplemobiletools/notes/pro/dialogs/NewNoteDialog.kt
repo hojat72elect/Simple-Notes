@@ -2,17 +2,17 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.app.Activity
 import android.content.DialogInterface.BUTTON_POSITIVE
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.extensions.showKeyboard
-import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.extensions.value
-import com.simplemobiletools.commons.helpers.PROTECTION_NONE
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
+import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.DialogNewNoteBinding
 import com.simplemobiletools.notes.pro.extensions.config
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.extensions.notesDB
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.extensions.showKeyboard
+import com.simplemobiletools.notes.pro.extensions.toast
+import com.simplemobiletools.notes.pro.extensions.value
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 

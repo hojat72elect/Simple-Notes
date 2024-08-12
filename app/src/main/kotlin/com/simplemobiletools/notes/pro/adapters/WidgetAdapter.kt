@@ -6,11 +6,11 @@ import android.graphics.Paint
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import com.simplemobiletools.commons.extensions.adjustAlpha
-import com.simplemobiletools.commons.extensions.setText
-import com.simplemobiletools.commons.extensions.setTextSize
-import com.simplemobiletools.commons.helpers.SORT_BY_CUSTOM
-import com.simplemobiletools.commons.helpers.WIDGET_TEXT_COLOR
+import com.simplemobiletools.notes.pro.extensions.adjustAlpha
+import com.simplemobiletools.notes.pro.extensions.setText
+import com.simplemobiletools.notes.pro.extensions.setTextSize
+import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
+import com.simplemobiletools.notes.pro.helpers.WIDGET_TEXT_COLOR
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.R.id.widget_text_holder
 import com.simplemobiletools.notes.pro.extensions.config

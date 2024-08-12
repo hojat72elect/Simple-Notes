@@ -24,6 +24,7 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -32,9 +33,15 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.biometric.BiometricPrompt
+import androidx.biometric.auth.AuthPromptCallback
+import androidx.biometric.auth.AuthPromptHost
+import androidx.biometric.auth.Class2BiometricAuthPrompt
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentActivity
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.databinding.DialogTitleBinding
 import com.simplemobiletools.commons.dialogs.AppSideloadedDialog
 import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
@@ -48,104 +55,10 @@ import com.simplemobiletools.commons.dialogs.WhatsNewDialog
 import com.simplemobiletools.commons.dialogs.WritePermissionDialog
 import com.simplemobiletools.commons.dialogs.WritePermissionDialog.Mode
 import com.simplemobiletools.commons.extensions.baseConfig
-import com.simplemobiletools.commons.extensions.buildDocumentUriSdk30
-import com.simplemobiletools.commons.extensions.canManageMedia
-import com.simplemobiletools.commons.extensions.checkAppIconColor
-import com.simplemobiletools.commons.extensions.copySingleFileSdk30
-import com.simplemobiletools.commons.extensions.createAndroidDataOrObbUri
-import com.simplemobiletools.commons.extensions.createAndroidSAFFile
-import com.simplemobiletools.commons.extensions.createDocumentUriUsingFirstParentTreeUri
-import com.simplemobiletools.commons.extensions.createFirstParentTreeUriUsingRootTree
-import com.simplemobiletools.commons.extensions.createSAFFileSdk30
-import com.simplemobiletools.commons.extensions.deleteAndroidSAFDirectory
-import com.simplemobiletools.commons.extensions.deleteDocumentWithSAFSdk30
-import com.simplemobiletools.commons.extensions.deleteFromMediaStore
-import com.simplemobiletools.commons.extensions.doesThisOrParentHaveNoMedia
-import com.simplemobiletools.commons.extensions.ensurePublicUri
-import com.simplemobiletools.commons.extensions.getAndroidSAFUri
-import com.simplemobiletools.commons.extensions.getAndroidTreeUri
-import com.simplemobiletools.commons.extensions.getAppIconColors
-import com.simplemobiletools.commons.extensions.getCanAppBeUpgraded
-import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
-import com.simplemobiletools.commons.extensions.getDocumentFile
-import com.simplemobiletools.commons.extensions.getDoesFilePathExist
-import com.simplemobiletools.commons.extensions.getFileUrisFromFileDirItems
-import com.simplemobiletools.commons.extensions.getFilenameExtension
-import com.simplemobiletools.commons.extensions.getFilenameFromPath
-import com.simplemobiletools.commons.extensions.getFirstParentLevel
-import com.simplemobiletools.commons.extensions.getFirstParentPath
-import com.simplemobiletools.commons.extensions.getFormattedSeconds
-import com.simplemobiletools.commons.extensions.getGenericMimeType
-import com.simplemobiletools.commons.extensions.getInternalStoragePath
-import com.simplemobiletools.commons.extensions.getIsPathDirectory
-import com.simplemobiletools.commons.extensions.getMimeType
-import com.simplemobiletools.commons.extensions.getParentPath
-import com.simplemobiletools.commons.extensions.getProperBackgroundColor
-import com.simplemobiletools.commons.extensions.getProperPrimaryColor
-import com.simplemobiletools.commons.extensions.getProperTextColor
-import com.simplemobiletools.commons.extensions.getSomeDocumentFile
-import com.simplemobiletools.commons.extensions.getStoreUrl
-import com.simplemobiletools.commons.extensions.getTimePickerDialogTheme
-import com.simplemobiletools.commons.extensions.getUriMimeType
-import com.simplemobiletools.commons.extensions.hasProperStoredAndroidTreeUri
-import com.simplemobiletools.commons.extensions.hasProperStoredDocumentUriSdk30
-import com.simplemobiletools.commons.extensions.hasProperStoredFirstParentUri
 import com.simplemobiletools.commons.extensions.hasProperStoredTreeUri
-import com.simplemobiletools.commons.extensions.internalStoragePath
-import com.simplemobiletools.commons.extensions.isAProApp
-import com.simplemobiletools.commons.extensions.isAccessibleWithSAFSdk30
-import com.simplemobiletools.commons.extensions.isBlackAndWhiteTheme
-import com.simplemobiletools.commons.extensions.isDefaultDialer
-import com.simplemobiletools.commons.extensions.isMediaFile
-import com.simplemobiletools.commons.extensions.isOrWasThankYouInstalled
-import com.simplemobiletools.commons.extensions.isPathOnInternalStorage
-import com.simplemobiletools.commons.extensions.isPathOnOTG
 import com.simplemobiletools.commons.extensions.isPathOnSD
-import com.simplemobiletools.commons.extensions.isRecycleBinPath
-import com.simplemobiletools.commons.extensions.isRestrictedSAFOnlyRoot
-import com.simplemobiletools.commons.extensions.isRestrictedWithSAFSdk30
 import com.simplemobiletools.commons.extensions.isSDCardSetAsDefaultStorage
-import com.simplemobiletools.commons.extensions.launchActivityIntent
-import com.simplemobiletools.commons.extensions.needsStupidWritePermissions
-import com.simplemobiletools.commons.extensions.renameAndroidSAFDocument
-import com.simplemobiletools.commons.extensions.renameDocumentSdk30
-import com.simplemobiletools.commons.extensions.rescanAndDeletePath
-import com.simplemobiletools.commons.extensions.rescanPath
-import com.simplemobiletools.commons.extensions.rescanPaths
-import com.simplemobiletools.commons.extensions.scanFileRecursively
-import com.simplemobiletools.commons.extensions.scanFilesRecursively
-import com.simplemobiletools.commons.extensions.scanPathRecursively
-import com.simplemobiletools.commons.extensions.scanPathsRecursively
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.extensions.showFileCreateError
-import com.simplemobiletools.commons.extensions.toFileDirItem
 import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.extensions.toggleAppIconColor
-import com.simplemobiletools.commons.extensions.trySAFFileDelete
-import com.simplemobiletools.commons.extensions.updateInMediaStore
-import com.simplemobiletools.commons.extensions.updateLastModified
-import com.simplemobiletools.commons.extensions.updateSDCardPath
-import com.simplemobiletools.commons.extensions.updateTextColors
-import com.simplemobiletools.commons.helpers.CREATE_DOCUMENT_SDK_30
-import com.simplemobiletools.commons.helpers.EXTRA_SHOW_ADVANCED
-import com.simplemobiletools.commons.helpers.IS_FROM_GALLERY
-import com.simplemobiletools.commons.helpers.MINUTE_SECONDS
-import com.simplemobiletools.commons.helpers.MyContentProvider
-import com.simplemobiletools.commons.helpers.OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR_OBB
-import com.simplemobiletools.commons.helpers.OPEN_DOCUMENT_TREE_FOR_SDK_30
-import com.simplemobiletools.commons.helpers.OPEN_DOCUMENT_TREE_OTG
-import com.simplemobiletools.commons.helpers.OPEN_DOCUMENT_TREE_SD
-import com.simplemobiletools.commons.helpers.PERMISSION_CALL_PHONE
-import com.simplemobiletools.commons.helpers.PERMISSION_READ_STORAGE
-import com.simplemobiletools.commons.helpers.REAL_FILE_PATH
-import com.simplemobiletools.commons.helpers.REQUEST_EDIT_IMAGE
-import com.simplemobiletools.commons.helpers.REQUEST_SET_AS
-import com.simplemobiletools.commons.helpers.SIDELOADING_FALSE
-import com.simplemobiletools.commons.helpers.SIDELOADING_TRUE
-import com.simplemobiletools.commons.helpers.SILENT
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isOnMainThread
-import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.commons.models.AlarmSound
 import com.simplemobiletools.commons.models.Android30RenameFormat
 import com.simplemobiletools.commons.models.FileDirItem
@@ -153,10 +66,32 @@ import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.commons.models.SharedTheme
 import com.simplemobiletools.commons.views.MyTextView
+import com.simplemobiletools.notes.pro.helpers.CREATE_DOCUMENT_SDK_30
+import com.simplemobiletools.notes.pro.helpers.EXTRA_SHOW_ADVANCED
+import com.simplemobiletools.notes.pro.helpers.IS_FROM_GALLERY
+import com.simplemobiletools.notes.pro.helpers.MINUTE_SECONDS
+import com.simplemobiletools.notes.pro.helpers.MyContentProvider
+import com.simplemobiletools.notes.pro.helpers.OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR_OBB
+import com.simplemobiletools.notes.pro.helpers.OPEN_DOCUMENT_TREE_FOR_SDK_30
+import com.simplemobiletools.notes.pro.helpers.OPEN_DOCUMENT_TREE_OTG
+import com.simplemobiletools.notes.pro.helpers.OPEN_DOCUMENT_TREE_SD
+import com.simplemobiletools.notes.pro.helpers.PERMISSION_CALL_PHONE
+import com.simplemobiletools.notes.pro.helpers.PERMISSION_READ_STORAGE
+import com.simplemobiletools.notes.pro.helpers.PROTECTION_FINGERPRINT
+import com.simplemobiletools.notes.pro.helpers.REAL_FILE_PATH
+import com.simplemobiletools.notes.pro.helpers.REQUEST_EDIT_IMAGE
+import com.simplemobiletools.notes.pro.helpers.REQUEST_SET_AS
+import com.simplemobiletools.notes.pro.helpers.SIDELOADING_FALSE
+import com.simplemobiletools.notes.pro.helpers.SIDELOADING_TRUE
+import com.simplemobiletools.notes.pro.helpers.SILENT
+import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
+import com.simplemobiletools.notes.pro.helpers.isOnMainThread
+import com.simplemobiletools.notes.pro.helpers.isRPlus
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 import java.io.OutputStream
 import java.util.TreeSet
 
@@ -879,6 +814,77 @@ fun BaseSimpleActivity.deleteFile(
     deleteFiles(arrayListOf(file), allowDeleteFolder, callback)
 }
 
+
+fun BaseSimpleActivity.copySingleFileSdk30(source: FileDirItem, destination: FileDirItem): Boolean {
+    val directory = destination.getParentPath()
+    if (!createDirectorySync(directory)) {
+        val error = String.format(getString(commonR.string.could_not_create_folder), directory)
+        showErrorToast(error)
+        return false
+    }
+
+    var inputStream: InputStream? = null
+    var out: OutputStream? = null
+    try {
+
+        out = getFileOutputStreamSync(destination.path, source.path.getMimeType())
+        inputStream = getFileInputStreamSync(source.path)!!
+
+        var copiedSize = 0L
+        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+        var bytes = inputStream.read(buffer)
+        while (bytes >= 0) {
+            out!!.write(buffer, 0, bytes)
+            copiedSize += bytes
+            bytes = inputStream.read(buffer)
+        }
+
+        out?.flush()
+
+        return if (source.size == copiedSize && getDoesFilePathExist(destination.path)) {
+            if (baseConfig.keepLastModified) {
+                copyOldLastModified(source.path, destination.path)
+                val lastModified = File(source.path).lastModified()
+                if (lastModified != 0L) {
+                    File(destination.path).setLastModified(lastModified)
+                }
+            }
+            true
+        } else {
+            false
+        }
+    } finally {
+        inputStream?.close()
+        out?.close()
+    }
+}
+
+fun BaseSimpleActivity.copyOldLastModified(sourcePath: String, destinationPath: String) {
+    val projection =
+        arrayOf(MediaStore.Images.Media.DATE_TAKEN, MediaStore.Images.Media.DATE_MODIFIED)
+    val uri = MediaStore.Files.getContentUri("external")
+    val selection = "${MediaStore.MediaColumns.DATA} = ?"
+    var selectionArgs = arrayOf(sourcePath)
+    val cursor =
+        applicationContext.contentResolver.query(uri, projection, selection, selectionArgs, null)
+
+    cursor?.use {
+        if (cursor.moveToFirst()) {
+            val dateTaken = cursor.getLongValue(MediaStore.Images.Media.DATE_TAKEN)
+            val dateModified = cursor.getIntValue(MediaStore.Images.Media.DATE_MODIFIED)
+
+            val values = ContentValues().apply {
+                put(MediaStore.Images.Media.DATE_TAKEN, dateTaken)
+                put(MediaStore.Images.Media.DATE_MODIFIED, dateModified)
+            }
+
+            selectionArgs = arrayOf(destinationPath)
+            applicationContext.contentResolver.update(uri, values, selection, selectionArgs)
+        }
+    }
+}
+
+
 fun BaseSimpleActivity.deleteFiles(
     files: List<FileDirItem>,
     allowDeleteFolder: Boolean = false,
@@ -931,6 +937,12 @@ fun BaseSimpleActivity.deleteFilesBg(
         }
     }
 }
+
+
+inline fun <T : ViewBinding> Activity.viewBinding(crossinline bindingInflater: (LayoutInflater) -> T) =
+    lazy(LazyThreadSafetyMode.NONE) {
+        bindingInflater.invoke(layoutInflater)
+    }
 
 private fun BaseSimpleActivity.deleteFilesCasual(
     files: List<FileDirItem>,
@@ -1051,6 +1063,31 @@ private fun BaseSimpleActivity.deleteSdk30(
         }
     }
 }
+
+fun Activity.performSecurityCheck(
+    protectionType: Int,
+    requiredHash: String,
+    successCallback: ((String, Int) -> Unit)? = null,
+    failureCallback: (() -> Unit)? = null
+) {
+    if (protectionType == PROTECTION_FINGERPRINT && isRPlus()) {
+        showBiometricPrompt(successCallback, failureCallback)
+    } else {
+        SecurityDialog(
+            activity = this,
+            requiredHash = requiredHash,
+            showTabIndex = protectionType,
+            callback = { hash, type, success ->
+                if (success) {
+                    successCallback?.invoke(hash, type)
+                } else {
+                    failureCallback?.invoke()
+                }
+            }
+        )
+    }
+}
+
 
 private fun deleteRecursively(file: File, context: Context): Boolean {
     if (file.isDirectory) {
@@ -1369,6 +1406,46 @@ private fun BaseSimpleActivity.renameCasually(
             callback?.invoke(false, Android30RenameFormat.NONE)
         }
     }
+}
+
+fun Activity.showBiometricPrompt(
+    successCallback: ((String, Int) -> Unit)? = null,
+    failureCallback: (() -> Unit)? = null
+) {
+    Class2BiometricAuthPrompt.Builder(
+        getText(commonR.string.authenticate),
+        getText(commonR.string.cancel)
+    )
+        .build()
+        .startAuthentication(
+            AuthPromptHost(this as FragmentActivity),
+            object : AuthPromptCallback() {
+                override fun onAuthenticationSucceeded(
+                    activity: FragmentActivity?,
+                    result: BiometricPrompt.AuthenticationResult
+                ) {
+                    successCallback?.invoke("", PROTECTION_FINGERPRINT)
+                }
+
+                override fun onAuthenticationError(
+                    activity: FragmentActivity?,
+                    errorCode: Int,
+                    errString: CharSequence
+                ) {
+                    val isCanceledByUser =
+                        errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON || errorCode == BiometricPrompt.ERROR_USER_CANCELED
+                    if (!isCanceledByUser) {
+                        toast(errString.toString())
+                    }
+                    failureCallback?.invoke()
+                }
+
+                override fun onAuthenticationFailed(activity: FragmentActivity?) {
+                    toast(commonR.string.authentication_failed)
+                    failureCallback?.invoke()
+                }
+            }
+        )
 }
 
 fun Activity.createTempFile(file: File): File? {
@@ -1875,3 +1952,4 @@ fun Activity.onApplyWindowInsets(callback: (WindowInsetsCompat) -> Unit) {
         insets
     }
 }
+

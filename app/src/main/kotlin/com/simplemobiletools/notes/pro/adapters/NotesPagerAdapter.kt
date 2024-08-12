@@ -1,11 +1,13 @@
 package com.simplemobiletools.notes.pro.adapters
 
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.simplemobiletools.commons.extensions.showErrorToast
+import com.simplemobiletools.notes.pro.extensions.showErrorToast
 import com.simplemobiletools.notes.pro.fragments.ChecklistFragment
 import com.simplemobiletools.notes.pro.fragments.NoteFragment
 import com.simplemobiletools.notes.pro.fragments.TextFragment
@@ -13,6 +15,7 @@ import com.simplemobiletools.notes.pro.helpers.NOTE_ID
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 
+@RequiresApi(Build.VERSION_CODES.O)
 class NotesPagerAdapter(fm: FragmentManager, val notes: List<Note>, val activity: Activity) :
     FragmentStatePagerAdapter(fm) {
     private var fragments: HashMap<Int, NoteFragment> = LinkedHashMap()
@@ -51,6 +54,7 @@ class NotesPagerAdapter(fm: FragmentManager, val notes: List<Note>, val activity
     fun textFragment(position: Int): TextFragment? = (fragments[position] as? TextFragment)
 
     fun getCurrentNotesView(position: Int) = (fragments[position] as? TextFragment)?.getNotesView()
+
 
     fun getCurrentNoteViewText(position: Int) =
         (fragments[position] as? TextFragment)?.getCurrentNoteViewText()

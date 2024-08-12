@@ -1,8 +1,8 @@
 package com.simplemobiletools.notes.pro.dialogs
 
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.R
 
 class DateTimePatternInfoDialog(activity: BaseSimpleActivity) {

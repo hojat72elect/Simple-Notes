@@ -1,12 +1,12 @@
 package com.simplemobiletools.notes.pro.dialogs
 
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.extensions.beVisible
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogDeleteNoteBinding
+import com.simplemobiletools.notes.pro.extensions.beVisible
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.models.Note
 
 class DeleteNoteDialog(

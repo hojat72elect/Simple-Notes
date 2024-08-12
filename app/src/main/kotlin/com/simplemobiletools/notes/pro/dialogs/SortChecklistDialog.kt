@@ -1,12 +1,12 @@
 package com.simplemobiletools.notes.pro.dialogs
 
-import com.simplemobiletools.commons.extensions.beGoneIf
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.helpers.SORT_BY_CUSTOM
-import com.simplemobiletools.commons.helpers.SORT_BY_DATE_CREATED
-import com.simplemobiletools.commons.helpers.SORT_BY_TITLE
-import com.simplemobiletools.commons.helpers.SORT_DESCENDING
+import com.simplemobiletools.notes.pro.extensions.beGoneIf
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
+import com.simplemobiletools.notes.pro.helpers.SORT_BY_DATE_CREATED
+import com.simplemobiletools.notes.pro.helpers.SORT_BY_TITLE
+import com.simplemobiletools.notes.pro.helpers.SORT_DESCENDING
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogSortChecklistBinding

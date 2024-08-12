@@ -6,22 +6,22 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatEditText
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.getContrastColor
-import com.simplemobiletools.commons.extensions.getProperPrimaryColor
-import com.simplemobiletools.commons.extensions.isWhiteTheme
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.extensions.showKeyboard
-import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.extensions.updateTextColors
-import com.simplemobiletools.commons.helpers.DARK_GREY
-import com.simplemobiletools.commons.helpers.SORT_BY_CUSTOM
+import com.simplemobiletools.notes.pro.helpers.DARK_GREY
+import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.DialogNewChecklistItemBinding
 import com.simplemobiletools.notes.pro.databinding.ItemAddChecklistBinding
+import com.simplemobiletools.notes.pro.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.extensions.beVisibleIf
 import com.simplemobiletools.notes.pro.extensions.config
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.getContrastColor
+import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
+import com.simplemobiletools.notes.pro.extensions.isWhiteTheme
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.extensions.showKeyboard
+import com.simplemobiletools.notes.pro.extensions.toast
+import com.simplemobiletools.notes.pro.extensions.updateTextColors
 
 class NewChecklistItemDialog(
     val activity: Activity,

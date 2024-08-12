@@ -3,11 +3,11 @@ package com.simplemobiletools.notes.pro.dialogs
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.performSecurityCheck
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.notes.pro.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.performSecurityCheck
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.extensions.updateTextColors
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.DialogUnlockNotesBinding
 import com.simplemobiletools.notes.pro.databinding.ItemLockedNoteBinding

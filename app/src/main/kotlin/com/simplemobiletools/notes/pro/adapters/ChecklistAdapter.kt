@@ -12,11 +12,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
-import com.simplemobiletools.commons.extensions.removeBit
-import com.simplemobiletools.commons.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.commons.interfaces.ItemMoveCallback
 import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
@@ -24,9 +19,14 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.ItemChecklistBinding
 import com.simplemobiletools.notes.pro.dialogs.RenameChecklistItemDialog
+import com.simplemobiletools.notes.pro.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.extensions.beVisibleIf
 import com.simplemobiletools.notes.pro.extensions.config
+import com.simplemobiletools.notes.pro.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.notes.pro.extensions.getPercentageFontSize
+import com.simplemobiletools.notes.pro.extensions.removeBit
 import com.simplemobiletools.notes.pro.helpers.DONE_CHECKLIST_ITEM_ALPHA
+import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.notes.pro.interfaces.ChecklistItemsListener
 import com.simplemobiletools.notes.pro.models.ChecklistItem
 import java.util.Collections
