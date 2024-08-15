@@ -1,8 +1,7 @@
 package com.simplemobiletools.notes.pro.interfaces
 
 import androidx.biometric.auth.AuthPromptHost
-import com.simplemobiletools.commons.views.MyScrollView
-import com.simplemobiletools.notes.pro.interfaces.HashListener
+import com.simplemobiletools.notes.pro.views.MyScrollView
 
 interface SecurityTab {
     fun initTab(

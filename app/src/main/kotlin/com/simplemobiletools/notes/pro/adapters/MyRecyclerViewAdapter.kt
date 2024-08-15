@@ -21,7 +21,7 @@ import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
 import com.simplemobiletools.notes.pro.extensions.getProperTextColor
 import com.simplemobiletools.notes.pro.extensions.onGlobalLayout
 import com.simplemobiletools.notes.pro.interfaces.MyActionModeCallback
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import kotlin.math.max

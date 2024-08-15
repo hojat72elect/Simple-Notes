@@ -5,7 +5,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.graphics.BitmapFactory
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.compose.extensions.getActivity
+import com.simplemobiletools.notes.pro.compose.extensions.getActivity
 import com.simplemobiletools.notes.pro.helpers.APP_ICON_IDS
 import com.simplemobiletools.notes.pro.helpers.APP_LAUNCHER_NAME
 import com.simplemobiletools.notes.pro.helpers.BaseConfig

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.notes.pro.interfaces.ItemMoveCallback
 import com.simplemobiletools.notes.pro.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.notes.pro.interfaces.StartReorderDragListener
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.databinding.ItemChecklistBinding
@@ -236,7 +236,7 @@ class ChecklistAdapter(
         }
     }
 
-    override fun onRowClear(myViewHolder: com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter.ViewHolder?) {
+    override fun onRowClear(myViewHolder: MyRecyclerViewAdapter.ViewHolder?) {
         listener?.saveChecklist()
     }
 
@@ -254,7 +254,7 @@ class ChecklistAdapter(
         notifyItemMoved(fromPosition, toPosition)
     }
 
-    override fun onRowSelected(myViewHolder: com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter.ViewHolder?) {
+    override fun onRowSelected(myViewHolder: MyRecyclerViewAdapter.ViewHolder?) {
     }
 
 }

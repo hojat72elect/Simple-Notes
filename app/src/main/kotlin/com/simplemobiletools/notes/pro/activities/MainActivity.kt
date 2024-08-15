@@ -30,7 +30,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.viewpager.widget.ViewPager
-import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
+import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.notes.pro.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.dialogs.SecurityDialog
@@ -38,7 +38,7 @@ import com.simplemobiletools.notes.pro.models.FAQItem
 import com.simplemobiletools.notes.pro.models.FileDirItem
 import com.simplemobiletools.notes.pro.models.RadioItem
 import com.simplemobiletools.notes.pro.models.Release
-import com.simplemobiletools.commons.views.MyEditText
+import com.simplemobiletools.notes.pro.views.MyEditText
 import com.simplemobiletools.notes.pro.BuildConfig
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.adapters.NotesPagerAdapter
@@ -162,10 +162,10 @@ class MainActivity : SimpleActivity() {
             useTopSearchMenu = false
         )
 
-        searchQueryET = findViewById(com.simplemobiletools.commons.R.id.search_query)
-        searchPrevBtn = findViewById(com.simplemobiletools.commons.R.id.search_previous)
-        searchNextBtn = findViewById(com.simplemobiletools.commons.R.id.search_next)
-        searchClearBtn = findViewById(com.simplemobiletools.commons.R.id.search_clear)
+        searchQueryET = findViewById(R.id.search_query)
+        searchPrevBtn = findViewById(R.id.search_previous)
+        searchNextBtn = findViewById(R.id.search_next)
+        searchClearBtn = findViewById(R.id.search_clear)
 
         val noteToOpen = intent.getLongExtra(OPEN_NOTE_ID, -1L)
         initViewPager(noteToOpen)
@@ -233,7 +233,7 @@ class MainActivity : SimpleActivity() {
 
         checkShortcuts()
 
-        binding.searchWrapper.setBackgroundColor(getProperStatusBarColor())
+        binding.searchWrapper.root.setBackgroundColor(getProperStatusBarColor())
         val contrastColor = getProperPrimaryColor().getContrastColor()
         arrayListOf(searchPrevBtn, searchNextBtn, searchClearBtn).forEach {
             it.applyColorFilter(contrastColor)
@@ -665,7 +665,7 @@ class MainActivity : SimpleActivity() {
 
     private fun openSearch() {
         isSearchActive = true
-        binding.searchWrapper.fadeIn()
+        binding.searchWrapper.root.fadeIn()
         showKeyboard(searchQueryET)
 
         currentNotesView()?.let { noteView ->
@@ -681,7 +681,7 @@ class MainActivity : SimpleActivity() {
     private fun closeSearch() {
         searchQueryET.text?.clear()
         isSearchActive = false
-        binding.searchWrapper.fadeOut()
+        binding.searchWrapper.root.fadeOut()
         hideKeyboard()
     }
 

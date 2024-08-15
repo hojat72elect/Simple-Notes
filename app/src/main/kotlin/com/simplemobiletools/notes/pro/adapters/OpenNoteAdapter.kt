@@ -2,14 +2,16 @@ package com.simplemobiletools.notes.pro.adapters
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.databinding.OpenNoteItemBinding
 import com.simplemobiletools.notes.pro.extensions.beGoneIf
@@ -23,6 +25,7 @@ import com.simplemobiletools.notes.pro.models.ChecklistItem
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 
+@RequiresApi(Build.VERSION_CODES.O)
 class OpenNoteAdapter(
     activity: BaseSimpleActivity, var items: List<Note>,
     recyclerView: MyRecyclerView, itemClick: (Any) -> Unit

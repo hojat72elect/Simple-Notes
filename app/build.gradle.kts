@@ -126,4 +126,6 @@ dependencies {
     implementation(libs.glide.compose)
     api(libs.glide)
     ksp(libs.glide.compiler)
+
+    implementation(libs.bundles.lifecycle)
 }

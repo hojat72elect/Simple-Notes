@@ -6,7 +6,7 @@
     android:scrollbarSize="5dp"
     android:scrollbars="horizontal">
 
-    <com.simplemobiletools.commons.views.MyEditText
+    <com.simplemobiletools.notes.pro.views.MyEditText
         android:id="@+id/text_note_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

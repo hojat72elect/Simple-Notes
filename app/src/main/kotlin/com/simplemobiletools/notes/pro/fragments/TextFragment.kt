@@ -21,7 +21,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.viewbinding.ViewBinding
-import com.simplemobiletools.commons.views.MyEditText
+import com.simplemobiletools.notes.pro.views.MyEditText
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.MainActivity
 import com.simplemobiletools.notes.pro.databinding.FragmentTextBinding

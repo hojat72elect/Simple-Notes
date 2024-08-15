@@ -15,7 +15,7 @@
         android:minHeight="@dimen/min_open_note_popup_height"
         app:layout_constraintHeight_max="@dimen/max_open_note_popup_height">
 
-        <com.simplemobiletools.commons.views.MyRecyclerView
+        <com.simplemobiletools.notes.pro.views.MyRecyclerView
             android:id="@+id/dialog_open_note_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -25,7 +25,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.simplemobiletools.commons.views.MyFloatingActionButton
+    <com.simplemobiletools.notes.pro.views.MyFloatingActionButton
         android:id="@+id/new_note_fab"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"

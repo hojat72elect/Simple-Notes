@@ -46,7 +46,7 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.simplemobiletools.commons.databinding.DialogTitleBinding
 import com.simplemobiletools.commons.dialogs.AppSideloadedDialog
-import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
+import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.commons.dialogs.CustomIntervalPickerDialog
 import com.simplemobiletools.commons.dialogs.DonateDialog
 import com.simplemobiletools.notes.pro.dialogs.RadioGroupDialog
@@ -60,7 +60,7 @@ import com.simplemobiletools.notes.pro.models.FileDirItem
 import com.simplemobiletools.notes.pro.models.RadioItem
 import com.simplemobiletools.notes.pro.models.Release
 import com.simplemobiletools.notes.pro.models.SharedTheme
-import com.simplemobiletools.commons.views.MyTextView
+import com.simplemobiletools.notes.pro.views.MyTextView
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.dialogs.WritePermissionDialog
 import com.simplemobiletools.notes.pro.helpers.CREATE_DOCUMENT_SDK_30

@@ -1,6 +1,6 @@
 package com.simplemobiletools.notes.pro.interfaces
 
-import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.notes.pro.adapters.MyRecyclerViewAdapter
 
 interface ItemTouchHelperContract {
     fun onRowMoved(fromPosition: Int, toPosition: Int)

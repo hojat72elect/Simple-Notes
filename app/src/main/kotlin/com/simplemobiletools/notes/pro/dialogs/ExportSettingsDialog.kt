@@ -4,9 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.databinding.DialogExportSettingsBinding
-import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.databinding.DialogExportSettingsBinding
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.beGone
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder

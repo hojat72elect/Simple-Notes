@@ -17,7 +17,7 @@ import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.databinding.ItemFilepickerListBinding
 import com.simplemobiletools.notes.pro.models.FileDirItem
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.formatSize

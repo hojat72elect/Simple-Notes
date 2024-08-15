@@ -1,5 +1,6 @@
 package com.simplemobiletools.notes.pro.dialogs
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Environment
 import android.os.Parcelable
@@ -11,12 +12,10 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.notes.pro.adapters.FilepickerItemsAdapter
-import com.simplemobiletools.commons.databinding.DialogFilepickerBinding
-import com.simplemobiletools.notes.pro.models.FileDirItem
-import com.simplemobiletools.commons.views.Breadcrumbs
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.adapters.FilepickerFavoritesAdapter
+import com.simplemobiletools.notes.pro.adapters.FilepickerItemsAdapter
+import com.simplemobiletools.notes.pro.databinding.DialogFilepickerBinding
 import com.simplemobiletools.notes.pro.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.beGone
@@ -51,6 +50,8 @@ import com.simplemobiletools.notes.pro.extensions.isVisible
 import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.extensions.toast
 import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
+import com.simplemobiletools.notes.pro.models.FileDirItem
+import com.simplemobiletools.notes.pro.views.Breadcrumbs
 import java.io.File
 
 /**
@@ -63,6 +64,7 @@ import java.io.File
  * @param showFAB toggle the displaying of a Floating Action Button for creating new folders
  * @param callback the callback used for returning the selected file/folder
  */
+@SuppressLint("SetTextI18n")
 @RequiresApi(Build.VERSION_CODES.O)
 class FilePickerDialog(
     val activity: BaseSimpleActivity,
