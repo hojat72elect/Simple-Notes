@@ -9,9 +9,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.text.TextUtilsCompat
 import androidx.core.view.ViewCompat
-import com.simplemobiletools.commons.dialogs.RadioGroupDialog
-import com.simplemobiletools.commons.helpers.NavigationIcon
-import com.simplemobiletools.commons.models.RadioItem
+import com.simplemobiletools.notes.pro.dialogs.RadioGroupDialog
+import com.simplemobiletools.notes.pro.helpers.NavigationIcon
+import com.simplemobiletools.notes.pro.models.RadioItem
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.ActivitySettingsBinding
 import com.simplemobiletools.notes.pro.dialogs.ExportNotesDialog

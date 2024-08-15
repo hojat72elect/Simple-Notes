@@ -9,9 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.databinding.OpenNoteItemBinding
 import com.simplemobiletools.notes.pro.extensions.beGoneIf
 import com.simplemobiletools.notes.pro.extensions.beVisibleIf

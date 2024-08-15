@@ -7,9 +7,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.notes.pro.extensions.getIntValue
 import com.simplemobiletools.notes.pro.extensions.getStringValue
-import com.simplemobiletools.commons.models.PhoneNumber
-import com.simplemobiletools.commons.models.SimpleContact
-import com.simplemobiletools.commons.models.contacts.Contact
+import com.simplemobiletools.notes.pro.models.contacts.PhoneNumber
+import com.simplemobiletools.notes.pro.models.SimpleContact
+import com.simplemobiletools.notes.pro.models.contacts.Contact
 
 // used for sharing privately stored contacts in Simple Contacts with Simple Dialer, Simple SMS Messenger and Simple Calendar Pro
 class MyContactsContentProvider {

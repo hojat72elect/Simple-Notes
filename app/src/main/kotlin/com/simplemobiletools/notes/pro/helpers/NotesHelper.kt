@@ -3,7 +3,7 @@ package com.simplemobiletools.notes.pro.helpers
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.notesDB

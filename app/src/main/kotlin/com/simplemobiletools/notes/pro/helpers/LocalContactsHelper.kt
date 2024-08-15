@@ -7,11 +7,11 @@ import android.provider.ContactsContract.CommonDataKinds.Event
 import android.provider.MediaStore
 import com.simplemobiletools.notes.pro.extensions.contactsDB
 import com.simplemobiletools.notes.pro.extensions.getEmptyContact
-import com.simplemobiletools.commons.models.SimpleContact
-import com.simplemobiletools.commons.models.contacts.Contact
-import com.simplemobiletools.commons.models.contacts.Group
-import com.simplemobiletools.commons.models.contacts.LocalContact
-import com.simplemobiletools.commons.models.contacts.Organization
+import com.simplemobiletools.notes.pro.models.SimpleContact
+import com.simplemobiletools.notes.pro.models.contacts.Contact
+import com.simplemobiletools.notes.pro.models.contacts.Group
+import com.simplemobiletools.notes.pro.models.contacts.LocalContact
+import com.simplemobiletools.notes.pro.models.contacts.Organization
 import com.simplemobiletools.notes.pro.extensions.getByteArray
 
 class LocalContactsHelper(val context: Context) {

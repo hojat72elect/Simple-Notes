@@ -3,20 +3,21 @@ package com.simplemobiletools.notes.pro.adapters
 import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.interfaces.ItemMoveCallback
-import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
-import com.simplemobiletools.commons.interfaces.StartReorderDragListener
+import com.simplemobiletools.notes.pro.interfaces.ItemMoveCallback
+import com.simplemobiletools.notes.pro.interfaces.ItemTouchHelperContract
+import com.simplemobiletools.notes.pro.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.databinding.ItemChecklistBinding
 import com.simplemobiletools.notes.pro.dialogs.RenameChecklistItemDialog
 import com.simplemobiletools.notes.pro.extensions.applyColorFilter
@@ -31,6 +32,7 @@ import com.simplemobiletools.notes.pro.interfaces.ChecklistItemsListener
 import com.simplemobiletools.notes.pro.models.ChecklistItem
 import java.util.Collections
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("ClickableViewAccessibility")
 class ChecklistAdapter(
     activity: BaseSimpleActivity,
@@ -234,6 +236,10 @@ class ChecklistAdapter(
         }
     }
 
+    override fun onRowClear(myViewHolder: com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter.ViewHolder?) {
+        listener?.saveChecklist()
+    }
+
     override fun onRowMoved(fromPosition: Int, toPosition: Int) {
         activity.config.sorting = SORT_BY_CUSTOM
         if (fromPosition < toPosition) {
@@ -248,10 +254,7 @@ class ChecklistAdapter(
         notifyItemMoved(fromPosition, toPosition)
     }
 
-    override fun onRowSelected(myViewHolder: ViewHolder?) {
+    override fun onRowSelected(myViewHolder: com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter.ViewHolder?) {
     }
 
-    override fun onRowClear(myViewHolder: ViewHolder?) {
-        listener?.saveChecklist()
-    }
 }

@@ -1,21 +1,23 @@
 package com.simplemobiletools.notes.pro.dialogs
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.databinding.DialogRadioGroupBinding
 import com.simplemobiletools.commons.databinding.RadioButtonBinding
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.getBasePath
-import com.simplemobiletools.commons.extensions.hasExternalSDCard
-import com.simplemobiletools.commons.extensions.hasOTGConnected
-import com.simplemobiletools.commons.extensions.internalStoragePath
-import com.simplemobiletools.commons.extensions.otgPath
-import com.simplemobiletools.commons.extensions.sdCardPath
-import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.extensions.hasExternalSDCard
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.getBasePath
+import com.simplemobiletools.notes.pro.extensions.hasOTGConnected
+import com.simplemobiletools.notes.pro.extensions.internalStoragePath
+import com.simplemobiletools.notes.pro.extensions.otgPath
+import com.simplemobiletools.notes.pro.extensions.sdCardPath
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 
 /**
  * A dialog for choosing between internal, root, SD card (optional) storage
@@ -26,6 +28,7 @@ import com.simplemobiletools.commons.extensions.setupDialogStuff
  * @param callback an anonymous function
  *
  */
+@RequiresApi(Build.VERSION_CODES.O)
 class StoragePickerDialog(
     val activity: BaseSimpleActivity,
     val currPath: String,
@@ -140,6 +143,7 @@ class StoragePickerDialog(
         dialog?.dismiss()
         callback(activity.sdCardPath)
     }
+
 
     private fun otgPicked() {
         activity.handleOTGPermission {

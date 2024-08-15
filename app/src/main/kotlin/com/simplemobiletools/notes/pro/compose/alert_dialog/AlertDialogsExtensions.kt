@@ -16,13 +16,13 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.compose.theme.LocalTheme
-import com.simplemobiletools.commons.compose.theme.Shapes
-import com.simplemobiletools.commons.compose.theme.light_grey_stroke
-import com.simplemobiletools.commons.compose.theme.model.Theme
-import com.simplemobiletools.commons.extensions.baseConfig
-import com.simplemobiletools.commons.helpers.isSPlus
+import com.simplemobiletools.notes.pro.compose.theme.light_grey_stroke
+import com.simplemobiletools.notes.pro.compose.theme.LocalTheme
+import com.simplemobiletools.notes.pro.compose.theme.Shapes
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
+import com.simplemobiletools.notes.pro.compose.theme.model.Theme
+import com.simplemobiletools.notes.pro.extensions.baseConfig
+import com.simplemobiletools.notes.pro.helpers.isSPlus
 import kotlinx.coroutines.android.awaitFrame
 
 val dialogContainerColor

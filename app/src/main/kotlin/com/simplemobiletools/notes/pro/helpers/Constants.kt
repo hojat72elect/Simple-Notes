@@ -10,7 +10,7 @@ import android.provider.ContactsContract
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.StringRes
-import com.simplemobiletools.commons.models.contacts.LocalContact
+import com.simplemobiletools.notes.pro.models.contacts.LocalContact
 import com.simplemobiletools.commons.overloads.times
 import com.simplemobiletools.notes.pro.extensions.normalizeString
 import org.joda.time.DateTime

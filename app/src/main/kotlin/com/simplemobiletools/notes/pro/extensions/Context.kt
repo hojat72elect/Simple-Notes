@@ -26,6 +26,8 @@ import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Point
+import android.hardware.usb.UsbConstants
+import android.hardware.usb.UsbManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaScannerConnection
 import android.media.RingtoneManager
@@ -72,17 +74,13 @@ import androidx.loader.content.CursorLoader
 import com.github.ajalt.reprint.core.Reprint
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.databases.ContactsDatabase
-import com.simplemobiletools.commons.interfaces.ContactsDao
-import com.simplemobiletools.commons.interfaces.GroupsDao
-import com.simplemobiletools.commons.models.AlarmSound
-import com.simplemobiletools.commons.models.BlockedNumber
-import com.simplemobiletools.commons.models.FileDirItem
-import com.simplemobiletools.commons.models.SharedTheme
-import com.simplemobiletools.commons.models.contacts.Contact
-import com.simplemobiletools.commons.models.contacts.ContactSource
-import com.simplemobiletools.commons.models.contacts.Organization
+import com.simplemobiletools.notes.pro.models.AlarmSound
+import com.simplemobiletools.notes.pro.models.BlockedNumber
+import com.simplemobiletools.notes.pro.models.FileDirItem
+import com.simplemobiletools.notes.pro.models.SharedTheme
+import com.simplemobiletools.notes.pro.models.contacts.Contact
+import com.simplemobiletools.notes.pro.models.contacts.ContactSource
+import com.simplemobiletools.notes.pro.models.contacts.Organization
 import com.simplemobiletools.commons.views.MyAppCompatCheckbox
 import com.simplemobiletools.commons.views.MyAppCompatSpinner
 import com.simplemobiletools.commons.views.MyAutoCompleteTextView
@@ -94,6 +92,8 @@ import com.simplemobiletools.commons.views.MySeekBar
 import com.simplemobiletools.commons.views.MyTextInputLayout
 import com.simplemobiletools.commons.views.MyTextView
 import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.databases.ContactsDatabase
 import com.simplemobiletools.notes.pro.databases.NotesDatabase
 import com.simplemobiletools.notes.pro.dialogs.UnlockNotesDialog
 import com.simplemobiletools.notes.pro.helpers.AUTOMATIC_BACKUP_REQUEST_CODE
@@ -169,6 +169,8 @@ import com.simplemobiletools.notes.pro.helpers.isRPlus
 import com.simplemobiletools.notes.pro.helpers.isSPlus
 import com.simplemobiletools.notes.pro.helpers.isUpsideDownCakePlus
 import com.simplemobiletools.notes.pro.helpers.proPackages
+import com.simplemobiletools.notes.pro.interfaces.ContactsDao
+import com.simplemobiletools.notes.pro.interfaces.GroupsDao
 import com.simplemobiletools.notes.pro.interfaces.NotesDao
 import com.simplemobiletools.notes.pro.interfaces.WidgetsDao
 import com.simplemobiletools.notes.pro.models.Note
@@ -1182,6 +1184,16 @@ fun Context.rescanPath(path: String, callback: (() -> Unit)? = null) {
     rescanPaths(arrayListOf(path), callback)
 }
 
+fun Context.hasOTGConnected(): Boolean {
+    return try {
+        (getSystemService(Context.USB_SERVICE) as UsbManager).deviceList.any {
+            it.value.getInterface(0).interfaceClass == UsbConstants.USB_CLASS_MASS_STORAGE
+        }
+    } catch (e: Exception) {
+        false
+    }
+}
+
 fun Context.scanPathsRecursively(paths: List<String>, callback: (() -> Unit)? = null) {
     val allPaths = java.util.ArrayList<String>()
     for (path in paths) {
@@ -1192,6 +1204,7 @@ fun Context.scanPathsRecursively(paths: List<String>, callback: (() -> Unit)? = 
 
 val Context.groupsDB: GroupsDao get() = ContactsDatabase.getInstance(applicationContext).GroupsDao()
 
+fun Context.hasExternalSDCard() = sdCardPath.isNotEmpty()
 
 fun Context.getVisibleContactSources(): ArrayList<String> {
     val sources = getAllContactSources()
@@ -1199,7 +1212,6 @@ fun Context.getVisibleContactSources(): ArrayList<String> {
     return ArrayList(sources).filter { !ignoredContactSources.contains(it.getFullIdentifier()) }
         .map { it.name }.toMutableList() as ArrayList<String>
 }
-
 
 fun Context.getPhotoThumbnailSize(): Int {
     val uri = ContactsContract.DisplayPhoto.CONTENT_MAX_DIMENSIONS_URI

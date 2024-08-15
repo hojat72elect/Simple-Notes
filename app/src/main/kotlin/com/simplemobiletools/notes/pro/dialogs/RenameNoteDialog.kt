@@ -2,7 +2,7 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.content.DialogInterface.BUTTON_POSITIVE
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.extensions.renameFile
+import com.simplemobiletools.notes.pro.extensions.renameFile
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogRenameNoteBinding

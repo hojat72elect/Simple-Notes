@@ -1,14 +1,17 @@
 package com.simplemobiletools.notes.pro.adapters
 
+import android.os.Build
 import android.util.TypedValue
 import android.view.Menu
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.databinding.FilepickerFavoriteBinding
-import com.simplemobiletools.commons.extensions.getTextSize
+import com.simplemobiletools.notes.pro.extensions.getTextSize
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 
+@RequiresApi(Build.VERSION_CODES.O)
 class FilepickerFavoritesAdapter(
     activity: BaseSimpleActivity, val paths: List<String>, recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit

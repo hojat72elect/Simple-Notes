@@ -2,7 +2,7 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.extensions.performSecurityCheck

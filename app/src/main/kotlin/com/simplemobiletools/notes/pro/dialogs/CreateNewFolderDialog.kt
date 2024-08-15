@@ -1,6 +1,8 @@
 package com.simplemobiletools.notes.pro.dialogs
 
+import android.os.Build
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,28 +27,28 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.compose.extensions.MyDevices
+import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
 import com.simplemobiletools.commons.compose.theme.AppThemeSurface
 import com.simplemobiletools.commons.databinding.DialogCreateNewFolderBinding
-import com.simplemobiletools.commons.extensions.createAndroidSAFDirectory
-import com.simplemobiletools.commons.extensions.createSAFDirectorySdk30
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.getDocumentFile
-import com.simplemobiletools.commons.extensions.getFilenameFromPath
-import com.simplemobiletools.commons.extensions.getParentPath
-import com.simplemobiletools.commons.extensions.humanizePath
-import com.simplemobiletools.commons.extensions.isAStorageRootFolder
-import com.simplemobiletools.commons.extensions.isAValidFilename
-import com.simplemobiletools.commons.extensions.isAccessibleWithSAFSdk30
-import com.simplemobiletools.commons.extensions.isRestrictedSAFOnlyRoot
-import com.simplemobiletools.commons.extensions.needsStupidWritePermissions
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.extensions.showKeyboard
-import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.extensions.value
-import com.simplemobiletools.commons.helpers.isRPlus
+import com.simplemobiletools.notes.pro.extensions.createAndroidSAFDirectory
+import com.simplemobiletools.notes.pro.extensions.createSAFDirectorySdk30
+import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.getDocumentFile
+import com.simplemobiletools.notes.pro.extensions.getFilenameFromPath
+import com.simplemobiletools.notes.pro.extensions.getParentPath
+import com.simplemobiletools.notes.pro.extensions.humanizePath
+import com.simplemobiletools.notes.pro.extensions.isAStorageRootFolder
+import com.simplemobiletools.notes.pro.extensions.isAValidFilename
+import com.simplemobiletools.notes.pro.extensions.isAccessibleWithSAFSdk30
+import com.simplemobiletools.notes.pro.extensions.isRestrictedSAFOnlyRoot
+import com.simplemobiletools.notes.pro.extensions.needsStupidWritePermissions
+import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.extensions.showErrorToast
+import com.simplemobiletools.notes.pro.extensions.showKeyboard
+import com.simplemobiletools.notes.pro.extensions.toast
+import com.simplemobiletools.notes.pro.extensions.value
+import com.simplemobiletools.notes.pro.helpers.isRPlus
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.notes.pro.compose.alert_dialog.ShowKeyboardWhenDialogIsOpenedAndRequestFocus
 import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogBorder
@@ -58,6 +60,7 @@ import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogS
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import java.io.File
 
+@RequiresApi(Build.VERSION_CODES.O)
 class CreateNewFolderDialog(
     val activity: BaseSimpleActivity,
     val path: String,
@@ -98,6 +101,7 @@ class CreateNewFolderDialog(
                 }
             }
     }
+
 
     private fun createFolder(path: String, alertDialog: AlertDialog) {
         try {

@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.notes.pro.adapters.FilepickerItemsAdapter
 import com.simplemobiletools.commons.databinding.DialogFilepickerBinding
-import com.simplemobiletools.notes.pro.dialogs.StoragePickerDialog
-import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.notes.pro.models.FileDirItem
 import com.simplemobiletools.commons.views.Breadcrumbs
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.adapters.FilepickerFavoritesAdapter

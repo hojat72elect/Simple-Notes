@@ -12,8 +12,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.util.Pair
 import androidx.documentfile.provider.DocumentFile
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.interfaces.CopyMoveListener
-import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.notes.pro.interfaces.CopyMoveListener
+import com.simplemobiletools.notes.pro.models.FileDirItem
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.canManageMedia

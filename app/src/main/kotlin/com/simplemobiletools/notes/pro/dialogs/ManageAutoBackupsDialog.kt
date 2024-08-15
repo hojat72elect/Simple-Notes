@@ -1,8 +1,8 @@
 package com.simplemobiletools.notes.pro.dialogs
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogManageAutomaticBackupsBinding
 import com.simplemobiletools.notes.pro.extensions.config
@@ -13,8 +13,10 @@ import com.simplemobiletools.notes.pro.extensions.isAValidFilename
 import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.extensions.toast
 import com.simplemobiletools.notes.pro.extensions.value
+import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import java.io.File
 
+@RequiresApi(Build.VERSION_CODES.O)
 class ManageAutoBackupsDialog(private val activity: SimpleActivity, onSuccess: () -> Unit) {
     private val binding = DialogManageAutomaticBackupsBinding.inflate(activity.layoutInflater)
     private val view = binding.root
@@ -83,6 +85,7 @@ class ManageAutoBackupsDialog(private val activity: SimpleActivity, onSuccess: (
                 }
             }
     }
+
 
     private fun selectBackupFolder() {
         activity.hideKeyboard(binding.backupNotesFilename)

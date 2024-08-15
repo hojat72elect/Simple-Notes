@@ -8,17 +8,14 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
 import android.widget.RemoteViews
+import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
-import com.simplemobiletools.commons.dialogs.RadioGroupDialog
-import com.simplemobiletools.notes.pro.helpers.IS_CUSTOMIZING_COLORS
-import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
-import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.adapters.ChecklistAdapter
 import com.simplemobiletools.notes.pro.databinding.WidgetConfigBinding
@@ -45,13 +42,18 @@ import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_KEY_ID
 import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_NOTE_ID
 import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_SHOW_TITLE
 import com.simplemobiletools.notes.pro.helpers.CUSTOMIZED_WIDGET_TEXT_COLOR
+import com.simplemobiletools.notes.pro.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.notes.pro.helpers.MyWidgetProvider
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
+import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
+import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.models.ChecklistItem
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
+import com.simplemobiletools.notes.pro.models.RadioItem
 import com.simplemobiletools.notes.pro.models.Widget
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("RemoteViewLayout")
 class WidgetConfigureActivity : SimpleActivity() {
     private var mBgAlpha = 0f
@@ -164,7 +166,11 @@ class WidgetConfigureActivity : SimpleActivity() {
             items.add(RadioItem(it.id!!.toInt(), it.title))
         }
 
-        RadioGroupDialog(this, items, mCurrentNoteId.toInt()) {
+        com.simplemobiletools.notes.pro.dialogs.RadioGroupDialog(
+            this,
+            items,
+            mCurrentNoteId.toInt()
+        ) {
             val selectedId = it as Int
             val note =
                 mNotes.firstOrNull { it.id!!.toInt() == selectedId } ?: return@RadioGroupDialog

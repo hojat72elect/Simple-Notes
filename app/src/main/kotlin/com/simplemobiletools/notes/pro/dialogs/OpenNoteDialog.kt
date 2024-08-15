@@ -2,7 +2,7 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 import com.simplemobiletools.commons.views.AutoStaggeredGridLayoutManager

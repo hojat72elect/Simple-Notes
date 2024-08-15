@@ -1,8 +1,10 @@
 package com.simplemobiletools.notes.pro.activities
 
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.simplemobiletools.notes.pro.R
 
+@RequiresApi(Build.VERSION_CODES.O)
 open class SimpleActivity : BaseSimpleActivity() {
     override fun getAppIconIDs() = arrayListOf(
         R.mipmap.ic_launcher_red,

@@ -7,7 +7,7 @@ import com.simplemobiletools.notes.pro.helpers.audioExtensions
 import com.simplemobiletools.notes.pro.helpers.photoExtensions
 import com.simplemobiletools.notes.pro.helpers.rawExtensions
 import com.simplemobiletools.notes.pro.helpers.videoExtensions
-import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.notes.pro.models.FileDirItem
 import java.io.File
 import java.util.HashMap
 

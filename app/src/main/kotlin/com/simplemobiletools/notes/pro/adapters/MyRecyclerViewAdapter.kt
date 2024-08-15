@@ -1,6 +1,7 @@
 package com.simplemobiletools.notes.pro.adapters
 
 import android.graphics.Color
+import android.os.Build
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
@@ -8,23 +9,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.baseConfig
-import com.simplemobiletools.commons.extensions.getContrastColor
-import com.simplemobiletools.commons.extensions.getProperBackgroundColor
-import com.simplemobiletools.commons.extensions.getProperPrimaryColor
-import com.simplemobiletools.commons.extensions.getProperTextColor
-import com.simplemobiletools.commons.extensions.onGlobalLayout
-import com.simplemobiletools.commons.interfaces.MyActionModeCallback
+import com.simplemobiletools.notes.pro.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.extensions.getContrastColor
+import com.simplemobiletools.notes.pro.extensions.getProperBackgroundColor
+import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
+import com.simplemobiletools.notes.pro.extensions.getProperTextColor
+import com.simplemobiletools.notes.pro.extensions.onGlobalLayout
+import com.simplemobiletools.notes.pro.interfaces.MyActionModeCallback
 import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.extensions.baseConfig
 import kotlin.math.max
 import kotlin.math.min
 
+@RequiresApi(Build.VERSION_CODES.O)
 abstract class MyRecyclerViewAdapter(
     val activity: BaseSimpleActivity,
     val recyclerView: MyRecyclerView,
@@ -72,6 +75,7 @@ abstract class MyRecyclerViewAdapter(
                 actionItemPressed(item.itemId)
                 return true
             }
+
 
             override fun onCreateActionMode(actionMode: ActionMode, menu: Menu?): Boolean {
                 if (getActionMenuId() == 0) {
