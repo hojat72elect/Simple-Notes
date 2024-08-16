@@ -2,6 +2,7 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.app.Activity
 import android.content.DialogInterface.BUTTON_POSITIVE
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.DialogRenameChecklistItemBinding
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
@@ -20,15 +21,15 @@ class RenameChecklistItemDialog(
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(binding.root, this) { alertDialog ->
                     alertDialog.showKeyboard(binding.checklistItemTitle)
                     alertDialog.getButton(BUTTON_POSITIVE).setOnClickListener {
                         val newTitle = binding.checklistItemTitle.value
                         when {
-                            newTitle.isEmpty() -> activity.toast(com.simplemobiletools.commons.R.string.empty_name)
+                            newTitle.isEmpty() -> activity.toast(R.string.empty_name)
                             else -> {
                                 callback(newTitle)
                                 alertDialog.dismiss()

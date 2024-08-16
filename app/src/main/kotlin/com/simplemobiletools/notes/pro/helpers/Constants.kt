@@ -1,6 +1,5 @@
 package com.simplemobiletools.notes.pro.helpers
 
-import com.simplemobiletools.commons.R as commonR
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -10,9 +9,10 @@ import android.provider.ContactsContract
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.StringRes
-import com.simplemobiletools.notes.pro.models.contacts.LocalContact
 import com.simplemobiletools.commons.overloads.times
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.extensions.normalizeString
+import com.simplemobiletools.notes.pro.models.contacts.LocalContact
 import org.joda.time.DateTime
 
 const val NOTE_ID = "note_id"
@@ -530,8 +530,8 @@ const val TIME_FORMAT_24 = "HH:mm"
 
 // possible icons at the top left corner
 enum class NavigationIcon(@StringRes val accessibilityResId: Int) {
-    Cross(commonR.string.close),
-    Arrow(commonR.string.back),
+    Cross(R.string.close),
+    Arrow(R.string.back),
     None(0)
 }
 
@@ -665,49 +665,49 @@ fun getQuestionMarks(size: Int) = ("?," * size).trimEnd(',')
 fun getFilePlaceholderDrawables(context: Context): HashMap<String, Drawable> {
     val fileDrawables = HashMap<String, Drawable>()
     hashMapOf<String, Int>().apply {
-        put("aep", commonR.drawable.ic_file_aep)
-        put("ai", commonR.drawable.ic_file_ai)
-        put("avi", commonR.drawable.ic_file_avi)
-        put("css", commonR.drawable.ic_file_css)
-        put("csv", commonR.drawable.ic_file_csv)
-        put("dbf", commonR.drawable.ic_file_dbf)
-        put("doc", commonR.drawable.ic_file_doc)
-        put("docx", commonR.drawable.ic_file_doc)
-        put("dwg", commonR.drawable.ic_file_dwg)
-        put("exe", commonR.drawable.ic_file_exe)
-        put("fla", commonR.drawable.ic_file_fla)
-        put("flv", commonR.drawable.ic_file_flv)
-        put("htm", commonR.drawable.ic_file_html)
-        put("html", commonR.drawable.ic_file_html)
-        put("ics", commonR.drawable.ic_file_ics)
-        put("indd", commonR.drawable.ic_file_indd)
-        put("iso", commonR.drawable.ic_file_iso)
-        put("jpg", commonR.drawable.ic_file_jpg)
-        put("jpeg", commonR.drawable.ic_file_jpg)
-        put("js", commonR.drawable.ic_file_js)
-        put("json", commonR.drawable.ic_file_json)
-        put("m4a", commonR.drawable.ic_file_m4a)
-        put("mp3", commonR.drawable.ic_file_mp3)
-        put("mp4", commonR.drawable.ic_file_mp4)
-        put("ogg", commonR.drawable.ic_file_ogg)
-        put("pdf", commonR.drawable.ic_file_pdf)
-        put("plproj", commonR.drawable.ic_file_plproj)
-        put("ppt", commonR.drawable.ic_file_ppt)
-        put("pptx", commonR.drawable.ic_file_ppt)
-        put("prproj", commonR.drawable.ic_file_prproj)
-        put("psd", commonR.drawable.ic_file_psd)
-        put("rtf", commonR.drawable.ic_file_rtf)
-        put("sesx", commonR.drawable.ic_file_sesx)
-        put("sql", commonR.drawable.ic_file_sql)
-        put("svg", commonR.drawable.ic_file_svg)
-        put("txt", commonR.drawable.ic_file_txt)
-        put("vcf", commonR.drawable.ic_file_vcf)
-        put("wav", commonR.drawable.ic_file_wav)
-        put("wmv", commonR.drawable.ic_file_wmv)
-        put("xls", commonR.drawable.ic_file_xls)
-        put("xlsx", commonR.drawable.ic_file_xls)
-        put("xml", commonR.drawable.ic_file_xml)
-        put("zip", commonR.drawable.ic_file_zip)
+        put("aep", R.drawable.ic_file_aep)
+        put("ai", R.drawable.ic_file_ai)
+        put("avi", R.drawable.ic_file_avi)
+        put("css", R.drawable.ic_file_css)
+        put("csv", R.drawable.ic_file_csv)
+        put("dbf", R.drawable.ic_file_dbf)
+        put("doc", R.drawable.ic_file_doc)
+        put("docx", R.drawable.ic_file_doc)
+        put("dwg", R.drawable.ic_file_dwg)
+        put("exe", R.drawable.ic_file_exe)
+        put("fla", R.drawable.ic_file_fla)
+        put("flv", R.drawable.ic_file_flv)
+        put("htm", R.drawable.ic_file_html)
+        put("html", R.drawable.ic_file_html)
+        put("ics", R.drawable.ic_file_ics)
+        put("indd", R.drawable.ic_file_indd)
+        put("iso", R.drawable.ic_file_iso)
+        put("jpg", R.drawable.ic_file_jpg)
+        put("jpeg", R.drawable.ic_file_jpg)
+        put("js", R.drawable.ic_file_js)
+        put("json", R.drawable.ic_file_json)
+        put("m4a", R.drawable.ic_file_m4a)
+        put("mp3", R.drawable.ic_file_mp3)
+        put("mp4", R.drawable.ic_file_mp4)
+        put("ogg", R.drawable.ic_file_ogg)
+        put("pdf", R.drawable.ic_file_pdf)
+        put("plproj", R.drawable.ic_file_plproj)
+        put("ppt", R.drawable.ic_file_ppt)
+        put("pptx", R.drawable.ic_file_ppt)
+        put("prproj", R.drawable.ic_file_prproj)
+        put("psd", R.drawable.ic_file_psd)
+        put("rtf", R.drawable.ic_file_rtf)
+        put("sesx", R.drawable.ic_file_sesx)
+        put("sql", R.drawable.ic_file_sql)
+        put("svg", R.drawable.ic_file_svg)
+        put("txt", R.drawable.ic_file_txt)
+        put("vcf", R.drawable.ic_file_vcf)
+        put("wav", R.drawable.ic_file_wav)
+        put("wmv", R.drawable.ic_file_wmv)
+        put("xls", R.drawable.ic_file_xls)
+        put("xlsx", R.drawable.ic_file_xls)
+        put("xml", R.drawable.ic_file_xml)
+        put("zip", R.drawable.ic_file_zip)
     }.forEach { (key, value) ->
         fileDrawables[key] = context.resources.getDrawable(value)
     }

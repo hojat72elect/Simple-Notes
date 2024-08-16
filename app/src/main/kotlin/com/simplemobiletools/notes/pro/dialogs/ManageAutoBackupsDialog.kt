@@ -3,6 +3,7 @@ package com.simplemobiletools.notes.pro.dialogs
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogManageAutomaticBackupsBinding
 import com.simplemobiletools.notes.pro.extensions.config
@@ -27,7 +28,7 @@ class ManageAutoBackupsDialog(private val activity: SimpleActivity, onSuccess: (
         binding.apply {
             backupNotesFolder.setText(activity.humanizePath(backupFolder))
             val filename = config.autoBackupFilename.ifEmpty {
-                "${activity.getString(com.simplemobiletools.commons.R.string.notes)}_%Y%M%D_%h%m%s"
+                "${activity.getString(R.string.notes)}_%Y%M%D_%h%m%s"
             }
 
             backupNotesFilename.setText(filename)
@@ -46,22 +47,22 @@ class ManageAutoBackupsDialog(private val activity: SimpleActivity, onSuccess: (
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(
                     view,
                     this,
-                    com.simplemobiletools.commons.R.string.manage_automatic_backups
+                    R.string.manage_automatic_backups
                 ) { dialog ->
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         val filename = binding.backupNotesFilename.value
                         when {
-                            filename.isEmpty() -> activity.toast(com.simplemobiletools.commons.R.string.empty_name)
+                            filename.isEmpty() -> activity.toast(R.string.empty_name)
                             filename.isAValidFilename() -> {
                                 val file = File(backupFolder, "$filename.json")
                                 if (file.exists() && !file.canWrite()) {
-                                    activity.toast(com.simplemobiletools.commons.R.string.name_taken)
+                                    activity.toast(R.string.name_taken)
                                     return@setOnClickListener
                                 }
 
@@ -79,7 +80,7 @@ class ManageAutoBackupsDialog(private val activity: SimpleActivity, onSuccess: (
                                 }
                             }
 
-                            else -> activity.toast(com.simplemobiletools.commons.R.string.invalid_name)
+                            else -> activity.toast(R.string.invalid_name)
                         }
                     }
                 }

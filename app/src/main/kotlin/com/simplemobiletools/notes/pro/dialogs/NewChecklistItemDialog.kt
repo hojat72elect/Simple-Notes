@@ -49,8 +49,8 @@ class NewChecklistItemDialog(
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(
                     view,
@@ -62,7 +62,7 @@ class NewChecklistItemDialog(
                         activity.config.addNewChecklistItemsTop =
                             binding.settingsAddChecklistTop.isChecked
                         when {
-                            titles.all { it.text!!.isEmpty() } -> activity.toast(com.simplemobiletools.commons.R.string.empty_name)
+                            titles.all { it.text!!.isEmpty() } -> activity.toast(R.string.empty_name)
                             else -> {
                                 val titles =
                                     titles.map { it.text.toString() }.filter { it.isNotEmpty() }

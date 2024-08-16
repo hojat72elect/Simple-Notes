@@ -128,7 +128,7 @@ class SettingsActivity : SimpleActivity() {
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
-                toast(com.simplemobiletools.commons.R.string.importing)
+                toast(R.string.importing)
                 importNotes(uri)
             }
         }
@@ -136,7 +136,7 @@ class SettingsActivity : SimpleActivity() {
     private val saveDocument =
         registerForActivityResult(ActivityResultContracts.CreateDocument(notesFileType)) { uri ->
             if (uri != null) {
-                toast(com.simplemobiletools.commons.R.string.exporting)
+                toast(R.string.exporting)
                 NotesHelper(this).getNotes { notes ->
                     requestUnlockNotes(notes) { unlockedNotes ->
                         val notLockedNotes = notes.filterNot { it.isLocked() }
@@ -366,7 +366,7 @@ class SettingsActivity : SimpleActivity() {
 
     private fun exportNotes(notes: List<Note>, uri: Uri) {
         if (notes.isEmpty()) {
-            toast(com.simplemobiletools.commons.R.string.no_entries_for_exporting)
+            toast(R.string.no_entries_for_exporting)
         } else {
             try {
                 val outputStream = contentResolver.openOutputStream(uri)!!
@@ -375,7 +375,7 @@ class SettingsActivity : SimpleActivity() {
                 outputStream.use {
                     it.write(jsonString.toByteArray())
                 }
-                toast(com.simplemobiletools.commons.R.string.exporting_successful)
+                toast(R.string.exporting_successful)
             } catch (e: Exception) {
                 showErrorToast(e)
             }
@@ -389,21 +389,21 @@ class SettingsActivity : SimpleActivity() {
             }
             val objects = Json.decodeFromString<List<Note>>(jsonString)
             if (objects.isEmpty()) {
-                toast(com.simplemobiletools.commons.R.string.no_entries_for_importing)
+                toast(R.string.no_entries_for_importing)
                 return
             }
             NotesHelper(this).importNotes(this, objects) { importResult ->
                 when (importResult) {
-                    NotesHelper.ImportResult.IMPORT_OK -> toast(com.simplemobiletools.commons.R.string.importing_successful)
-                    NotesHelper.ImportResult.IMPORT_PARTIAL -> toast(com.simplemobiletools.commons.R.string.importing_some_entries_failed)
-                    NotesHelper.ImportResult.IMPORT_NOTHING_NEW -> toast(com.simplemobiletools.commons.R.string.no_new_items)
-                    else -> toast(com.simplemobiletools.commons.R.string.importing_failed)
+                    NotesHelper.ImportResult.IMPORT_OK -> toast(R.string.importing_successful)
+                    NotesHelper.ImportResult.IMPORT_PARTIAL -> toast(R.string.importing_some_entries_failed)
+                    NotesHelper.ImportResult.IMPORT_NOTHING_NEW -> toast(R.string.no_new_items)
+                    else -> toast(R.string.importing_failed)
                 }
             }
         } catch (_: SerializationException) {
-            toast(com.simplemobiletools.commons.R.string.invalid_file_format)
+            toast(R.string.invalid_file_format)
         } catch (_: IllegalArgumentException) {
-            toast(com.simplemobiletools.commons.R.string.invalid_file_format)
+            toast(R.string.invalid_file_format)
         } catch (e: Exception) {
             showErrorToast(e)
         }

@@ -1,6 +1,8 @@
 package com.simplemobiletools.notes.pro.dialogs
 
 import android.content.DialogInterface.BUTTON_POSITIVE
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.extensions.renameFile
 import com.simplemobiletools.notes.pro.R
@@ -20,6 +22,7 @@ import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.models.Note
 import java.io.File
 
+@RequiresApi(Build.VERSION_CODES.O)
 class RenameNoteDialog(
     val activity: SimpleActivity,
     val note: Note,
@@ -33,8 +36,8 @@ class RenameNoteDialog(
         binding.lockedNoteTitle.setText(note.title)
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(view, this, R.string.rename_note) { alertDialog ->
                     alertDialog.showKeyboard(binding.lockedNoteTitle)
@@ -47,6 +50,7 @@ class RenameNoteDialog(
                 }
             }
     }
+
 
     private fun newTitleConfirmed(title: String, dialog: AlertDialog) {
         when {
@@ -67,14 +71,14 @@ class RenameNoteDialog(
                     }
                 } else {
                     if (title.isEmpty()) {
-                        activity.toast(com.simplemobiletools.commons.R.string.filename_cannot_be_empty)
+                        activity.toast(R.string.filename_cannot_be_empty)
                         return
                     }
 
                     val file = File(path)
                     val newFile = File(file.parent, title)
                     if (!newFile.name.isAValidFilename()) {
-                        activity.toast(com.simplemobiletools.commons.R.string.invalid_name)
+                        activity.toast(R.string.invalid_name)
                         return
                     }
 
@@ -90,7 +94,7 @@ class RenameNoteDialog(
                                 callback(note)
                             }
                         } else {
-                            activity.toast(com.simplemobiletools.commons.R.string.rename_file_error)
+                            activity.toast(R.string.rename_file_error)
                             return@renameFile
                         }
                     }

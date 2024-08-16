@@ -1,6 +1,5 @@
 package com.simplemobiletools.notes.pro.extensions
 
-import com.simplemobiletools.commons.R as commonR
 import android.Manifest
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -58,14 +57,11 @@ import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.documentfile.provider.DocumentFile
@@ -335,7 +331,7 @@ fun Context.backupNotes() {
         val config = config
         NotesHelper(this).getNotes { notesToBackup ->
             if (notesToBackup.isEmpty()) {
-                toast(com.simplemobiletools.commons.R.string.no_entries_for_exporting)
+                toast(R.string.no_entries_for_exporting)
                 config.lastAutoBackupTime = DateTime.now().millis
                 scheduleNextAutomaticBackup()
                 return@getNotes
@@ -394,7 +390,7 @@ fun Context.backupNotes() {
             }
 
             if (exportResult == ExportResult.EXPORT_FAIL) {
-                toast(com.simplemobiletools.commons.R.string.exporting_failed)
+                toast(R.string.exporting_failed)
             }
 
             config.lastAutoBackupTime = DateTime.now().millis
@@ -556,10 +552,10 @@ fun Context.createDocumentUriFromRootTree(fullPath: String): Uri {
 fun Context.getHumanReadablePath(path: String): String {
     return getString(
         when (path) {
-            "/" -> commonR.string.root
-            internalStoragePath -> commonR.string.internal
-            otgPath -> commonR.string.usb
-            else -> commonR.string.sd_card
+            "/" -> R.string.root
+            internalStoragePath -> R.string.internal
+            otgPath -> R.string.usb
+            else -> R.string.sd_card
         }
     )
 }
@@ -785,7 +781,7 @@ private fun doToast(context: Context, message: String, length: Int) {
 }
 
 fun Context.showErrorToast(msg: String, length: Int = Toast.LENGTH_LONG) {
-    toast(String.format(getString(commonR.string.error), msg), length)
+    toast(String.format(getString(R.string.error), msg), length)
 }
 
 fun Context.showErrorToast(exception: Exception, length: Int = Toast.LENGTH_LONG) {
@@ -1312,7 +1308,7 @@ fun Context.launchActivityIntent(intent: Intent) {
     try {
         startActivity(intent)
     } catch (e: ActivityNotFoundException) {
-        toast(commonR.string.no_app_found)
+        toast(R.string.no_app_found)
     } catch (e: Exception) {
         showErrorToast(e)
     }
@@ -1564,18 +1560,7 @@ fun Context.getUriMimeType(path: String, newUri: Uri): String {
 
 fun Context.isThankYouInstalled() = isPackageInstalled("com.simplemobiletools.thankyou")
 
-fun Context.isOrWasThankYouInstalled(): Boolean {
-    return when {
-        resources.getBoolean(commonR.bool.pretend_thank_you_installed) -> true
-        baseConfig.hadThankYouInstalled -> true
-        isThankYouInstalled() -> {
-            baseConfig.hadThankYouInstalled = true
-            true
-        }
-
-        else -> false
-    }
-}
+fun Context.isOrWasThankYouInstalled() = true
 
 fun Context.isAProApp() =
     packageName.startsWith("com.simplemobiletools.") && packageName.removeSuffix(".debug")
@@ -1583,9 +1568,9 @@ fun Context.isAProApp() =
 
 fun Context.getCustomizeColorsString(): String {
     val textId = if (isOrWasThankYouInstalled()) {
-        commonR.string.customize_colors
+        R.string.customize_colors
     } else {
-        commonR.string.customize_colors_locked
+        R.string.customize_colors_locked
     }
 
     return getString(textId)
@@ -1595,7 +1580,7 @@ fun Context.addLockedLabelIfNeeded(stringId: Int): String {
     return if (isOrWasThankYouInstalled()) {
         getString(stringId)
     } else {
-        "${getString(stringId)} (${getString(commonR.string.feature_locked)})"
+        "${getString(stringId)} (${getString(R.string.feature_locked)})"
     }
 }
 
@@ -1620,7 +1605,7 @@ fun Context.getSelectedDaysString(bitMask: Int): String {
         SUNDAY_BIT
     )
     val weekDays =
-        resources.getStringArray(commonR.array.week_days_short).toList() as ArrayList<String>
+        resources.getStringArray(R.array.week_days_short).toList() as ArrayList<String>
 
     if (baseConfig.isSundayFirst) {
         dayBits.moveLastItemToFront()
@@ -1652,31 +1637,31 @@ fun Context.formatSecondsToTimeString(totalSeconds: Int): String {
     val timesString = StringBuilder()
     if (days > 0) {
         val daysString =
-            String.format(resources.getQuantityString(commonR.plurals.days, days, days))
+            String.format(resources.getQuantityString(R.plurals.days, days, days))
         timesString.append("$daysString, ")
     }
 
     if (hours > 0) {
         val hoursString =
-            String.format(resources.getQuantityString(commonR.plurals.hours, hours, hours))
+            String.format(resources.getQuantityString(R.plurals.hours, hours, hours))
         timesString.append("$hoursString, ")
     }
 
     if (minutes > 0) {
         val minutesString =
-            String.format(resources.getQuantityString(commonR.plurals.minutes, minutes, minutes))
+            String.format(resources.getQuantityString(R.plurals.minutes, minutes, minutes))
         timesString.append("$minutesString, ")
     }
 
     if (seconds > 0) {
         val secondsString =
-            String.format(resources.getQuantityString(commonR.plurals.seconds, seconds, seconds))
+            String.format(resources.getQuantityString(R.plurals.seconds, seconds, seconds))
         timesString.append(secondsString)
     }
 
     var result = timesString.toString().trim().trimEnd(',')
     if (result.isEmpty()) {
-        result = String.format(resources.getQuantityString(commonR.plurals.minutes, 0, 0))
+        result = String.format(resources.getQuantityString(R.plurals.minutes, 0, 0))
     }
     return result
 }
@@ -1685,47 +1670,47 @@ fun Context.getFormattedMinutes(minutes: Int, showBefore: Boolean = true) =
     getFormattedSeconds(if (minutes == -1) minutes else minutes * 60, showBefore)
 
 fun Context.getFormattedSeconds(seconds: Int, showBefore: Boolean = true) = when (seconds) {
-    -1 -> getString(commonR.string.no_reminder)
-    0 -> getString(commonR.string.at_start)
+    -1 -> getString(R.string.no_reminder)
+    0 -> getString(R.string.at_start)
     else -> {
         when {
             seconds < 0 && seconds > -60 * 60 * 24 -> {
                 val minutes = -seconds / 60
-                getString(commonR.string.during_day_at).format(minutes / 60, minutes % 60)
+                getString(R.string.during_day_at).format(minutes / 60, minutes % 60)
             }
 
             seconds % YEAR_SECONDS == 0 -> {
                 val base =
-                    if (showBefore) commonR.plurals.years_before else commonR.plurals.by_years
+                    if (showBefore) R.plurals.years_before else R.plurals.by_years
                 resources.getQuantityString(base, seconds / YEAR_SECONDS, seconds / YEAR_SECONDS)
             }
 
             seconds % MONTH_SECONDS == 0 -> {
                 val base =
-                    if (showBefore) commonR.plurals.months_before else commonR.plurals.by_months
+                    if (showBefore) R.plurals.months_before else R.plurals.by_months
                 resources.getQuantityString(base, seconds / MONTH_SECONDS, seconds / MONTH_SECONDS)
             }
 
             seconds % WEEK_SECONDS == 0 -> {
                 val base =
-                    if (showBefore) commonR.plurals.weeks_before else commonR.plurals.by_weeks
+                    if (showBefore) R.plurals.weeks_before else R.plurals.by_weeks
                 resources.getQuantityString(base, seconds / WEEK_SECONDS, seconds / WEEK_SECONDS)
             }
 
             seconds % DAY_SECONDS == 0 -> {
-                val base = if (showBefore) commonR.plurals.days_before else commonR.plurals.by_days
+                val base = if (showBefore) R.plurals.days_before else R.plurals.by_days
                 resources.getQuantityString(base, seconds / DAY_SECONDS, seconds / DAY_SECONDS)
             }
 
             seconds % HOUR_SECONDS == 0 -> {
                 val base =
-                    if (showBefore) commonR.plurals.hours_before else commonR.plurals.by_hours
+                    if (showBefore) R.plurals.hours_before else R.plurals.by_hours
                 resources.getQuantityString(base, seconds / HOUR_SECONDS, seconds / HOUR_SECONDS)
             }
 
             seconds % MINUTE_SECONDS == 0 -> {
                 val base =
-                    if (showBefore) commonR.plurals.minutes_before else commonR.plurals.by_minutes
+                    if (showBefore) R.plurals.minutes_before else R.plurals.by_minutes
                 resources.getQuantityString(
                     base,
                     seconds / MINUTE_SECONDS,
@@ -1735,7 +1720,7 @@ fun Context.getFormattedSeconds(seconds: Int, showBefore: Boolean = true) = when
 
             else -> {
                 val base =
-                    if (showBefore) commonR.plurals.seconds_before else commonR.plurals.by_seconds
+                    if (showBefore) R.plurals.seconds_before else R.plurals.by_seconds
                 resources.getQuantityString(base, seconds, seconds)
             }
         }
@@ -1743,7 +1728,7 @@ fun Context.getFormattedSeconds(seconds: Int, showBefore: Boolean = true) = when
 }
 
 fun Context.getDefaultAlarmTitle(type: Int): String {
-    val alarmString = getString(commonR.string.alarm)
+    val alarmString = getString(R.string.alarm)
     return try {
         RingtoneManager.getRingtone(this, RingtoneManager.getDefaultUri(type))?.getTitle(this)
             ?: alarmString
@@ -1771,7 +1756,7 @@ fun Context.storeNewYourAlarmSound(resultData: Intent): AlarmSound {
     val uri = resultData.data
     var filename = getFilenameFromUri(uri!!)
     if (filename.isEmpty()) {
-        filename = getString(commonR.string.alarm)
+        filename = getString(R.string.alarm)
     }
 
     val token = object : TypeToken<ArrayList<AlarmSound>>() {}.type
@@ -2056,22 +2041,22 @@ fun Context.hasContactPermissions() = hasPermission(PERMISSION_READ_CONTACTS) &&
     PERMISSION_WRITE_CONTACTS
 )
 
-fun Context.getStringsPackageName() = getString(commonR.string.package_name)
+fun Context.getStringsPackageName() = getString(R.string.package_name)
 
 fun Context.getFontSizeText() = getString(
     when (baseConfig.fontSize) {
-        FONT_SIZE_SMALL -> commonR.string.small
-        FONT_SIZE_MEDIUM -> commonR.string.medium
-        FONT_SIZE_LARGE -> commonR.string.large
-        else -> commonR.string.extra_large
+        FONT_SIZE_SMALL -> R.string.small
+        FONT_SIZE_MEDIUM -> R.string.medium
+        FONT_SIZE_LARGE -> R.string.large
+        else -> R.string.extra_large
     }
 )
 
 fun Context.getTextSize() = when (baseConfig.fontSize) {
-    FONT_SIZE_SMALL -> resources.getDimension(commonR.dimen.smaller_text_size)
-    FONT_SIZE_MEDIUM -> resources.getDimension(commonR.dimen.bigger_text_size)
-    FONT_SIZE_LARGE -> resources.getDimension(commonR.dimen.big_text_size)
-    else -> resources.getDimension(commonR.dimen.extra_big_text_size)
+    FONT_SIZE_SMALL -> resources.getDimension(R.dimen.smaller_text_size)
+    FONT_SIZE_MEDIUM -> resources.getDimension(R.dimen.bigger_text_size)
+    FONT_SIZE_LARGE -> resources.getDimension(R.dimen.big_text_size)
+    else -> resources.getDimension(R.dimen.extra_big_text_size)
 }
 
 val Context.telecomManager: TelecomManager get() = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
@@ -2150,8 +2135,6 @@ fun Context.isUsingGestureNavigation(): Boolean {
         false
     }
 }
-
-fun Context.getCornerRadius() = resources.getDimension(commonR.dimen.rounded_corner_radius_small)
 
 // we need the Default Dialer functionality only in Simple Dialer and in Simple Contacts for now
 fun Context.isDefaultDialer(): Boolean {
@@ -2316,9 +2299,9 @@ fun Context.isNumberBlockedByPattern(
 }
 
 fun Context.copyToClipboard(text: String) {
-    val clip = ClipData.newPlainText(getString(commonR.string.simple_commons), text)
+    val clip = ClipData.newPlainText(getString(R.string.simple_commons), text)
     (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(clip)
-    val toastText = String.format(getString(commonR.string.value_copied_to_clipboard_show), text)
+    val toastText = String.format(getString(R.string.value_copied_to_clipboard_show), text)
     toast(toastText)
 }
 
@@ -2328,33 +2311,17 @@ fun Context.getPhoneNumberTypeText(type: Int, label: String): String {
     } else {
         getString(
             when (type) {
-                Phone.TYPE_MOBILE -> commonR.string.mobile
-                Phone.TYPE_HOME -> commonR.string.home
-                Phone.TYPE_WORK -> commonR.string.work
-                Phone.TYPE_MAIN -> commonR.string.main_number
-                Phone.TYPE_FAX_WORK -> commonR.string.work_fax
-                Phone.TYPE_FAX_HOME -> commonR.string.home_fax
-                Phone.TYPE_PAGER -> commonR.string.pager
-                else -> commonR.string.other
+                Phone.TYPE_MOBILE -> R.string.mobile
+                Phone.TYPE_HOME -> R.string.home
+                Phone.TYPE_WORK -> R.string.work
+                Phone.TYPE_MAIN -> R.string.main_number
+                Phone.TYPE_FAX_WORK -> R.string.work_fax
+                Phone.TYPE_FAX_HOME -> R.string.home_fax
+                Phone.TYPE_PAGER -> R.string.pager
+                else -> R.string.other
             }
         )
     }
-}
-
-fun Context.updateBottomTabItemColors(view: View?, isActive: Boolean, drawableId: Int? = null) {
-    val color = if (isActive) {
-        getProperPrimaryColor()
-    } else {
-        getProperTextColor()
-    }
-
-    if (drawableId != null) {
-        val drawable = ResourcesCompat.getDrawable(resources, drawableId, theme)
-        view?.findViewById<ImageView>(commonR.id.tab_item_icon)?.setImageDrawable(drawable)
-    }
-
-    view?.findViewById<ImageView>(commonR.id.tab_item_icon)?.applyColorFilter(color)
-    view?.findViewById<TextView>(commonR.id.tab_item_label)?.setTextColor(color)
 }
 
 fun Context.sendEmailIntent(recipient: String) {
@@ -2427,7 +2394,7 @@ fun Context.getTempFile(folderName: String, filename: String): File? {
     val folder = File(cacheDir, folderName)
     if (!folder.exists()) {
         if (!folder.mkdir()) {
-            toast(commonR.string.unknown_error_occurred)
+            toast(R.string.unknown_error_occurred)
             return null
         }
     }

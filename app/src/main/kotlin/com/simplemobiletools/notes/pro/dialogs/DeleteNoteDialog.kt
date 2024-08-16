@@ -32,12 +32,12 @@ class DeleteNoteDialog(
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.delete) { _, _ ->
+            .setPositiveButton(R.string.delete) { _, _ ->
                 dialogConfirmed(
                     binding.deleteNoteCheckbox.isChecked
                 )
             }
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(binding.root, this)
             }

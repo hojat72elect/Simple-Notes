@@ -1,5 +1,7 @@
 package com.simplemobiletools.notes.pro.dialogs
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.extensions.getFilenameFromPath
 import com.simplemobiletools.notes.pro.extensions.humanizePath
@@ -13,6 +15,7 @@ import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 import java.io.File
 
+@RequiresApi(Build.VERSION_CODES.O)
 class OpenFileDialog(
     val activity: SimpleActivity,
     val path: String,
@@ -26,8 +29,8 @@ class OpenFileDialog(
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(binding.root, this, R.string.open_file) { alertDialog ->
                     dialog = alertDialog

@@ -30,20 +30,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.viewpager.widget.ViewPager
-import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedDialog
-import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.notes.pro.dialogs.RadioGroupDialog
-import com.simplemobiletools.commons.dialogs.SecurityDialog
-import com.simplemobiletools.notes.pro.models.FAQItem
-import com.simplemobiletools.notes.pro.models.FileDirItem
-import com.simplemobiletools.notes.pro.models.RadioItem
-import com.simplemobiletools.notes.pro.models.Release
-import com.simplemobiletools.notes.pro.views.MyEditText
 import com.simplemobiletools.notes.pro.BuildConfig
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.adapters.NotesPagerAdapter
 import com.simplemobiletools.notes.pro.databases.NotesDatabase
 import com.simplemobiletools.notes.pro.databinding.ActivityMainBinding
+import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedDialog
+import com.simplemobiletools.notes.pro.dialogs.ConfirmationDialog
 import com.simplemobiletools.notes.pro.dialogs.DeleteNoteDialog
 import com.simplemobiletools.notes.pro.dialogs.ExportFileDialog
 import com.simplemobiletools.notes.pro.dialogs.FilePickerDialog
@@ -51,7 +44,9 @@ import com.simplemobiletools.notes.pro.dialogs.ImportFolderDialog
 import com.simplemobiletools.notes.pro.dialogs.NewNoteDialog
 import com.simplemobiletools.notes.pro.dialogs.OpenFileDialog
 import com.simplemobiletools.notes.pro.dialogs.OpenNoteDialog
+import com.simplemobiletools.notes.pro.dialogs.RadioGroupDialog
 import com.simplemobiletools.notes.pro.dialogs.RenameNoteDialog
+import com.simplemobiletools.notes.pro.dialogs.SecurityDialog
 import com.simplemobiletools.notes.pro.dialogs.SortChecklistDialog
 import com.simplemobiletools.notes.pro.extensions.appLaunched
 import com.simplemobiletools.notes.pro.extensions.applyColorFilter
@@ -115,8 +110,13 @@ import com.simplemobiletools.notes.pro.helpers.SHOW_ALL_TABS
 import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.helpers.isNougatMR1Plus
 import com.simplemobiletools.notes.pro.helpers.isQPlus
+import com.simplemobiletools.notes.pro.models.FAQItem
+import com.simplemobiletools.notes.pro.models.FileDirItem
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
+import com.simplemobiletools.notes.pro.models.RadioItem
+import com.simplemobiletools.notes.pro.models.Release
+import com.simplemobiletools.notes.pro.views.MyEditText
 import java.io.File
 import java.nio.charset.Charset
 import java.util.Arrays
@@ -193,12 +193,12 @@ class MainActivity : SimpleActivity() {
 
         if (isPackageInstalled("com.simplemobiletools.notes")) {
             val dialogText =
-                getString(com.simplemobiletools.commons.R.string.upgraded_from_free_notes)
+                getString(R.string.upgraded_from_free_notes)
             ConfirmationDialog(
                 this,
                 dialogText,
                 0,
-                com.simplemobiletools.commons.R.string.ok,
+                R.string.ok,
                 0,
                 false
             ) {}
@@ -352,8 +352,8 @@ class MainActivity : SimpleActivity() {
                 this,
                 "",
                 R.string.unsaved_changes_warning,
-                com.simplemobiletools.commons.R.string.save,
-                com.simplemobiletools.commons.R.string.discard
+                R.string.save,
+                R.string.discard
             ) {
                 if (it) {
                     mAdapter?.saveAllFragmentTexts()
@@ -411,7 +411,7 @@ class MainActivity : SimpleActivity() {
     private fun getNewTextNoteShortcut(appIconColor: Int): ShortcutInfo {
         val shortLabel = getString(R.string.text_note)
         val longLabel = getString(R.string.new_text_note)
-        val drawable = resources.getDrawable(com.simplemobiletools.commons.R.drawable.shortcut_plus)
+        val drawable = resources.getDrawable(R.drawable.shortcut_plus)
         (drawable as LayerDrawable).findDrawableByLayerId(R.id.shortcut_plus_background)
             .applyColorFilter(appIconColor)
         val bmp = drawable.convertToBitmap()
@@ -756,8 +756,8 @@ class MainActivity : SimpleActivity() {
 
         val faqItems = arrayListOf(
             FAQItem(
-                com.simplemobiletools.commons.R.string.faq_1_title_commons,
-                com.simplemobiletools.commons.R.string.faq_1_text_commons
+                R.string.faq_1_title_commons,
+                R.string.faq_1_text_commons
             ),
             FAQItem(R.string.faq_1_title, R.string.faq_1_text)
         )
@@ -765,26 +765,26 @@ class MainActivity : SimpleActivity() {
         if (!resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)) {
             faqItems.add(
                 FAQItem(
-                    com.simplemobiletools.commons.R.string.faq_2_title_commons,
-                    com.simplemobiletools.commons.R.string.faq_2_text_commons
+                    R.string.faq_2_title_commons,
+                    R.string.faq_2_text_commons
                 )
             )
             faqItems.add(
                 FAQItem(
-                    com.simplemobiletools.commons.R.string.faq_6_title_commons,
-                    com.simplemobiletools.commons.R.string.faq_6_text_commons
+                    R.string.faq_6_title_commons,
+                    R.string.faq_6_text_commons
                 )
             )
             faqItems.add(
                 FAQItem(
-                    com.simplemobiletools.commons.R.string.faq_7_title_commons,
-                    com.simplemobiletools.commons.R.string.faq_7_text_commons
+                    R.string.faq_7_title_commons,
+                    R.string.faq_7_text_commons
                 )
             )
             faqItems.add(
                 FAQItem(
-                    com.simplemobiletools.commons.R.string.faq_10_title_commons,
-                    com.simplemobiletools.commons.R.string.faq_10_text_commons
+                    R.string.faq_10_title_commons,
+                    R.string.faq_10_text_commons
                 )
             )
         }
@@ -807,7 +807,7 @@ class MainActivity : SimpleActivity() {
                     startActivityForResult(this, PICK_OPEN_FILE_INTENT)
                 } catch (e: ActivityNotFoundException) {
                     toast(
-                        com.simplemobiletools.commons.R.string.system_service_disabled,
+                        R.string.system_service_disabled,
                         Toast.LENGTH_LONG
                     )
                 } catch (e: Exception) {
@@ -859,7 +859,7 @@ class MainActivity : SimpleActivity() {
     private fun checkFile(path: String, checkTitle: Boolean, onChecksPassed: (file: File) -> Unit) {
         val file = File(path)
         if (path.isMediaFile()) {
-            toast(com.simplemobiletools.commons.R.string.invalid_file_format)
+            toast(R.string.invalid_file_format)
         } else if (file.length() > 1000 * 1000) {
             toast(R.string.file_too_large)
         } else if (checkTitle && mNotes.any { it.title.equals(path.getFilenameFromPath(), true) }) {
@@ -900,7 +900,7 @@ class MainActivity : SimpleActivity() {
                     if (realPath != null) {
                         openPath(realPath)
                     } else {
-                        com.simplemobiletools.commons.R.string.unknown_error_occurred
+                        R.string.unknown_error_occurred
                     }
                 } else if (realPath != null && realPath != "") {
                     checkFile(realPath, false) {
@@ -1008,7 +1008,7 @@ class MainActivity : SimpleActivity() {
                     }
                 }
             } else {
-                toast(com.simplemobiletools.commons.R.string.no_storage_permissions)
+                toast(R.string.no_storage_permissions)
             }
         }
     }
@@ -1039,7 +1039,7 @@ class MainActivity : SimpleActivity() {
                     startActivityForResult(this, PICK_EXPORT_FILE_INTENT)
                 } catch (e: ActivityNotFoundException) {
                     toast(
-                        com.simplemobiletools.commons.R.string.system_service_disabled,
+                        R.string.system_service_disabled,
                         Toast.LENGTH_LONG
                     )
                 } catch (e: NetworkErrorException) {
@@ -1056,7 +1056,7 @@ class MainActivity : SimpleActivity() {
             val textToExport =
                 if (mCurrentNote.type == NoteType.TYPE_TEXT) getCurrentNoteText() else mCurrentNote.value
             if (textToExport == null || textToExport.isEmpty()) {
-                toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+                toast(R.string.unknown_error_occurred)
             } else if (mCurrentNote.type == NoteType.TYPE_TEXT) {
                 showExportFilePickUpdateDialog(it, textToExport)
             } else {
@@ -1125,7 +1125,7 @@ class MainActivity : SimpleActivity() {
     ) {
         try {
             if (File(path).isDirectory) {
-                toast(com.simplemobiletools.commons.R.string.name_taken)
+                toast(R.string.name_taken)
                 return
             }
 
@@ -1314,7 +1314,7 @@ class MainActivity : SimpleActivity() {
             if (deleteFile) {
                 deleteFile(FileDirItem(note.path, note.title)) {
                     if (!it) {
-                        toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+                        toast(R.string.unknown_error_occurred)
                     }
                 }
             }
@@ -1368,7 +1368,7 @@ class MainActivity : SimpleActivity() {
         }
 
         val res = resources
-        val shareTitle = res.getString(com.simplemobiletools.commons.R.string.share_via)
+        val shareTitle = res.getString(R.string.share_via)
         Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_SUBJECT, mCurrentNote.title)
@@ -1409,8 +1409,8 @@ class MainActivity : SimpleActivity() {
             this,
             "",
             R.string.locking_warning,
-            com.simplemobiletools.commons.R.string.ok,
-            com.simplemobiletools.commons.R.string.cancel
+            R.string.ok,
+            R.string.cancel
         ) {
             SecurityDialog(this, "", SHOW_ALL_TABS) { hash, type, success ->
                 if (success) {

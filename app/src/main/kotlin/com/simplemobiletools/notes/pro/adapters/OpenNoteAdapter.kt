@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.notes.pro.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.databinding.OpenNoteItemBinding
 import com.simplemobiletools.notes.pro.extensions.beGoneIf
@@ -24,6 +24,7 @@ import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.notes.pro.models.ChecklistItem
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
+import com.simplemobiletools.notes.pro.views.MyRecyclerView
 
 @RequiresApi(Build.VERSION_CODES.O)
 class OpenNoteAdapter(
@@ -74,7 +75,7 @@ class OpenNoteAdapter(
             iconLock.beVisibleIf(note.isLocked())
             iconLock.setImageDrawable(
                 activity.resources.getColoredDrawableWithColor(
-                    com.simplemobiletools.commons.R.drawable.ic_lock_vector,
+                    R.drawable.ic_lock_vector,
                     properPrimaryColor
                 )
             )
@@ -87,7 +88,7 @@ class OpenNoteAdapter(
 
     private fun View.setupCard() {
         if (context.isBlackAndWhiteTheme()) {
-            setBackgroundResource(com.simplemobiletools.commons.R.drawable.black_dialog_background)
+            setBackgroundResource(R.drawable.black_dialog_background)
         } else {
             val cardBackgroundColor = if (backgroundColor == Color.BLACK) {
                 Color.WHITE
@@ -95,9 +96,9 @@ class OpenNoteAdapter(
                 Color.BLACK
             }
             val cardBackground = if (context.config.isUsingSystemTheme) {
-                com.simplemobiletools.commons.R.drawable.dialog_you_background
+                R.drawable.dialog_you_background
             } else {
-                com.simplemobiletools.commons.R.drawable.dialog_bg
+                R.drawable.dialog_bg
             }
             background =
                 activity.resources.getColoredDrawableWithColor(

@@ -43,8 +43,8 @@ import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.activities.AboutActivity
 import com.simplemobiletools.commons.activities.CustomizationActivity
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.dialogs.FeatureLockedDialog
-import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
+import com.simplemobiletools.notes.pro.dialogs.FeatureLockedDialog
+import com.simplemobiletools.notes.pro.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.notes.pro.asynctasks.CopyMoveTask
 import com.simplemobiletools.notes.pro.compose.extensions.DEVELOPER_PLAY_STORE_URL
 import com.simplemobiletools.notes.pro.dialogs.ExportSettingsDialog

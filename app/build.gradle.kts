@@ -118,6 +118,7 @@ dependencies {
 
     debugImplementation(libs.bundles.compose.preview)
     implementation(libs.bundles.compose)
+    implementation(libs.compose.view.binding)
 
     implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)

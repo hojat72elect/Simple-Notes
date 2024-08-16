@@ -15,10 +15,10 @@ import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.adapters.ChecklistAdapter
 import com.simplemobiletools.notes.pro.databinding.WidgetConfigBinding
+import com.simplemobiletools.notes.pro.dialogs.ColorPickerDialog
 import com.simplemobiletools.notes.pro.extensions.adjustAlpha
 import com.simplemobiletools.notes.pro.extensions.beGone
 import com.simplemobiletools.notes.pro.extensions.beGoneIf

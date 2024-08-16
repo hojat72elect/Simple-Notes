@@ -17,7 +17,7 @@ class ExportNotesDialog(val activity: SimpleActivity, callback: (filename: Strin
         val binding = DialogExportNotesBinding.inflate(activity.layoutInflater).apply {
             exportNotesFilename.setText(
                 buildString {
-                    append(root.context.getString(com.simplemobiletools.commons.R.string.notes))
+                    append(root.context.getString(R.string.notes))
                     append("_")
                     append(root.context.getCurrentFormattedDateTime())
                 }
@@ -25,8 +25,8 @@ class ExportNotesDialog(val activity: SimpleActivity, callback: (filename: Strin
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null).apply {
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null).apply {
                 activity.setupDialogStuff(
                     binding.root,
                     this,
@@ -36,13 +36,13 @@ class ExportNotesDialog(val activity: SimpleActivity, callback: (filename: Strin
 
                         val filename = binding.exportNotesFilename.value
                         when {
-                            filename.isEmpty() -> activity.toast(com.simplemobiletools.commons.R.string.empty_name)
+                            filename.isEmpty() -> activity.toast(R.string.empty_name)
                             filename.isAValidFilename() -> {
                                 callback(filename)
                                 alertDialog.dismiss()
                             }
 
-                            else -> activity.toast(com.simplemobiletools.commons.R.string.invalid_name)
+                            else -> activity.toast(R.string.invalid_name)
                         }
                     }
                 }

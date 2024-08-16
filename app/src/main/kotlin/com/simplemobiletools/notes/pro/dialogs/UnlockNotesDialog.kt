@@ -31,8 +31,8 @@ class UnlockNotesDialog(
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.skip, null)
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
+            .setPositiveButton(R.string.skip, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(
                     view,
@@ -72,7 +72,7 @@ class UnlockNotesDialog(
                 } else {
                     unlockedNoteIds.remove(note.id)
                     lockedUnlockedImage.apply {
-                        setImageResource(com.simplemobiletools.commons.R.drawable.ic_lock_vector)
+                        setImageResource(R.drawable.ic_lock_vector)
                         applyColorFilter(redColor)
                     }
                     updatePositiveButton()
@@ -84,9 +84,9 @@ class UnlockNotesDialog(
     private fun updatePositiveButton() {
         dialog?.getButton(DialogInterface.BUTTON_POSITIVE)?.text =
             if (unlockedNoteIds.isNotEmpty()) {
-                activity.getString(com.simplemobiletools.commons.R.string.ok)
+                activity.getString(R.string.ok)
             } else {
-                activity.getString(com.simplemobiletools.commons.R.string.skip)
+                activity.getString(R.string.skip)
             }
     }
 }

@@ -1,10 +1,10 @@
 package com.simplemobiletools.notes.pro.extensions
 
-import com.simplemobiletools.commons.R as commonR
 import android.content.Context
 import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewTreeObserver
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.helpers.SHORT_ANIMATION_DURATION
 
 
@@ -59,8 +59,8 @@ fun View.fadeOut() {
 
 fun View.setupViewBackground(context: Context) {
     background = if (context.baseConfig.isUsingSystemTheme) {
-        resources.getDrawable(commonR.drawable.selector_clickable_you)
+        resources.getDrawable(R.drawable.selector_clickable_you)
     } else {
-        resources.getDrawable(commonR.drawable.selector_clickable)
+        resources.getDrawable(R.drawable.selector_clickable)
     }
 }

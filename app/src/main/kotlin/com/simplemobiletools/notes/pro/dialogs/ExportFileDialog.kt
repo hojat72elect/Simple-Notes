@@ -1,7 +1,13 @@
 package com.simplemobiletools.notes.pro.dialogs
 
+import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.dialogs.FilePickerDialog
+import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.activities.SimpleActivity
+import com.simplemobiletools.notes.pro.databinding.DialogExportFileBinding
+import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.extensions.humanizePath
 import com.simplemobiletools.notes.pro.extensions.isAValidFilename
@@ -9,13 +15,11 @@ import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.extensions.showKeyboard
 import com.simplemobiletools.notes.pro.extensions.toast
 import com.simplemobiletools.notes.pro.extensions.value
-import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.SimpleActivity
-import com.simplemobiletools.notes.pro.databinding.DialogExportFileBinding
-import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.models.Note
 import java.io.File
 
+@SuppressLint("StringFormatMatches")
+@RequiresApi(Build.VERSION_CODES.O)
 class ExportFileDialog(
     val activity: SimpleActivity,
     val note: Note,
@@ -45,8 +49,8 @@ class ExportFileDialog(
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(
                     binding.root,
@@ -59,7 +63,7 @@ class ExportFileDialog(
                         val extension = binding.extension.value
 
                         if (filename.isEmpty()) {
-                            activity.toast(com.simplemobiletools.commons.R.string.filename_cannot_be_empty)
+                            activity.toast(R.string.filename_cannot_be_empty)
                             return@setOnClickListener
                         }
 
@@ -69,7 +73,7 @@ class ExportFileDialog(
                             activity.toast(
                                 String.format(
                                     activity.getString(
-                                        com.simplemobiletools.commons.R.string.filename_invalid_characters_placeholder,
+                                        R.string.filename_invalid_characters_placeholder,
                                         fullFilename
                                     )
                                 )

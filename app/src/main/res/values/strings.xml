@@ -32,7 +32,7 @@
     <string name="new_checklist">New checklist</string>
     <string name="cannot_load_over_internet">The app cannot load files over the internet</string>
     <string name="phone_storage_hidden">Phone storage (not visible by other apps)</string>
-
+    <string name="importing">Importing…</string>
     <!-- File notes -->
     <string name="open_file">Open file</string>
     <string name="export_as_file">Export as file</string>
@@ -45,7 +45,8 @@
     <string name="only_export_file_content">Only export the current file content\n(changing the note will not affect the file)</string>
     <string name="could_not_create_folder">Could not create folder %s</string>
     <string name="could_not_create_file">Could not create file %s</string>
-
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
     <!-- Settings -->
     <string name="display_success_message">Display save success messages</string>
     <string name="links_and_emails_clickable">Make links and emails clickable</string>
@@ -65,7 +66,7 @@
     <string name="use_incognito_mode">Use Incognito mode of keyboards</string>
     <string name="move_done_checklist_items">Move done checklist items to the bottom</string>
     <string name="add_new_checklist_items_top">Add new checklist items at the top</string>
-
+    <string name="notes">Notes</string>
     <!-- Checklists -->
     <string name="checklist">Checklist</string>
     <string name="checklists">Checklists</string>
@@ -74,18 +75,179 @@
     <string name="checklist_is_empty">The checklist is empty</string>
     <string name="remove_done_items">Remove done items</string>
     <string name="add_to_the_top">Add to the top</string>
+    <string name="upgraded_from_free_notes">Hello,\n\nseems like you just upgraded from the free version. If you want to migrate your notes over, you have to do it manually by exporting them into a file in the free app version and importing here through the top menu. \n\nOnce you are satisfied with your setup in the Pro version, you can uninstall the old free one as you won\'t need it anymore, it will also prevent this dialog from showing up.\n\nThanks!</string>
 
     <!-- Import / Export -->
     <string name="import_folder">Import folder</string>
     <string name="export_notes">Export notes</string>
     <string name="import_notes">Import notes</string>
     <string name="import_notes_pro">Import notes (Pro)</string>
-
+    <string name="save">Save</string>
+    <string name="discard">Discard</string>
+    <string name="faq_1_title_commons">How come I don\'t see this apps widget on the list of widgets?</string>
+    <string name="faq_1_text_commons">It is most likely because you moved the app on an SD card. There is an Android system limitation which hides the given app widgets
+        in that case. The only solution is to move the app back onto the Internal Storage via your device settings.</string>
+    <string name="faq_2_title_commons">I want to support you, but I cannot donate money. Is there anything else I can do?</string>
+    <string name="faq_2_text_commons">
+        <![CDATA[
+            Yes, of course. You can spread the word about the apps or give good feedback and ratings. You can also help by translating the apps in a new language, or just update some existing translations.
+            The guide to translating is at <a href="https://github.com/SimpleMobileTools/General-Discussion#how-can-i-suggest-an-edit-to-a-file">this website</a>, or just contact us at <a href="mailto:hello@simplemobiletools.com">hello@simplemobiletools.com</a> if you have any questions.
+        ]]>
+    </string>
+    <string name="faq_6_title_commons">The app launcher icon disappeared. What can I do?</string>
+    <string name="faq_6_text_commons">It is caused by your launcher not supporting icon customization properly. Try launching the app via Google Play or some widget, if available.
+        Once launched, just set back the default orange icon #F57C00. You might have to reinstall the app in the worst case.</string>
+    <string name="faq_7_title_commons">The money has been deducted from my bank account, but I cannot download the app. What can I do?</string>
+    <string name="faq_7_text_commons">Payments are fully handled by Google, their system glitches from time to time. Just clear your Google Play app cache and restart your device, then retry downloading it.</string>
     <!-- FAQ -->
     <string name="faq_1_title">How can I change the widgets color?</string>
     <string name="faq_1_text">In case you have only 1 active widget, you can either recreate it, or use the button in the app settings for customizing it. If you have multiple active widgets, the button in the app settings will not be available. As the app supports color customization per-widget, you will have to recreate the widget that you want to customize.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
-    -->
+
+    <string name="faq_10_title_commons">I have purchased the app, but I cannot download it on another device.</string>
+    <string name="faq_10_text_commons">Try clearing your Google Play app cache and restarting your device. It is some Google Play glitch, not really related to the app itself.</string>
+    <string name="system_service_disabled">System service for selecting files and folders is unavailable</string>
+    <string name="invalid_file_format">Invalid file format</string>
+    <string name="unknown_error_occurred">An unknown error occurred</string>
+    <string name="no_storage_permissions">Storage permission is required</string>
+    <string name="name_taken">A file or folder with that name already exists</string>
+    <string name="share_via">Share via</string>
+    <string name="filename_cannot_be_empty">Filename cannot be empty</string>
+    <string name="invalid_name">The name contains invalid characters</string>
+    <string name="rename_file_error">Could not rename the file</string>
+    <string name="exporting">Exporting…</string>
+    <string name="no_entries_for_exporting">No entries for exporting have been found</string>
+    <string name="exporting_successful">Exporting successful</string>
+    <string name="no_entries_for_importing">No entries for importing have been found</string>
+    <string name="importing_successful">Importing successful</string>
+    <string name="importing_some_entries_failed">Importing some entries failed</string>
+    <string name="no_new_items">No new items have been found</string>
+    <string name="importing_failed">Importing failed</string>
+    <string name="manage_automatic_backups">Manage automatic backups</string>
+    <string name="empty_name">Please enter a name</string>
+    <string name="skip">Skip</string>
+    <string name="filename_invalid_characters_placeholder">Filename \'%s\' contains invalid characters</string>
+    <string name="delete">Delete</string>
+    <string name="exporting_failed">Exporting failed</string>
+    <string name="sort_by">Sort by</string>
+    <string name="root">Root</string>
+    <string name="internal">Internal</string>
+    <string name="sd_card">SD Card</string>
+    <string name="usb">USB</string>
+    <string name="close">Close</string>
+    <string name="back">Back</string>
+    <string name="confirm_storage_access_android_text">Please allow the app accessing the selected storage on the next screen by pressing \'Use this folder\' at the bottom.</string>
+    <string name="thank_you_url">https://play.google.com/store/apps/details?id=com.simplemobiletools.thankyou</string>
+    <string name="no_browser_found">No browser found</string>
+    <string name="no_app_found">No valid app found</string>
+    <string name="maximum_share_reached">You cannot share this much content at once</string>
+    <string name="set_as">Set as</string>
+    <string name="edit_with">Edit with</string>
+    <string name="open_with">Open with</string>
+    <string name="error">Error: %s</string>
+    <string name="cannot_rename_folder">Cannot rename this folder</string>
+    <string name="authenticate">Authenticate</string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="custom">Custom</string>
+    <string name="during_day_at_hh_mm">During the day at hh:mm</string>
+    <string name="customize_colors">Customize colors</string>
+    <string name="customize_colors_locked">Customize colors (Locked)</string>
+    <string name="feature_locked">Locked</string>
+    <string name="no_reminder">No reminder</string>
+    <string name="at_start">At start</string>
+    <string name="alarm">Alarm</string>
+    <string name="no_sound">No sound</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+    <string name="extra_large">Extra large</string>
+    <string name="value_copied_to_clipboard_show">Value copied to clipboard:\n%s</string>
+    <string name="simple_commons">Simple Commons</string>
+    <string name="mobile">Mobile</string>
+    <string name="main_number">Main</string>
+    <string name="work_fax">Work Fax</string>
+    <string name="home_fax">Home Fax</string>
+    <string name="pager">Pager</string>
+    <string name="home">Home</string>
+    <string name="work">Work</string>
+    <string name="other">Other</string>
+    <string name="during_day_at">During the day at %02d:%02d</string>
+
+
+
+
+
+
+    <plurals name="weeks_before">
+        <item quantity="one">%d week before</item>
+        <item quantity="other">%d weeks before</item>
+    </plurals>
+    <plurals name="months_before">
+        <item quantity="one">%d month before</item>
+        <item quantity="other">%d months before</item>
+    </plurals>
+    <plurals name="years_before">
+        <item quantity="one">%d year before</item>
+        <item quantity="other">%d years before</item>
+    </plurals>
+    <plurals name="by_weeks">
+        <item quantity="one">%d week</item>
+        <item quantity="other">%d weeks</item>
+    </plurals>
+    <plurals name="by_months">
+        <item quantity="one">%d month</item>
+        <item quantity="other">%d months</item>
+    </plurals>
+    <plurals name="by_years">
+        <item quantity="one">%d year</item>
+        <item quantity="other">%d years</item>
+    </plurals>
+    <plurals name="seconds_before">
+        <item quantity="one">%d second before</item>
+        <item quantity="other">%d seconds before</item>
+    </plurals>
+    <plurals name="minutes_before">
+        <item quantity="one">%d minute before</item>
+        <item quantity="other">%d minutes before</item>
+    </plurals>
+    <plurals name="hours_before">
+        <item quantity="one">%d hour before</item>
+        <item quantity="other">%d hours before</item>
+    </plurals>
+    <plurals name="days_before">
+        <item quantity="one">%d day before</item>
+        <item quantity="other">%d days before</item>
+    </plurals>
+    <plurals name="by_seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="by_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="by_hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="by_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+
 </resources>
