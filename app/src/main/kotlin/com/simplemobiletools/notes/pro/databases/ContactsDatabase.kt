@@ -8,13 +8,13 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.simplemobiletools.notes.pro.helpers.Converters
-import com.simplemobiletools.notes.pro.models.contacts.Group
-import com.simplemobiletools.notes.pro.models.contacts.LocalContact
 import com.simplemobiletools.notes.pro.helpers.FIRST_CONTACT_ID
 import com.simplemobiletools.notes.pro.helpers.FIRST_GROUP_ID
 import com.simplemobiletools.notes.pro.helpers.getEmptyLocalContact
 import com.simplemobiletools.notes.pro.interfaces.ContactsDao
 import com.simplemobiletools.notes.pro.interfaces.GroupsDao
+import com.simplemobiletools.notes.pro.models.contacts.Group
+import com.simplemobiletools.notes.pro.models.contacts.LocalContact
 import java.util.concurrent.Executors
 
 @Database(entities = [LocalContact::class, Group::class], version = 3, exportSchema = true)
@@ -52,10 +52,6 @@ abstract class ContactsDatabase : RoomDatabase() {
             return db!!
         }
 
-        fun destroyInstance() {
-            db = null
-        }
-
         // start autoincrement ID from FIRST_CONTACT_ID/FIRST_GROUP_ID to avoid conflicts
         // Room doesn't seem to have a built in way for it, so just create a contact/group and delete it
         private fun increaseAutoIncrementIds() {
@@ -76,16 +72,16 @@ abstract class ContactsDatabase : RoomDatabase() {
         }
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.apply {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.apply {
                     execSQL("ALTER TABLE contacts ADD COLUMN photo_uri TEXT NOT NULL DEFAULT ''")
                 }
             }
         }
 
         private val MIGRATION_2_3 = object : Migration(2, 3) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.apply {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.apply {
                     execSQL("ALTER TABLE contacts ADD COLUMN ringtone TEXT DEFAULT ''")
                 }
             }

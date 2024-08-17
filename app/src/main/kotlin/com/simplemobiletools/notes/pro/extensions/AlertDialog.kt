@@ -5,7 +5,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 
 
-// in dialogs, lets use findViewById, because while some dialogs use MyEditText, material theme dialogs use TextInputEditText so the system takes care of it
+// in dialogs, lets use findViewById, because while some dialogs use MyEditText, material theme
+// dialogs use TextInputEditText so the system takes care of it.
 fun AlertDialog.showKeyboard(editText: AppCompatEditText) {
     window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
     editText.apply {
@@ -16,6 +17,3 @@ fun AlertDialog.showKeyboard(editText: AppCompatEditText) {
     }
 }
 
-fun AlertDialog.hideKeyboard() {
-    window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-}

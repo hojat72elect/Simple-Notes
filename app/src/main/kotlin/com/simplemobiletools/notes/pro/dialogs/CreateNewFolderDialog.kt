@@ -1,5 +1,6 @@
 package com.simplemobiletools.notes.pro.dialogs
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
@@ -60,6 +61,7 @@ import com.simplemobiletools.notes.pro.extensions.value
 import com.simplemobiletools.notes.pro.helpers.isRPlus
 import java.io.File
 
+@SuppressLint("SetTextI18n")
 @RequiresApi(Build.VERSION_CODES.O)
 class CreateNewFolderDialog(
     val activity: BaseSimpleActivity,

@@ -58,7 +58,7 @@ import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 @RequiresApi(Build.VERSION_CODES.O)
 class WritePermissionDialog(
     activity: Activity,
-    val writePermissionDialogMode: WritePermissionDialogMode,
+    private val writePermissionDialogMode: WritePermissionDialogMode,
     val callback: () -> Unit
 ) {
 

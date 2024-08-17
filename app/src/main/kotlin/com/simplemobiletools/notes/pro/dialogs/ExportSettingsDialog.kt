@@ -20,7 +20,9 @@ import com.simplemobiletools.notes.pro.extensions.value
 
 @RequiresApi(Build.VERSION_CODES.O)
 class ExportSettingsDialog(
-    val activity: BaseSimpleActivity, val defaultFilename: String, val hidePath: Boolean,
+    val activity: BaseSimpleActivity,
+    private val defaultFilename: String,
+    private val hidePath: Boolean,
     callback: (path: String, filename: String) -> Unit
 ) {
     init {

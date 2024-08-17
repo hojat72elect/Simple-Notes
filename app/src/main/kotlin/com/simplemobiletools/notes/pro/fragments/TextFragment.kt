@@ -30,7 +30,6 @@ import com.simplemobiletools.notes.pro.extensions.adjustAlpha
 import com.simplemobiletools.notes.pro.extensions.beVisibleIf
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getPercentageFontSize
-import com.simplemobiletools.notes.pro.extensions.getProperBackgroundColor
 import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
 import com.simplemobiletools.notes.pro.extensions.getProperTextColor
 import com.simplemobiletools.notes.pro.extensions.onGlobalLayout
@@ -172,8 +171,7 @@ class TextFragment : NoteFragment() {
             val adjustedPrimaryColor = context.getProperPrimaryColor()
             setColors(
                 context.getProperTextColor(),
-                adjustedPrimaryColor,
-                context.getProperBackgroundColor()
+                adjustedPrimaryColor
             )
             setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getPercentageFontSize())
             highlightColor = adjustedPrimaryColor.adjustAlpha(.4f)

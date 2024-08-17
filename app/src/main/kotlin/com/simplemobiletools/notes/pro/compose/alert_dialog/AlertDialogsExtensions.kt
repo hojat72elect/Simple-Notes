@@ -1,8 +1,6 @@
 package com.simplemobiletools.notes.pro.compose.alert_dialog
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,10 +14,10 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.compose.theme.light_grey_stroke
 import com.simplemobiletools.notes.pro.compose.theme.LocalTheme
 import com.simplemobiletools.notes.pro.compose.theme.Shapes
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
+import com.simplemobiletools.notes.pro.compose.theme.light_grey_stroke
 import com.simplemobiletools.notes.pro.compose.theme.model.Theme
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.helpers.isSPlus
@@ -35,15 +33,6 @@ val dialogContainerColor
             Color(context.baseConfig.backgroundColor)
         }
     }
-
-val Modifier.dialogBackgroundShapeAndBorder: Modifier
-    @ReadOnlyComposable
-    @Composable get() = then(
-        Modifier
-            .fillMaxWidth()
-            .background(dialogContainerColor, dialogShape)
-            .dialogBorder
-    )
 
 val dialogShape = Shapes.extraLarge
 

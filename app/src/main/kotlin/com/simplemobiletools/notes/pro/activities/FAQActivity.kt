@@ -17,7 +17,8 @@ class FAQActivity : ComponentActivity() {
         enableEdgeToEdgeSimple()
         setContent {
             AppThemeSurface {
-                val faqItems = remember { intent.getSerializableExtra(APP_FAQ) as ArrayList<FAQItem> }
+                val faqItems =
+                    remember { intent.getSerializableExtra(APP_FAQ) as ArrayList<FAQItem> }
                 FAQScreen(
                     goBack = ::finish,
                     faqItems = faqItems.toImmutableList()

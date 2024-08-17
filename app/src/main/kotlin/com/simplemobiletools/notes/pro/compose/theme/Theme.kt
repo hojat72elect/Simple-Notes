@@ -13,7 +13,6 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import com.simplemobiletools.notes.pro.compose.extensions.config
@@ -28,7 +27,6 @@ internal fun Theme(
 ) {
     val view = LocalView.current
     val context = LocalContext.current
-    val configuration = LocalConfiguration.current
     val baseConfig = remember { context.config }
     val isSystemInDarkTheme = isSystemInDarkTheme()
 

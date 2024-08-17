@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.adapters.FilepickerFavoritesAdapter
-import com.simplemobiletools.notes.pro.adapters.FilepickerItemsAdapter
+import com.simplemobiletools.notes.pro.adapters.FilePickerItemsAdapter
 import com.simplemobiletools.notes.pro.databinding.DialogFilepickerBinding
 import com.simplemobiletools.notes.pro.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.notes.pro.extensions.baseConfig
@@ -73,8 +73,8 @@ class FilePickerDialog(
     var showHidden: Boolean = false,
     val showFAB: Boolean = false,
     val canAddShowHiddenButton: Boolean = false,
-    val forceShowRoot: Boolean = false,
-    val showFavoritesButton: Boolean = false,
+    private val forceShowRoot: Boolean = false,
+    private val showFavoritesButton: Boolean = false,
     private val enforceStorageRestrictions: Boolean = true,
     val callback: (pickedPath: String) -> Unit
 ) : Breadcrumbs.BreadcrumbsListener {
@@ -111,7 +111,7 @@ class FilePickerDialog(
 
         val builder = activity.getAlertDialogBuilder()
             .setNegativeButton(R.string.cancel, null)
-            .setOnKeyListener { dialogInterface, i, keyEvent ->
+            .setOnKeyListener { _, i, keyEvent ->
                 if (keyEvent.action == KeyEvent.ACTION_UP && i == KeyEvent.KEYCODE_BACK) {
                     val breadcrumbs = mDialogView.filepickerBreadcrumbs
                     if (breadcrumbs.getItemCount() > 1) {
@@ -208,7 +208,7 @@ class FilePickerDialog(
         }
 
         val sortedItems = items.sortedWith(compareBy({ !it.isDirectory }, { it.name.lowercase() }))
-        val adapter = FilepickerItemsAdapter(activity, sortedItems, mDialogView.filepickerList) {
+        val adapter = FilePickerItemsAdapter(activity, sortedItems, mDialogView.filepickerList) {
             if ((it as FileDirItem).isDirectory) {
                 activity.handleLockedFolderOpening(it.path) { success ->
                     if (success) {

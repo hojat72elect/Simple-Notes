@@ -7,8 +7,8 @@ import kotlin.math.max
 /**
  * RecyclerView StaggeredGridLayoutManager but with automatic spanCount calculation.
  *
- * @param context The initiating view's context.
- * @param itemSize: Grid item size (width or height, depending on orientation) in pixels. Will be used to calculate span count.
+ * @param itemSize: Grid item size (width or height, depending on orientation) in pixels.
+ * Will be used to calculate span count.
  */
 class AutoStaggeredGridLayoutManager(
     private var itemSize: Int,

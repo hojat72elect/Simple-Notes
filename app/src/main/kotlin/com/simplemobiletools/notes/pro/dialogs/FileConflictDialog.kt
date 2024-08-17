@@ -2,13 +2,23 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.app.Activity
 import android.content.Context
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -18,9 +28,15 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
+import com.simplemobiletools.notes.pro.compose.alert_dialog.DialogSurface
+import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogTextColor
+import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
+import com.simplemobiletools.notes.pro.compose.components.RadioGroupDialogComponent
 import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
 import com.simplemobiletools.notes.pro.compose.settings.SettingsHorizontalDivider
 import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.databinding.DialogFileConflictBinding
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.beVisibleIf
@@ -31,18 +47,14 @@ import com.simplemobiletools.notes.pro.helpers.CONFLICT_MERGE
 import com.simplemobiletools.notes.pro.helpers.CONFLICT_OVERWRITE
 import com.simplemobiletools.notes.pro.helpers.CONFLICT_SKIP
 import com.simplemobiletools.notes.pro.models.FileDirItem
-import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
-import com.simplemobiletools.notes.pro.compose.alert_dialog.DialogSurface
-import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogTextColor
-import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
-import com.simplemobiletools.notes.pro.compose.components.RadioGroupDialogComponent
-import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.models.FileDirItemReadOnly
 import com.simplemobiletools.notes.pro.models.asReadOnly
 import kotlinx.collections.immutable.toImmutableList
 
 class FileConflictDialog(
-    val activity: Activity, val fileDirItem: FileDirItem, val showApplyToAllCheckbox: Boolean,
+    val activity: Activity,
+    private val fileDirItem: FileDirItem,
+    private val showApplyToAllCheckbox: Boolean,
     val callback: (resolution: Int, applyForAll: Boolean) -> Unit
 ) {
     val view = DialogFileConflictBinding.inflate(activity.layoutInflater, null, false)

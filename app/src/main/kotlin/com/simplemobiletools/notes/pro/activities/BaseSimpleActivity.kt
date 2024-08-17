@@ -40,7 +40,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.AboutActivity
 import com.simplemobiletools.notes.pro.asynctasks.CopyMoveTask
 import com.simplemobiletools.notes.pro.compose.extensions.DEVELOPER_PLAY_STORE_URL
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationDialog
@@ -151,17 +150,17 @@ import java.util.regex.Pattern
 
 @RequiresApi(Build.VERSION_CODES.O)
 abstract class BaseSimpleActivity : AppCompatActivity() {
-    var materialScrollColorAnimation: ValueAnimator? = null
+    private var materialScrollColorAnimation: ValueAnimator? = null
     var copyMoveCallback: ((destinationPath: String) -> Unit)? = null
-    var actionOnPermission: ((granted: Boolean) -> Unit)? = null
-    var isAskingPermissions = false
+    private var actionOnPermission: ((granted: Boolean) -> Unit)? = null
+    private var isAskingPermissions = false
     var useDynamicTheme = true
-    var showTransparentTop = false
+    private var showTransparentTop = false
     var isMaterialActivity =
         false      // by material activity we mean translucent navigation bar and opaque status and action bars
     var checkedDocumentPath = ""
-    var currentScrollY = 0
-    var configItemsToExport = LinkedHashMap<String, Any>()
+    private var currentScrollY = 0
+    private var configItemsToExport = LinkedHashMap<String, Any>()
 
     private var mainCoordinatorLayout: CoordinatorLayout? = null
     private var nestedView: View? = null
@@ -169,12 +168,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     private var toolbar: Toolbar? = null
     private var useTransparentNavigation = false
     private var useTopSearchMenu = false
-    private val GENERIC_PERM_HANDLER = 100
-    private val DELETE_FILE_SDK_30_HANDLER = 300
-    private val RECOVERABLE_SECURITY_HANDLER = 301
-    private val UPDATE_FILE_SDK_30_HANDLER = 302
-    private val MANAGE_MEDIA_RC = 303
-    private val TRASH_FILE_SDK_30_HANDLER = 304
+
 
     companion object {
         var funAfterSAFPermission: ((success: Boolean) -> Unit)? = null
@@ -183,6 +177,13 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         var funAfterTrash30File: ((success: Boolean) -> Unit)? = null
         var funRecoverableSecurity: ((success: Boolean) -> Unit)? = null
         var funAfterManageMediaPermission: (() -> Unit)? = null
+
+        private const val GENERIC_PERM_HANDLER = 100
+        private const val DELETE_FILE_SDK_30_HANDLER = 300
+        private const val RECOVERABLE_SECURITY_HANDLER = 301
+        private const val UPDATE_FILE_SDK_30_HANDLER = 302
+        private const val MANAGE_MEDIA_RC = 303
+        private const val TRASH_FILE_SDK_30_HANDLER = 304
     }
 
     abstract fun getAppIconIDs(): ArrayList<Int>
@@ -278,7 +279,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         window.decorView.setBackgroundColor(color)
     }
 
-    fun updateStatusbarColor(color: Int) {
+    private fun updateStatusBarColor(color: Int) {
         window.statusBarColor = color
 
         if (color.getContrastColor() == DARK_GREY) {
@@ -291,16 +292,16 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     }
 
     fun updateActionbarColor(color: Int = getProperStatusBarColor()) {
-        updateStatusbarColor(color)
+        updateStatusBarColor(color)
         setTaskDescription(ActivityManager.TaskDescription(null, null, color))
     }
 
-    fun updateNavigationBarColor(color: Int) {
+    private fun updateNavigationBarColor(color: Int) {
         window.navigationBarColor = color
         updateNavigationBarButtons(color)
     }
 
-    fun updateNavigationBarButtons(color: Int) {
+    private fun updateNavigationBarButtons(color: Int) {
         if (isOreoPlus()) {
             if (color.getContrastColor() == DARK_GREY) {
                 window.decorView.systemUiVisibility =
@@ -326,7 +327,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         handleNavigationAndScrolling()
 
         val backgroundColor = getProperBackgroundColor()
-        updateStatusbarColor(backgroundColor)
+        updateStatusBarColor(backgroundColor)
         updateActionbarColor(backgroundColor)
     }
 
@@ -362,13 +363,13 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         this.scrollingView = scrollingView
         this.toolbar = toolbar
         if (scrollingView is RecyclerView) {
-            scrollingView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            scrollingView.setOnScrollChangeListener { _, _, _, _, _ ->
                 val newScrollY = scrollingView.computeVerticalScrollOffset()
                 scrollingChanged(newScrollY, currentScrollY)
                 currentScrollY = newScrollY
             }
         } else if (scrollingView is NestedScrollView) {
-            scrollingView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            scrollingView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
                 scrollingChanged(scrollY, oldScrollY)
             }
         }
@@ -386,7 +387,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         }
     }
 
-    fun animateTopBarColors(colorFrom: Int, colorTo: Int) {
+    private fun animateTopBarColors(colorFrom: Int, colorTo: Int) {
         if (toolbar == null) {
             return
         }
@@ -403,7 +404,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         materialScrollColorAnimation!!.start()
     }
 
-    fun getRequiredStatusBarColor(): Int {
+    private fun getRequiredStatusBarColor(): Int {
         return if ((scrollingView is RecyclerView || scrollingView is NestedScrollView) && scrollingView?.computeVerticalScrollOffset() == 0) {
             getProperBackgroundColor()
         } else {
@@ -419,7 +420,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         }
 
         if (!useTopSearchMenu) {
-            updateStatusbarColor(color)
+            updateStatusBarColor(color)
             toolbar.setBackgroundColor(color)
             toolbar.setTitleTextColor(contrastColor)
             toolbar.navigationIcon?.applyColorFilter(contrastColor)
@@ -502,7 +503,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         }
     }
 
-    fun updateRecentsAppIcon() {
+    private fun updateRecentsAppIcon() {
         if (baseConfig.isUsingModifiedAppIcon) {
             val appIconIDs = getAppIconIDs()
             val currentAppIconColorIndex = getCurrentAppIconColorIndex()
@@ -614,7 +615,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         } else if (requestCode == OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR_OBB) {
             if (resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
                 if (isProperAndroidRoot(checkedDocumentPath, resultData.data!!)) {
-                    if (resultData.dataString == baseConfig.OTGTreeUri || resultData.dataString == baseConfig.sdTreeUri) {
+                    if (resultData.dataString == baseConfig.otgTreeUri || resultData.dataString == baseConfig.sdTreeUri) {
                         val pathToSelect = createAndroidDataOrObbPath(checkedDocumentPath)
                         toast(getString(R.string.wrong_folder_selected, pathToSelect))
                         return
@@ -662,7 +663,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
                     .matches() || (sdOtgPattern.matcher(partition)
                     .matches() && resultData.dataString!!.contains(partition))
                 if (isProperSDRootFolder(resultData.data!!) && isProperPartition) {
-                    if (resultData.dataString == baseConfig.OTGTreeUri) {
+                    if (resultData.dataString == baseConfig.otgTreeUri) {
                         toast(R.string.sd_card_usb_same)
                         return
                     }
@@ -694,9 +695,9 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
                         toast(R.string.sd_card_usb_same)
                         return
                     }
-                    baseConfig.OTGTreeUri = resultData.dataString!!
-                    baseConfig.OTGPartition =
-                        baseConfig.OTGTreeUri.removeSuffix("%3A").substringAfterLast('/')
+                    baseConfig.otgTreeUri = resultData.dataString!!
+                    baseConfig.otgPartition =
+                        baseConfig.otgTreeUri.removeSuffix("%3A").substringAfterLast('/')
                             .trimEnd('/')
                     updateOTGPathFromPartition()
 
@@ -926,7 +927,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     fun handleOTGPermission(callback: (success: Boolean) -> Unit) {
         hideKeyboard()
-        if (baseConfig.OTGTreeUri.isNotEmpty()) {
+        if (baseConfig.otgTreeUri.isNotEmpty()) {
             callback(true)
             return
         }
@@ -1252,7 +1253,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         }
     }
 
-    fun checkConflicts(
+    private fun checkConflicts(
         files: ArrayList<FileDirItem>,
         destinationPath: String,
         index: Int,
@@ -1353,7 +1354,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         }
     }
 
-    fun handleNotificationPermission(callback: (granted: Boolean) -> Unit) {
+    private fun handleNotificationPermission(callback: (granted: Boolean) -> Unit) {
         if (!isTiramisuPlus()) {
             callback(true)
         } else {
@@ -1375,7 +1376,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         }
     }
 
-    val copyMoveListener = object : CopyMoveListener {
+    private val copyMoveListener = object : CopyMoveListener {
         override fun copySucceeded(
             copyOnly: Boolean,
             copiedAll: Boolean,
@@ -1429,7 +1430,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     fun exportSettings(configItems: LinkedHashMap<String, Any>) {
         if (isQPlus()) {
             configItemsToExport = configItems
-            ExportSettingsDialog(this, getExportSettingsFilename(), true) { path, filename ->
+            ExportSettingsDialog(this, getExportSettingsFilename(), true) { _, filename ->
                 Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                     type = "text/plain"
                     putExtra(Intent.EXTRA_TITLE, filename)
@@ -1451,7 +1452,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
                         this,
                         getExportSettingsFilename(),
                         false
-                    ) { path, filename ->
+                    ) { path, _ ->
                         val file = File(path)
                         getFileOutputStream(file.toFileDirItem(this), true) {
                             exportSettingsTo(it, configItems)

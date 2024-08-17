@@ -119,7 +119,6 @@ import com.simplemobiletools.notes.pro.models.Release
 import com.simplemobiletools.notes.pro.views.MyEditText
 import java.io.File
 import java.nio.charset.Charset
-import java.util.Arrays
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : SimpleActivity() {
@@ -400,7 +399,7 @@ class MainActivity : SimpleActivity() {
             val newChecklist = getNewChecklistShortcut(appIconColor)
 
             try {
-                shortcutManager.dynamicShortcuts = Arrays.asList(newTextNote, newChecklist)
+                shortcutManager.dynamicShortcuts = listOf(newTextNote, newChecklist)
                 config.lastHandledShortcutColor = appIconColor
             } catch (ignored: Exception) {
             }
@@ -692,11 +691,7 @@ class MainActivity : SimpleActivity() {
         return getNoteIndexWithId(noteIdToOpen)
     }
 
-    private fun currentNotesView() = if (binding.viewPager == null) {
-        null
-    } else {
-        mAdapter?.getCurrentNotesView(binding.viewPager.currentItem)
-    }
+    private fun currentNotesView() = mAdapter?.getCurrentNotesView(binding.viewPager.currentItem)
 
     private fun displayRenameDialog() {
         RenameNoteDialog(this, mCurrentNote, getCurrentNoteText()) {

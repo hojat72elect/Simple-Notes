@@ -18,7 +18,6 @@ import com.simplemobiletools.notes.pro.databinding.FragmentChecklistBinding
 import com.simplemobiletools.notes.pro.dialogs.NewChecklistItemDialog
 import com.simplemobiletools.notes.pro.extensions.beVisibleIf
 import com.simplemobiletools.notes.pro.extensions.config
-import com.simplemobiletools.notes.pro.extensions.getContrastColor
 import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
 import com.simplemobiletools.notes.pro.extensions.getProperTextColor
 import com.simplemobiletools.notes.pro.extensions.hideKeyboard
@@ -123,9 +122,7 @@ class ChecklistFragment : NoteFragment(), ChecklistItemsListener {
         val adjustedPrimaryColor = requireActivity().getProperPrimaryColor()
         binding.checklistFab.apply {
             setColors(
-                requireActivity().getProperTextColor(),
-                adjustedPrimaryColor,
-                adjustedPrimaryColor.getContrastColor()
+                adjustedPrimaryColor
             )
 
             setOnClickListener {

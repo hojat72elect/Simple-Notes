@@ -88,7 +88,7 @@ class WidgetConfigureActivity : SimpleActivity() {
         binding.notesPickerValue.setOnClickListener { showNoteSelector() }
 
         val primaryColor = getProperPrimaryColor()
-        binding.configBgSeekbar.setColors(mTextColor, primaryColor, primaryColor)
+        binding.configBgSeekbar.setColors(primaryColor)
         binding.notesPickerHolder.background = ColorDrawable(getProperBackgroundColor())
 
         binding.showNoteTitleHolder.setOnClickListener {

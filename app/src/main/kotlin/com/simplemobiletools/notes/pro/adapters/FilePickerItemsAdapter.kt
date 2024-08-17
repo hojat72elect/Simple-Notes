@@ -15,10 +15,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.databinding.ItemFilepickerListBinding
-import com.simplemobiletools.notes.pro.models.FileDirItem
-import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.databinding.ItemFilepickerListBinding
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.formatSize
 import com.simplemobiletools.notes.pro.extensions.getAndroidSAFUri
@@ -31,11 +29,15 @@ import com.simplemobiletools.notes.pro.extensions.isGif
 import com.simplemobiletools.notes.pro.extensions.isPathOnOTG
 import com.simplemobiletools.notes.pro.extensions.isRestrictedSAFOnlyRoot
 import com.simplemobiletools.notes.pro.helpers.getFilePlaceholderDrawables
+import com.simplemobiletools.notes.pro.models.FileDirItem
+import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
-class FilepickerItemsAdapter(
-    activity: BaseSimpleActivity, val fileDirItems: List<FileDirItem>, recyclerView: MyRecyclerView,
+class FilePickerItemsAdapter(
+    activity: BaseSimpleActivity,
+    private val fileDirItems: List<FileDirItem>,
+    recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick),
     RecyclerViewFastScroller.OnPopupTextUpdate {

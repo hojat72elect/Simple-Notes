@@ -3,10 +3,13 @@ package com.simplemobiletools.notes.pro.extensions
 import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
-import androidx.annotation.DrawableRes
 
 
-fun ImageView.setFillWithStroke(fillColor: Int, backgroundColor: Int, drawRectangle: Boolean = false) {
+fun ImageView.setFillWithStroke(
+    fillColor: Int,
+    backgroundColor: Int,
+    drawRectangle: Boolean = false
+) {
     GradientDrawable().apply {
         shape = if (drawRectangle) GradientDrawable.RECTANGLE else GradientDrawable.OVAL
         setColor(fillColor)
@@ -20,12 +23,3 @@ fun ImageView.setFillWithStroke(fillColor: Int, backgroundColor: Int, drawRectan
 }
 
 fun ImageView.applyColorFilter(color: Int) = setColorFilter(color, PorterDuff.Mode.SRC_IN)
-
-fun ImageView.setImageResourceOrBeGone(@DrawableRes imageRes: Int?) {
-    if (imageRes != null) {
-        beVisible()
-        setImageResource(imageRes)
-    } else {
-        beGone()
-    }
-}

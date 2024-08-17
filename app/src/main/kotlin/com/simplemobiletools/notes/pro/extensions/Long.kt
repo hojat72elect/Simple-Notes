@@ -2,11 +2,11 @@ package com.simplemobiletools.notes.pro.extensions
 
 import android.content.Context
 import android.text.format.DateFormat
-import com.simplemobiletools.notes.pro.extensions.baseConfig
-import com.simplemobiletools.notes.pro.extensions.getTimeFormat
 import java.text.DecimalFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.log10
+import kotlin.math.pow
 
 
 fun Long.formatSize(): String {
@@ -15,11 +15,19 @@ fun Long.formatSize(): String {
     }
 
     val units = arrayOf("B", "kB", "MB", "GB", "TB")
-    val digitGroups = (Math.log10(toDouble()) / Math.log10(1024.0)).toInt()
-    return "${DecimalFormat("#,##0.#").format(this / Math.pow(1024.0, digitGroups.toDouble()))} ${units[digitGroups]}"
+    val digitGroups = (log10(toDouble()) / log10(1024.0)).toInt()
+    return "${
+        DecimalFormat("#,##0.#").format(
+            this / 1024.0.pow(digitGroups.toDouble())
+        )
+    } ${units[digitGroups]}"
 }
 
-fun Long.formatDate(context: Context, dateFormat: String? = null, timeFormat: String? = null): String {
+fun Long.formatDate(
+    context: Context,
+    dateFormat: String? = null,
+    timeFormat: String? = null
+): String {
     val useDateFormat = dateFormat ?: context.baseConfig.dateFormat
     val useTimeFormat = timeFormat ?: context.getTimeFormat()
     val cal = Calendar.getInstance(Locale.ENGLISH)

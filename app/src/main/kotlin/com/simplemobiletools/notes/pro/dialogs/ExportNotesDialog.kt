@@ -19,7 +19,7 @@ class ExportNotesDialog(val activity: SimpleActivity, callback: (filename: Strin
                 buildString {
                     append(root.context.getString(R.string.notes))
                     append("_")
-                    append(root.context.getCurrentFormattedDateTime())
+                    append(getCurrentFormattedDateTime())
                 }
             )
         }

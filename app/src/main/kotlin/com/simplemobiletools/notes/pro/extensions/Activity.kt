@@ -3,28 +3,20 @@ package com.simplemobiletools.notes.pro.extensions
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
-import android.app.TimePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.EXTRA_STREAM
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import android.os.Handler
 import android.os.Looper
-import android.os.TransactionTooLargeException
-import android.provider.ContactsContract
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.telecom.PhoneAccountHandle
-import android.telecom.TelecomManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +27,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.auth.AuthPromptCallback
 import androidx.biometric.auth.AuthPromptHost
@@ -46,11 +39,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogTitleBinding
-import com.simplemobiletools.notes.pro.dialogs.AppSideloadedDialog
+import com.simplemobiletools.notes.pro.dialogs.AppSideLoadedDialog
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedDialog
-import com.simplemobiletools.notes.pro.dialogs.CustomIntervalPickerDialog
 import com.simplemobiletools.notes.pro.dialogs.DonateDialog
-import com.simplemobiletools.notes.pro.dialogs.RadioGroupDialog
 import com.simplemobiletools.notes.pro.dialogs.RateStarsDialog
 import com.simplemobiletools.notes.pro.dialogs.SecurityDialog
 import com.simplemobiletools.notes.pro.dialogs.UpgradeToProDialog
@@ -59,29 +50,19 @@ import com.simplemobiletools.notes.pro.dialogs.WritePermissionDialog
 import com.simplemobiletools.notes.pro.helpers.CREATE_DOCUMENT_SDK_30
 import com.simplemobiletools.notes.pro.helpers.DARK_GREY
 import com.simplemobiletools.notes.pro.helpers.EXTRA_SHOW_ADVANCED
-import com.simplemobiletools.notes.pro.helpers.IS_FROM_GALLERY
-import com.simplemobiletools.notes.pro.helpers.MINUTE_SECONDS
 import com.simplemobiletools.notes.pro.helpers.MyContentProvider
 import com.simplemobiletools.notes.pro.helpers.OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR_OBB
 import com.simplemobiletools.notes.pro.helpers.OPEN_DOCUMENT_TREE_FOR_SDK_30
 import com.simplemobiletools.notes.pro.helpers.OPEN_DOCUMENT_TREE_OTG
 import com.simplemobiletools.notes.pro.helpers.OPEN_DOCUMENT_TREE_SD
-import com.simplemobiletools.notes.pro.helpers.PERMISSION_CALL_PHONE
-import com.simplemobiletools.notes.pro.helpers.PERMISSION_READ_STORAGE
 import com.simplemobiletools.notes.pro.helpers.PROTECTION_FINGERPRINT
-import com.simplemobiletools.notes.pro.helpers.REAL_FILE_PATH
-import com.simplemobiletools.notes.pro.helpers.REQUEST_EDIT_IMAGE
-import com.simplemobiletools.notes.pro.helpers.REQUEST_SET_AS
 import com.simplemobiletools.notes.pro.helpers.SIDELOADING_FALSE
 import com.simplemobiletools.notes.pro.helpers.SIDELOADING_TRUE
-import com.simplemobiletools.notes.pro.helpers.SILENT
 import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.helpers.isOnMainThread
 import com.simplemobiletools.notes.pro.helpers.isRPlus
-import com.simplemobiletools.notes.pro.models.AlarmSound
 import com.simplemobiletools.notes.pro.models.Android30RenameFormat
 import com.simplemobiletools.notes.pro.models.FileDirItem
-import com.simplemobiletools.notes.pro.models.RadioItem
 import com.simplemobiletools.notes.pro.models.Release
 import com.simplemobiletools.notes.pro.models.SharedTheme
 import com.simplemobiletools.notes.pro.views.MyTextView
@@ -91,7 +72,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.TreeSet
 
 
 fun Activity.appLaunched(appId: String) {
@@ -346,7 +326,7 @@ fun BaseSimpleActivity.isShowingAndroidSAFDialog(path: String): Boolean {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun BaseSimpleActivity.isShowingOTGDialog(path: String): Boolean {
-    return if (!isRPlus() && isPathOnOTG(path) && (baseConfig.OTGTreeUri.isEmpty() || !hasProperStoredTreeUri(
+    return if (!isRPlus() && isPathOnOTG(path) && (baseConfig.otgTreeUri.isEmpty() || !hasProperStoredTreeUri(
             true
         ))
     ) {
@@ -433,289 +413,6 @@ fun Activity.redirectToRateUs() {
     }
 }
 
-fun Activity.sharePathIntent(path: String, applicationId: String) {
-    ensureBackgroundThread {
-        val newUri = getFinalUriFromPath(path, applicationId) ?: return@ensureBackgroundThread
-        Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(EXTRA_STREAM, newUri)
-            type = getUriMimeType(path, newUri)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            grantUriPermission("android", newUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-            try {
-                startActivity(Intent.createChooser(this, getString(R.string.share_via)))
-            } catch (e: ActivityNotFoundException) {
-                toast(R.string.no_app_found)
-            } catch (e: RuntimeException) {
-                if (e.cause is TransactionTooLargeException) {
-                    toast(R.string.maximum_share_reached)
-                } else {
-                    showErrorToast(e)
-                }
-            } catch (e: Exception) {
-                showErrorToast(e)
-            }
-        }
-    }
-}
-
-fun Activity.sharePathsIntent(paths: List<String>, applicationId: String) {
-    ensureBackgroundThread {
-        if (paths.size == 1) {
-            sharePathIntent(paths.first(), applicationId)
-        } else {
-            val uriPaths = ArrayList<String>()
-            val newUris = paths.map {
-                val uri = getFinalUriFromPath(it, applicationId) ?: return@ensureBackgroundThread
-                uriPaths.add(uri.path!!)
-                uri
-            } as ArrayList<Uri>
-
-            var mimeType = uriPaths.getMimeType()
-            if (mimeType.isEmpty() || mimeType == "*/*") {
-                mimeType = paths.getMimeType()
-            }
-
-            Intent().apply {
-                action = Intent.ACTION_SEND_MULTIPLE
-                type = mimeType
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                putParcelableArrayListExtra(EXTRA_STREAM, newUris)
-
-                try {
-                    startActivity(Intent.createChooser(this, getString(R.string.share_via)))
-                } catch (e: ActivityNotFoundException) {
-                    toast(R.string.no_app_found)
-                } catch (e: RuntimeException) {
-                    if (e.cause is TransactionTooLargeException) {
-                        toast(R.string.maximum_share_reached)
-                    } else {
-                        showErrorToast(e)
-                    }
-                } catch (e: Exception) {
-                    showErrorToast(e)
-                }
-            }
-        }
-    }
-}
-
-fun Activity.setAsIntent(path: String, applicationId: String) {
-    ensureBackgroundThread {
-        val newUri = getFinalUriFromPath(path, applicationId) ?: return@ensureBackgroundThread
-        Intent().apply {
-            action = Intent.ACTION_ATTACH_DATA
-            setDataAndType(newUri, getUriMimeType(path, newUri))
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            val chooser = Intent.createChooser(this, getString(R.string.set_as))
-
-            try {
-                startActivityForResult(chooser, REQUEST_SET_AS)
-            } catch (e: ActivityNotFoundException) {
-                toast(R.string.no_app_found)
-            } catch (e: Exception) {
-                showErrorToast(e)
-            }
-        }
-    }
-}
-
-fun Activity.shareTextIntent(text: String) {
-    ensureBackgroundThread {
-        Intent().apply {
-            action = Intent.ACTION_SEND
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
-
-            try {
-                startActivity(Intent.createChooser(this, getString(R.string.share_via)))
-            } catch (e: ActivityNotFoundException) {
-                toast(R.string.no_app_found)
-            } catch (e: RuntimeException) {
-                if (e.cause is TransactionTooLargeException) {
-                    toast(R.string.maximum_share_reached)
-                } else {
-                    showErrorToast(e)
-                }
-            } catch (e: Exception) {
-                showErrorToast(e)
-            }
-        }
-    }
-}
-
-fun Activity.openEditorIntent(path: String, forceChooser: Boolean, applicationId: String) {
-    ensureBackgroundThread {
-        val newUri = getFinalUriFromPath(path, applicationId) ?: return@ensureBackgroundThread
-        Intent().apply {
-            action = Intent.ACTION_EDIT
-            setDataAndType(newUri, getUriMimeType(path, newUri))
-            if (!isRPlus() || (isRPlus() && (hasProperStoredDocumentUriSdk30(path) || Environment.isExternalStorageManager()))) {
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            }
-
-            val parent = path.getParentPath()
-            val newFilename = "${path.getFilenameFromPath().substringBeforeLast('.')}_1"
-            val extension = path.getFilenameExtension()
-            val newFilePath = File(parent, "$newFilename.$extension")
-
-            val outputUri = if (isPathOnOTG(path)) newUri else getFinalUriFromPath(
-                "$newFilePath",
-                applicationId
-            )
-            if (!isRPlus()) {
-                val resInfoList =
-                    packageManager.queryIntentActivities(this, PackageManager.MATCH_DEFAULT_ONLY)
-                for (resolveInfo in resInfoList) {
-                    val packageName = resolveInfo.activityInfo.packageName
-                    grantUriPermission(
-                        packageName,
-                        outputUri,
-                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    )
-                }
-            }
-
-            if (!isRPlus()) {
-                putExtra(MediaStore.EXTRA_OUTPUT, outputUri)
-            }
-
-            putExtra(REAL_FILE_PATH, path)
-
-            try {
-                val chooser = Intent.createChooser(this, getString(R.string.edit_with))
-                startActivityForResult(if (forceChooser) chooser else this, REQUEST_EDIT_IMAGE)
-            } catch (e: ActivityNotFoundException) {
-                toast(R.string.no_app_found)
-            } catch (e: Exception) {
-                showErrorToast(e)
-            }
-        }
-    }
-}
-
-fun Activity.openPathIntent(
-    path: String,
-    forceChooser: Boolean,
-    applicationId: String,
-    forceMimeType: String = "",
-    extras: HashMap<String, Boolean> = HashMap()
-) {
-    ensureBackgroundThread {
-        val newUri = getFinalUriFromPath(path, applicationId) ?: return@ensureBackgroundThread
-        val mimeType =
-            if (forceMimeType.isNotEmpty()) forceMimeType else getUriMimeType(path, newUri)
-        Intent().apply {
-            action = Intent.ACTION_VIEW
-            setDataAndType(newUri, mimeType)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-            if (applicationId == "com.simplemobiletools.gallery.pro" || applicationId == "com.simplemobiletools.gallery.pro.debug") {
-                putExtra(IS_FROM_GALLERY, true)
-            }
-
-            for ((key, value) in extras) {
-                putExtra(key, value)
-            }
-
-            putExtra(REAL_FILE_PATH, path)
-
-            try {
-                val chooser = Intent.createChooser(this, getString(R.string.open_with))
-                startActivity(if (forceChooser) chooser else this)
-            } catch (e: ActivityNotFoundException) {
-                if (!tryGenericMimeType(this, mimeType, newUri)) {
-                    toast(R.string.no_app_found)
-                }
-            } catch (e: Exception) {
-                showErrorToast(e)
-            }
-        }
-    }
-}
-
-fun Activity.launchViewContactIntent(uri: Uri) {
-    Intent().apply {
-        action = ContactsContract.QuickContact.ACTION_QUICK_CONTACT
-        data = uri
-        launchActivityIntent(this)
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-fun BaseSimpleActivity.launchCallIntent(recipient: String, handle: PhoneAccountHandle? = null) {
-    handlePermission(PERMISSION_CALL_PHONE) {
-        val action = if (it) Intent.ACTION_CALL else Intent.ACTION_DIAL
-        Intent(action).apply {
-            data = Uri.fromParts("tel", recipient, null)
-
-            if (handle != null) {
-                putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, handle)
-            }
-
-            if (isDefaultDialer()) {
-                val packageName = if (baseConfig.appId.contains(
-                        ".debug",
-                        true
-                    )
-                ) "com.simplemobiletools.dialer.debug" else "com.simplemobiletools.dialer"
-                val className = "com.simplemobiletools.dialer.activities.DialerActivity"
-                setClassName(packageName, className)
-            }
-
-            launchActivityIntent(this)
-        }
-    }
-}
-
-fun Activity.launchSendSMSIntent(recipient: String) {
-    Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.fromParts("smsto", recipient, null)
-        launchActivityIntent(this)
-    }
-}
-
-fun Activity.showLocationOnMap(coordinates: String) {
-    val uriBegin = "geo:${coordinates.replace(" ", "")}"
-    val encodedQuery = Uri.encode(coordinates)
-    val uriString = "$uriBegin?q=$encodedQuery&z=16"
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uriString))
-    launchActivityIntent(intent)
-}
-
-fun Activity.getFinalUriFromPath(path: String, applicationId: String): Uri? {
-    val uri = try {
-        ensurePublicUri(path, applicationId)
-    } catch (e: Exception) {
-        showErrorToast(e)
-        return null
-    }
-
-    if (uri == null) {
-        toast(R.string.unknown_error_occurred)
-        return null
-    }
-
-    return uri
-}
-
-fun Activity.tryGenericMimeType(intent: Intent, mimeType: String, uri: Uri): Boolean {
-    var genericMimeType = mimeType.getGenericMimeType()
-    if (genericMimeType.isEmpty()) {
-        genericMimeType = "*/*"
-    }
-
-    intent.setDataAndType(uri, genericMimeType)
-
-    return try {
-        startActivity(intent)
-        true
-    } catch (e: Exception) {
-        false
-    }
-}
-
 fun BaseSimpleActivity.checkWhatsNew(releases: List<Release>, currVersion: Int) {
     if (baseConfig.lastVersion == 0) {
         baseConfig.lastVersion = currVersion
@@ -730,95 +427,6 @@ fun BaseSimpleActivity.checkWhatsNew(releases: List<Release>, currVersion: Int) 
     }
 
     baseConfig.lastVersion = currVersion
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-fun BaseSimpleActivity.deleteFolders(
-    folders: List<FileDirItem>,
-    deleteMediaOnly: Boolean = true,
-    callback: ((wasSuccess: Boolean) -> Unit)? = null
-) {
-    ensureBackgroundThread {
-        deleteFoldersBg(folders, deleteMediaOnly, callback)
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-fun BaseSimpleActivity.deleteFoldersBg(
-    folders: List<FileDirItem>,
-    deleteMediaOnly: Boolean = true,
-    callback: ((wasSuccess: Boolean) -> Unit)? = null
-) {
-    var wasSuccess = false
-    var needPermissionForPath = ""
-    for (folder in folders) {
-        if (needsStupidWritePermissions(folder.path) && baseConfig.sdTreeUri.isEmpty()) {
-            needPermissionForPath = folder.path
-            break
-        }
-    }
-
-    handleSAFDialog(needPermissionForPath) {
-        if (!it) {
-            return@handleSAFDialog
-        }
-
-        folders.forEachIndexed { index, folder ->
-            deleteFolderBg(folder, deleteMediaOnly) {
-                if (it)
-                    wasSuccess = true
-
-                if (index == folders.size - 1) {
-                    runOnUiThread {
-                        callback?.invoke(wasSuccess)
-                    }
-                }
-            }
-        }
-    }
-}
-
-fun BaseSimpleActivity.deleteFolder(
-    folder: FileDirItem,
-    deleteMediaOnly: Boolean = true,
-    callback: ((wasSuccess: Boolean) -> Unit)? = null
-) {
-    ensureBackgroundThread {
-        deleteFolderBg(folder, deleteMediaOnly, callback)
-    }
-}
-
-fun BaseSimpleActivity.deleteFolderBg(
-    fileDirItem: FileDirItem,
-    deleteMediaOnly: Boolean = true,
-    callback: ((wasSuccess: Boolean) -> Unit)? = null
-) {
-    val folder = File(fileDirItem.path)
-    if (folder.exists()) {
-        val filesArr = folder.listFiles()
-        if (filesArr == null) {
-            runOnUiThread {
-                callback?.invoke(true)
-            }
-            return
-        }
-
-        val files = filesArr.toMutableList().filter { !deleteMediaOnly || it.isMediaFile() }
-        for (file in files) {
-            deleteFileBg(
-                file.toFileDirItem(applicationContext),
-                allowDeleteFolder = false,
-                isDeletingMultipleFiles = false
-            ) { }
-        }
-
-        if (folder.listFiles()?.isEmpty() == true) {
-            deleteFileBg(fileDirItem, allowDeleteFolder = true, isDeletingMultipleFiles = false) { }
-        }
-    }
-    runOnUiThread {
-        callback?.invoke(true)
-    }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -994,17 +602,6 @@ private fun BaseSimpleActivity.deleteFilesCasual(
     }
 }
 
-fun BaseSimpleActivity.deleteFile(
-    fileDirItem: FileDirItem,
-    allowDeleteFolder: Boolean = false,
-    isDeletingMultipleFiles: Boolean,
-    callback: ((wasSuccess: Boolean) -> Unit)? = null
-) {
-    ensureBackgroundThread {
-        deleteFileBg(fileDirItem, allowDeleteFolder, isDeletingMultipleFiles, callback)
-    }
-}
-
 fun BaseSimpleActivity.deleteFileBg(
     fileDirItem: FileDirItem,
     allowDeleteFolder: Boolean = false,
@@ -1122,16 +719,8 @@ private fun deleteRecursively(file: File, context: Context): Boolean {
     return deleted
 }
 
-fun Activity.scanFileRecursively(file: File, callback: (() -> Unit)? = null) {
-    applicationContext.scanFileRecursively(file, callback)
-}
-
 fun Activity.scanPathRecursively(path: String, callback: (() -> Unit)? = null) {
     applicationContext.scanPathRecursively(path, callback)
-}
-
-fun Activity.scanFilesRecursively(files: List<File>, callback: (() -> Unit)? = null) {
-    applicationContext.scanFilesRecursively(files, callback)
 }
 
 fun Activity.scanPathsRecursively(paths: List<String>, callback: (() -> Unit)? = null) {
@@ -1467,14 +1056,14 @@ fun Activity.showBiometricPrompt(
         )
 }
 
-fun Activity.createTempFile(file: File): File? {
+fun createTempFile(file: File): File? {
     return if (file.isDirectory) {
         createTempDir("temp", "${System.currentTimeMillis()}", file.parentFile)
     } else {
         if (isRPlus()) {
             // this can throw FileSystemException, lets catch and handle it at the place calling this function
             kotlin.io.path.createTempFile(
-                file.parentFile.toPath(),
+                file.parentFile?.toPath(),
                 "temp",
                 "${System.currentTimeMillis()}"
             ).toFile()
@@ -1647,36 +1236,6 @@ fun Activity.handleHiddenFolderPasswordProtection(callback: () -> Unit) {
     }
 }
 
-fun Activity.handleAppPasswordProtection(callback: (success: Boolean) -> Unit) {
-    if (baseConfig.isAppPasswordProtectionOn) {
-        SecurityDialog(
-            this,
-            baseConfig.appPasswordHash,
-            baseConfig.appProtectionType
-        ) { _, _, success ->
-            callback(success)
-        }
-    } else {
-        callback(true)
-    }
-}
-
-fun Activity.handleDeletePasswordProtection(callback: () -> Unit) {
-    if (baseConfig.isDeletePasswordProtectionOn) {
-        SecurityDialog(
-            this,
-            baseConfig.deletePasswordHash,
-            baseConfig.deleteProtectionType
-        ) { _, _, success ->
-            if (success) {
-                callback()
-            }
-        }
-    } else {
-        callback()
-    }
-}
-
 fun Activity.handleLockedFolderOpening(path: String, callback: (success: Boolean) -> Unit) {
     if (baseConfig.isFolderProtected(path)) {
         SecurityDialog(
@@ -1724,7 +1283,7 @@ fun Activity.setupDialogStuff(
     if (view is ViewGroup) {
         updateTextColors(view)
     } else if (view is MyTextView) {
-        view.setColors(textColor, primaryColor, backgroundColor)
+        view.setColors(textColor, primaryColor)
     }
 
     if (dialog is MaterialAlertDialogBuilder) {
@@ -1807,141 +1366,11 @@ fun Activity.getAlertDialogBuilder() = if (baseConfig.isUsingSystemTheme) {
     AlertDialog.Builder(this)
 }
 
-fun Activity.showPickSecondsDialogHelper(
-    curMinutes: Int,
-    isSnoozePicker: Boolean = false,
-    showSecondsAtCustomDialog: Boolean = false,
-    showDuringDayOption: Boolean = false,
-    cancelCallback: (() -> Unit)? = null,
-    callback: (seconds: Int) -> Unit
-) {
-    val seconds = if (curMinutes == -1) curMinutes else curMinutes * 60
-    showPickSecondsDialog(
-        seconds,
-        isSnoozePicker,
-        showSecondsAtCustomDialog,
-        showDuringDayOption,
-        cancelCallback,
-        callback
-    )
-}
-
-fun Activity.showPickSecondsDialog(
-    curSeconds: Int,
-    isSnoozePicker: Boolean = false,
-    showSecondsAtCustomDialog: Boolean = false,
-    showDuringDayOption: Boolean = false,
-    cancelCallback: (() -> Unit)? = null,
-    callback: (seconds: Int) -> Unit
-) {
-    hideKeyboard()
-    val seconds = TreeSet<Int>()
-    seconds.apply {
-        if (!isSnoozePicker) {
-            add(-1)
-            add(0)
-        }
-        add(1 * MINUTE_SECONDS)
-        add(5 * MINUTE_SECONDS)
-        add(10 * MINUTE_SECONDS)
-        add(30 * MINUTE_SECONDS)
-        add(60 * MINUTE_SECONDS)
-        add(curSeconds)
-    }
-
-    val items = ArrayList<RadioItem>(seconds.size + 1)
-    seconds.mapIndexedTo(items) { index, value ->
-        RadioItem(index, getFormattedSeconds(value, !isSnoozePicker), value)
-    }
-
-    var selectedIndex = 0
-    seconds.forEachIndexed { index, value ->
-        if (value == curSeconds) {
-            selectedIndex = index
-        }
-    }
-
-    items.add(RadioItem(-2, getString(R.string.custom)))
-
-    if (showDuringDayOption) {
-        items.add(RadioItem(-3, getString(R.string.during_day_at_hh_mm)))
-    }
-
-    RadioGroupDialog(
-        this,
-        items,
-        selectedIndex,
-        showOKButton = isSnoozePicker,
-        cancelCallback = cancelCallback
-    ) {
-        when (it) {
-            -2 -> {
-                CustomIntervalPickerDialog(this, showSeconds = showSecondsAtCustomDialog) {
-                    callback(it)
-                }
-            }
-
-            -3 -> {
-                TimePickerDialog(
-                    this, getTimePickerDialogTheme(),
-                    { view, hourOfDay, minute -> callback(hourOfDay * -3600 + minute * -60) },
-                    curSeconds / 3600, curSeconds % 3600, baseConfig.use24HourFormat
-                ).show()
-            }
-
-            else -> {
-                callback(it as Int)
-            }
-        }
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-fun BaseSimpleActivity.getAlarmSounds(type: Int, callback: (ArrayList<AlarmSound>) -> Unit) {
-    val alarms = ArrayList<AlarmSound>()
-    val manager = RingtoneManager(this)
-    manager.setType(type)
-
-    try {
-        val cursor = manager.cursor
-        var curId = 1
-        val silentAlarm = AlarmSound(curId++, getString(R.string.no_sound), SILENT)
-        alarms.add(silentAlarm)
-
-        while (cursor.moveToNext()) {
-            val title = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX)
-            var uri = cursor.getString(RingtoneManager.URI_COLUMN_INDEX)
-            val id = cursor.getString(RingtoneManager.ID_COLUMN_INDEX)
-            if (!uri.endsWith(id)) {
-                uri += "/$id"
-            }
-
-            val alarmSound = AlarmSound(curId++, title, uri)
-            alarms.add(alarmSound)
-        }
-        callback(alarms)
-    } catch (e: Exception) {
-        if (e is SecurityException) {
-            handlePermission(PERMISSION_READ_STORAGE) {
-                if (it) {
-                    getAlarmSounds(type, callback)
-                } else {
-                    showErrorToast(e)
-                    callback(ArrayList())
-                }
-            }
-        } else {
-            showErrorToast(e)
-            callback(ArrayList())
-        }
-    }
-}
-
 fun Activity.checkAppSideloading(): Boolean {
     val isSideloaded = when (baseConfig.appSideloadingStatus) {
         SIDELOADING_TRUE -> true
         SIDELOADING_FALSE -> false
-        else -> isAppSideloaded()
+        else -> isAppSideLoaded()
     }
 
     baseConfig.appSideloadingStatus = if (isSideloaded) SIDELOADING_TRUE else SIDELOADING_FALSE
@@ -1952,9 +1381,9 @@ fun Activity.checkAppSideloading(): Boolean {
     return isSideloaded
 }
 
-fun Activity.isAppSideloaded(): Boolean {
+fun Activity.isAppSideLoaded(): Boolean {
     return try {
-        getDrawable(R.drawable.ic_camera_vector)
+        AppCompatResources.getDrawable(this,R.drawable.ic_camera_vector)
         false
     } catch (e: Exception) {
         true
@@ -1962,7 +1391,7 @@ fun Activity.isAppSideloaded(): Boolean {
 }
 
 fun Activity.showSideloadingDialog() {
-    AppSideloadedDialog(this) {
+    AppSideLoadedDialog(this) {
         finish()
     }
 }

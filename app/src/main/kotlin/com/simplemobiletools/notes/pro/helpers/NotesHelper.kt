@@ -3,8 +3,8 @@ package com.simplemobiletools.notes.pro.helpers
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.notesDB
 import com.simplemobiletools.notes.pro.models.Note
@@ -76,7 +76,7 @@ class NotesHelper(val context: Context) {
         }
     }
 
-    fun insertOrUpdateNotes(
+    private fun insertOrUpdateNotes(
         notes: List<Note>,
         callback: ((newNoteIds: List<Long>) -> Unit)? = null
     ) {

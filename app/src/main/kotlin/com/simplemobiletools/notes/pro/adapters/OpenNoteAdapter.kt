@@ -55,7 +55,11 @@ class OpenNoteAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.bindView(item, true, false) { itemView, _ ->
+        holder.bindView(
+            any = item,
+            allowSingleClick = true,
+            allowLongClick = false
+        ) { itemView, _ ->
             setupView(itemView, item)
         }
         bindViewHolder(holder)

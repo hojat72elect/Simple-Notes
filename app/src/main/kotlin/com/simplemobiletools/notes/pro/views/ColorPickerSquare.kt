@@ -14,15 +14,15 @@ import android.util.AttributeSet
 import android.view.View
 
 class ColorPickerSquare(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    var paint: Paint? = null
-    var luar: Shader = LinearGradient(
+    private var paint: Paint? = null
+    private var luar: Shader = LinearGradient(
         0f,
         0f,
         0f,
         measuredHeight.toFloat(),
         Color.WHITE,
         Color.BLACK,
-        Shader.TileMode.CLAMP
+        TileMode.CLAMP
     )
     val color = floatArrayOf(1f, 1f, 1f)
 

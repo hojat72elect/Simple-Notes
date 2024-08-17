@@ -12,8 +12,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.util.Pair
 import androidx.documentfile.provider.DocumentFile
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.interfaces.CopyMoveListener
-import com.simplemobiletools.notes.pro.models.FileDirItem
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.canManageMedia
@@ -45,6 +43,8 @@ import com.simplemobiletools.notes.pro.helpers.CONFLICT_KEEP_BOTH
 import com.simplemobiletools.notes.pro.helpers.CONFLICT_SKIP
 import com.simplemobiletools.notes.pro.helpers.getConflictResolution
 import com.simplemobiletools.notes.pro.helpers.isOreoPlus
+import com.simplemobiletools.notes.pro.interfaces.CopyMoveListener
+import com.simplemobiletools.notes.pro.models.FileDirItem
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -53,14 +53,13 @@ import java.lang.ref.WeakReference
 @RequiresApi(Build.VERSION_CODES.O)
 class CopyMoveTask(
     val activity: BaseSimpleActivity,
-    val copyOnly: Boolean,
-    val copyMediaOnly: Boolean,
-    val conflictResolutions: LinkedHashMap<String, Int>,
+    private val copyOnly: Boolean,
+    private val copyMediaOnly: Boolean,
+    private val conflictResolutions: LinkedHashMap<String, Int>,
     listener: CopyMoveListener,
-    val copyHidden: Boolean
+    private val copyHidden: Boolean
 ) : AsyncTask<Pair<ArrayList<FileDirItem>, String>, Void, Boolean>() {
-    private val INITIAL_PROGRESS_DELAY = 3000L
-    private val PROGRESS_RECHECK_INTERVAL = 500L
+
 
     private var mListener: WeakReference<CopyMoveListener>? = null
     private var mTransferredFiles = ArrayList<FileDirItem>()
@@ -72,20 +71,21 @@ class CopyMoveTask(
     private var mDestinationPath = ""
 
     // progress indication
-    private var mNotificationBuilder: NotificationCompat.Builder
-    private var mCurrFilename = ""
-    private var mCurrentProgress = 0L
-    private var mMaxSize = 0
-    private var mNotifId = 0
-    private var mIsTaskOver = false
-    private var mProgressHandler = Handler()
+    private var notificationBuilder: NotificationCompat.Builder
+    private var currFilename = ""
+    private var currentProgress = 0L
+    private var maxSize = 0
+    private var notificationId = 0
+    private var isTaskOver = false
+    private var progressHandler = Handler()
 
     init {
         mListener = WeakReference(listener)
-        mNotificationBuilder = NotificationCompat.Builder(activity)
+        notificationBuilder = NotificationCompat.Builder(activity)
     }
 
-    override fun doInBackground(vararg params: Pair<ArrayList<FileDirItem>, String>): Boolean? {
+    @Deprecated("Deprecated in Java")
+    override fun doInBackground(vararg params: Pair<ArrayList<FileDirItem>, String>): Boolean {
         if (params.isEmpty()) {
             return false
         }
@@ -94,8 +94,8 @@ class CopyMoveTask(
         mFiles = pair.first!!
         mDestinationPath = pair.second!!
         mFileCountToCopy = mFiles.size
-        mNotifId = (System.currentTimeMillis() / 1000).toInt()
-        mMaxSize = 0
+        notificationId = (System.currentTimeMillis() / 1000).toInt()
+        maxSize = 0
         for (file in mFiles) {
             if (file.size == 0L) {
                 file.size = file.getProperSize(activity, copyHidden)
@@ -108,11 +108,11 @@ class CopyMoveTask(
                     newPath
                 ) != CONFLICT_SKIP || !fileExists
             ) {
-                mMaxSize += (file.size / 1000).toInt()
+                maxSize += (file.size / 1000).toInt()
             }
         }
 
-        mProgressHandler.postDelayed({
+        progressHandler.postDelayed({
             initProgressNotification()
             updateProgress()
         }, INITIAL_PROGRESS_DELAY)
@@ -144,14 +144,15 @@ class CopyMoveTask(
         return true
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPostExecute(success: Boolean) {
         if (activity.isFinishing || activity.isDestroyed) {
             return
         }
 
         deleteProtectedFiles()
-        mProgressHandler.removeCallbacksAndMessages(null)
-        activity.notificationManager.cancel(mNotifId)
+        progressHandler.removeCallbacksAndMessages(null)
+        activity.notificationManager.cancel(notificationId)
         val listener = mListener?.get() ?: return
 
         if (success) {
@@ -178,30 +179,30 @@ class CopyMoveTask(
             }
         }
 
-        mNotificationBuilder.setContentTitle(title)
+        notificationBuilder.setContentTitle(title)
             .setSmallIcon(R.drawable.ic_copy_vector)
             .setChannelId(channelId)
     }
 
     private fun updateProgress() {
-        if (mIsTaskOver) {
-            activity.notificationManager.cancel(mNotifId)
+        if (isTaskOver) {
+            activity.notificationManager.cancel(notificationId)
             cancel(true)
             return
         }
 
-        mNotificationBuilder.apply {
-            setContentText(mCurrFilename)
-            setProgress(mMaxSize, (mCurrentProgress / 1000).toInt(), false)
-            activity.notificationManager.notify(mNotifId, build())
+        notificationBuilder.apply {
+            setContentText(currFilename)
+            setProgress(maxSize, (currentProgress / 1000).toInt(), false)
+            activity.notificationManager.notify(notificationId, build())
         }
 
-        mProgressHandler.removeCallbacksAndMessages(null)
-        mProgressHandler.postDelayed({
+        progressHandler.removeCallbacksAndMessages(null)
+        progressHandler.postDelayed({
             updateProgress()
 
-            if (mCurrentProgress / 1000 >= mMaxSize) {
-                mIsTaskOver = true
+            if (currentProgress / 1000 >= maxSize) {
+                isTaskOver = true
             }
         }, PROGRESS_RECHECK_INTERVAL)
     }
@@ -289,7 +290,7 @@ class CopyMoveTask(
 
     private fun copyFile(source: FileDirItem, destination: FileDirItem) {
         if (copyMediaOnly && !source.path.isMediaFile()) {
-            mCurrentProgress += source.size
+            currentProgress += source.size
             return
         }
 
@@ -298,11 +299,11 @@ class CopyMoveTask(
             val error =
                 String.format(activity.getString(R.string.could_not_create_folder), directory)
             activity.showErrorToast(error)
-            mCurrentProgress += source.size
+            currentProgress += source.size
             return
         }
 
-        mCurrFilename = source.name
+        currFilename = source.name
         var inputStream: InputStream? = null
         var out: OutputStream? = null
         try {
@@ -326,7 +327,7 @@ class CopyMoveTask(
             while (bytes >= 0) {
                 out!!.write(buffer, 0, bytes)
                 copiedSize += bytes
-                mCurrentProgress += bytes
+                currentProgress += bytes
                 bytes = inputStream.read(buffer)
             }
 
@@ -428,5 +429,10 @@ class CopyMoveTask(
                 )
             }
         }
+    }
+
+    companion object {
+        private const val INITIAL_PROGRESS_DELAY = 3_000L
+        private const val PROGRESS_RECHECK_INTERVAL = 500L
     }
 }

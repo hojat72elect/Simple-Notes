@@ -44,19 +44,10 @@ import com.simplemobiletools.notes.pro.helpers.isSPlus
 import com.simplemobiletools.notes.pro.models.MyTheme
 import com.simplemobiletools.notes.pro.models.RadioItem
 import com.simplemobiletools.notes.pro.models.SharedTheme
+import kotlin.math.abs
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CustomizationActivity : BaseSimpleActivity() {
-    private val THEME_LIGHT = 0
-    private val THEME_DARK = 1
-    private val THEME_SOLARIZED = 2
-    private val THEME_DARK_RED = 3
-    private val THEME_BLACK_WHITE = 4
-    private val THEME_CUSTOM = 5
-    private val THEME_SHARED = 6
-    private val THEME_WHITE = 7
-    private val THEME_AUTO = 8
-    private val THEME_SYSTEM = 9    // Material You
 
     private var curTextColor = 0
     private var curBackgroundColor = 0
@@ -178,6 +169,7 @@ class CustomizationActivity : BaseSimpleActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (hasUnsavedChanges && System.currentTimeMillis() - lastSavePromptTS > SAVE_DISCARD_PROMPT_INTERVAL) {
             promptSaveDiscard()
@@ -568,7 +560,7 @@ class CustomizationActivity : BaseSimpleActivity() {
         }
     }
 
-    private fun hasColorChanged(old: Int, new: Int) = Math.abs(old - new) > 1
+    private fun hasColorChanged(old: Int, new: Int) = abs(old - new) > 1
 
     private fun colorChanged() {
         hasUnsavedChanges = true
@@ -787,4 +779,17 @@ class CustomizationActivity : BaseSimpleActivity() {
 
     private fun getMaterialYouString() =
         "${getString(R.string.system_default)} (${getString(R.string.material_you)})"
+
+    companion object {
+        private const val THEME_LIGHT = 0
+        private const val THEME_DARK = 1
+        private const val THEME_DARK_RED = 3
+        private const val THEME_BLACK_WHITE = 4
+        private const val THEME_CUSTOM = 5
+        private const val THEME_SHARED = 6
+        private const val THEME_WHITE = 7
+        private const val THEME_AUTO = 8
+        private const val THEME_SYSTEM = 9    // Material You
+
+    }
 }

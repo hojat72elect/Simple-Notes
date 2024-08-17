@@ -2,22 +2,20 @@ package com.simplemobiletools.notes.pro.extensions
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.role.RoleManager
 import android.appwidget.AppWidgetManager
-import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.ComponentName
-import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.ShortcutManager
 import android.content.res.Configuration
@@ -29,18 +27,13 @@ import android.hardware.usb.UsbConstants
 import android.hardware.usb.UsbManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaScannerConnection
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.provider.BaseColumns
-import android.provider.BlockedNumberContract.BlockedNumbers
 import android.provider.ContactsContract
-import android.provider.ContactsContract.CommonDataKinds.BaseTypes
-import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.DocumentsContract
 import android.provider.DocumentsContract.Document
 import android.provider.MediaStore
@@ -52,7 +45,6 @@ import android.provider.MediaStore.Video
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.telecom.TelecomManager
-import android.telephony.PhoneNumberUtils
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
@@ -62,15 +54,10 @@ import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.net.toUri
-import androidx.core.os.bundleOf
 import androidx.documentfile.provider.DocumentFile
-import androidx.exifinterface.media.ExifInterface
 import androidx.loader.content.CursorLoader
 import com.github.ajalt.reprint.core.Reprint
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.databases.ContactsDatabase
@@ -81,7 +68,6 @@ import com.simplemobiletools.notes.pro.helpers.BaseConfig
 import com.simplemobiletools.notes.pro.helpers.Config
 import com.simplemobiletools.notes.pro.helpers.ContactsHelper
 import com.simplemobiletools.notes.pro.helpers.DARK_GREY
-import com.simplemobiletools.notes.pro.helpers.DAY_SECONDS
 import com.simplemobiletools.notes.pro.helpers.DEFAULT_MIMETYPE
 import com.simplemobiletools.notes.pro.helpers.EXTERNAL_STORAGE_PROVIDER_AUTHORITY
 import com.simplemobiletools.notes.pro.helpers.ExportResult
@@ -89,13 +75,6 @@ import com.simplemobiletools.notes.pro.helpers.ExternalStorageProviderHack
 import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_LARGE
 import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_MEDIUM
 import com.simplemobiletools.notes.pro.helpers.FONT_SIZE_SMALL
-import com.simplemobiletools.notes.pro.helpers.FRIDAY_BIT
-import com.simplemobiletools.notes.pro.helpers.HOUR_SECONDS
-import com.simplemobiletools.notes.pro.helpers.KEY_MAILTO
-import com.simplemobiletools.notes.pro.helpers.MINUTE_SECONDS
-import com.simplemobiletools.notes.pro.helpers.MONDAY_BIT
-import com.simplemobiletools.notes.pro.helpers.MONTH_SECONDS
-import com.simplemobiletools.notes.pro.helpers.MyContactsContentProvider
 import com.simplemobiletools.notes.pro.helpers.MyContentProvider
 import com.simplemobiletools.notes.pro.helpers.MyWidgetProvider
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
@@ -124,37 +103,25 @@ import com.simplemobiletools.notes.pro.helpers.PERMISSION_WRITE_CALL_LOG
 import com.simplemobiletools.notes.pro.helpers.PERMISSION_WRITE_CONTACTS
 import com.simplemobiletools.notes.pro.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.notes.pro.helpers.PREFS_KEY
-import com.simplemobiletools.notes.pro.helpers.SATURDAY_BIT
 import com.simplemobiletools.notes.pro.helpers.SD_OTG_PATTERN
 import com.simplemobiletools.notes.pro.helpers.SD_OTG_SHORT
 import com.simplemobiletools.notes.pro.helpers.SMT_PRIVATE
-import com.simplemobiletools.notes.pro.helpers.SUNDAY_BIT
-import com.simplemobiletools.notes.pro.helpers.THURSDAY_BIT
 import com.simplemobiletools.notes.pro.helpers.TIME_FORMAT_12
 import com.simplemobiletools.notes.pro.helpers.TIME_FORMAT_24
-import com.simplemobiletools.notes.pro.helpers.TUESDAY_BIT
-import com.simplemobiletools.notes.pro.helpers.WEDNESDAY_BIT
-import com.simplemobiletools.notes.pro.helpers.WEEK_SECONDS
-import com.simplemobiletools.notes.pro.helpers.YEAR_SECONDS
-import com.simplemobiletools.notes.pro.helpers.YOUR_ALARM_SOUNDS_MIN_ID
 import com.simplemobiletools.notes.pro.helpers.appIconColorStrings
 import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.helpers.getNextAutoBackupTime
 import com.simplemobiletools.notes.pro.helpers.getPreviousAutoBackupTime
-import com.simplemobiletools.notes.pro.helpers.isNougatPlus
 import com.simplemobiletools.notes.pro.helpers.isOnMainThread
 import com.simplemobiletools.notes.pro.helpers.isOreoPlus
 import com.simplemobiletools.notes.pro.helpers.isQPlus
 import com.simplemobiletools.notes.pro.helpers.isRPlus
 import com.simplemobiletools.notes.pro.helpers.isSPlus
-import com.simplemobiletools.notes.pro.helpers.isUpsideDownCakePlus
 import com.simplemobiletools.notes.pro.helpers.proPackages
 import com.simplemobiletools.notes.pro.interfaces.ContactsDao
 import com.simplemobiletools.notes.pro.interfaces.GroupsDao
 import com.simplemobiletools.notes.pro.interfaces.NotesDao
 import com.simplemobiletools.notes.pro.interfaces.WidgetsDao
-import com.simplemobiletools.notes.pro.models.AlarmSound
-import com.simplemobiletools.notes.pro.models.BlockedNumber
 import com.simplemobiletools.notes.pro.models.FileDirItem
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.SharedTheme
@@ -229,7 +196,7 @@ fun Context.getDocumentFile(path: String): DocumentFile? {
     }
 
     return try {
-        val treeUri = Uri.parse(if (isOTG) baseConfig.OTGTreeUri else baseConfig.sdTreeUri)
+        val treeUri = Uri.parse(if (isOTG) baseConfig.otgTreeUri else baseConfig.sdTreeUri)
         var document = DocumentFile.fromTreeUri(applicationContext, treeUri)
         val parts = relativePath.split("/").filter { it.isNotEmpty() }
         for (part in parts) {
@@ -581,7 +548,7 @@ fun Context.createSAFDirectorySdk30(path: String): Boolean {
         DocumentsContract.createDocument(
             contentResolver,
             parentUri,
-            DocumentsContract.Document.MIME_TYPE_DIR,
+            Document.MIME_TYPE_DIR,
             path.getFilenameFromPath()
         ) != null
     } catch (e: IllegalStateException) {
@@ -713,13 +680,9 @@ fun Context.buildDocumentUriSdk30(fullPath: String): Uri {
     return DocumentsContract.buildDocumentUri(EXTERNAL_STORAGE_PROVIDER_AUTHORITY, documentId)
 }
 
-fun Context.getPicturesDirectoryPath(fullPath: String): String {
-    val basePath = fullPath.getBasePath(this)
-    return File(basePath, Environment.DIRECTORY_PICTURES).absolutePath
-}
 
-
-fun Context.getSharedPrefs() = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
+fun Context.getSharedPrefs(): SharedPreferences =
+    getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
 
 val Context.isRTLLayout: Boolean get() = resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 
@@ -743,7 +706,7 @@ fun Context.toast(msg: String, length: Int = Toast.LENGTH_SHORT) {
                 doToast(this, msg, length)
             }
         }
-    } catch (e: Exception) {
+    } catch (_: Exception) {
     }
 }
 
@@ -758,19 +721,18 @@ fun Context.hasProperStoredAndroidTreeUri(path: String): Boolean {
 
 fun Context.humanizePath(path: String): String {
     val trimmedPath = path.trimEnd('/')
-    val basePath = path.getBasePath(this)
-    return when (basePath) {
+    return when (val basePath = path.getBasePath(this)) {
         "/" -> "${getHumanReadablePath(basePath)}$trimmedPath"
         else -> trimmedPath.replaceFirst(basePath, getHumanReadablePath(basePath))
     }
 }
 
 fun Context.hasProperStoredTreeUri(isOTG: Boolean): Boolean {
-    val uri = if (isOTG) baseConfig.OTGTreeUri else baseConfig.sdTreeUri
+    val uri = if (isOTG) baseConfig.otgTreeUri else baseConfig.sdTreeUri
     val hasProperUri = contentResolver.persistedUriPermissions.any { it.uri.toString() == uri }
     if (!hasProperUri) {
         if (isOTG) {
-            baseConfig.OTGTreeUri = ""
+            baseConfig.otgTreeUri = ""
         } else {
             baseConfig.sdTreeUri = ""
         }
@@ -826,9 +788,9 @@ fun Context.createAndroidDataOrObbUri(fullPath: String): Uri {
 val Context.baseConfig: BaseConfig get() = BaseConfig.newInstance(this)
 val Context.sdCardPath: String get() = baseConfig.sdCardPath
 val Context.internalStoragePath: String get() = baseConfig.internalStoragePath
-val Context.otgPath: String get() = baseConfig.OTGPath
+val Context.otgPath: String get() = baseConfig.otgPath
 
-fun Context.isFingerPrintSensorAvailable() = Reprint.isHardwarePresent()
+fun isFingerPrintSensorAvailable() = Reprint.isHardwarePresent()
 
 private fun Context.createCasualFileOutputStream(targetFile: File): OutputStream? {
     if (targetFile.parentFile?.exists() == false) {
@@ -863,19 +825,19 @@ fun Context.getFileOutputStreamSync(
         needsStupidWritePermissions(path) -> {
             var documentFile = parentDocumentFile
             if (documentFile == null) {
-                if (getDoesFilePathExist(targetFile.parentFile.absolutePath)) {
-                    documentFile = getDocumentFile(targetFile.parent)
+                if (getDoesFilePathExist(targetFile.parentFile!!.absolutePath)) {
+                    documentFile = getDocumentFile(targetFile.parent!!)
                 } else {
-                    documentFile = getDocumentFile(targetFile.parentFile.parent)
-                    documentFile = documentFile!!.createDirectory(targetFile.parentFile.name)
-                        ?: getDocumentFile(targetFile.parentFile.absolutePath)
+                    documentFile = getDocumentFile(targetFile.parentFile!!.parent!!)
+                    documentFile = documentFile!!.createDirectory(targetFile.parentFile!!.name)
+                        ?: getDocumentFile(targetFile.parentFile!!.absolutePath)
                 }
             }
 
             if (documentFile == null) {
                 val casualOutputStream = createCasualFileOutputStream(targetFile)
                 return if (casualOutputStream == null) {
-                    showFileCreateError(targetFile.parent)
+                    showFileCreateError(targetFile.parent!!)
                     null
                 } else {
                     casualOutputStream
@@ -913,7 +875,7 @@ fun Context.getFileOutputStreamSync(
 
 fun Context.getStorageDirectories(): Array<String> {
     val paths = HashSet<String>()
-    val rawExternalStorage = System.getenv("EXTERNAL_STORAGE")
+
     val rawSecondaryStoragesStr = System.getenv("SECONDARY_STORAGE")
     val rawEmulatedStorageTarget = System.getenv("EMULATED_STORAGE_TARGET")
     if (TextUtils.isEmpty(rawEmulatedStorageTarget)) {
@@ -934,7 +896,7 @@ fun Context.getStorageDirectories(): Array<String> {
         if (TextUtils.isEmpty(rawUserId)) {
             paths.add(rawEmulatedStorageTarget!!)
         } else {
-            paths.add(rawEmulatedStorageTarget + File.separator + rawUserId)
+            paths.add(rawEmulatedStorageTarget!! + File.separator + rawUserId)
         }
     }
 
@@ -953,53 +915,18 @@ fun Context.showFileCreateError(path: String) {
 }
 
 
-fun Context.getLatestMediaId(uri: Uri = Files.getContentUri("external")): Long {
-    val projection = arrayOf(
-        BaseColumns._ID
-    )
-    try {
-        val cursor = queryCursorDesc(uri, projection, BaseColumns._ID, 1)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                return cursor.getLongValue(BaseColumns._ID)
-            }
-        }
-    } catch (ignored: Exception) {
-    }
-    return 0
-}
-
-private fun Context.queryCursorDesc(
-    uri: Uri,
-    projection: Array<String>,
-    sortColumn: String,
-    limit: Int,
-): Cursor? {
-    return if (isRPlus()) {
-        val queryArgs = bundleOf(
-            ContentResolver.QUERY_ARG_LIMIT to limit,
-            ContentResolver.QUERY_ARG_SORT_DIRECTION to ContentResolver.QUERY_SORT_DIRECTION_DESCENDING,
-            ContentResolver.QUERY_ARG_SORT_COLUMNS to arrayOf(sortColumn),
-        )
-        contentResolver.query(uri, projection, queryArgs, null)
-    } else {
-        val sortOrder = "$sortColumn DESC LIMIT $limit"
-        contentResolver.query(uri, projection, null, null, sortOrder)
-    }
-}
-
 // http://stackoverflow.com/a/40582634/1967672
 fun Context.getSDCardPath(): String {
     val directories = getStorageDirectories().filter {
-        !it.equals(getInternalStoragePath()) && !it.equals(
+        it != getInternalStoragePath() && !it.equals(
             "/storage/emulated/0",
             true
-        ) && (baseConfig.OTGPartition.isEmpty() || !it.endsWith(baseConfig.OTGPartition))
+        ) && (baseConfig.otgPartition.isEmpty() || !it.endsWith(baseConfig.otgPartition))
     }
 
     val fullSDpattern = Pattern.compile(SD_OTG_PATTERN)
     var sdCardPath = directories.firstOrNull { fullSDpattern.matcher(it).matches() }
-        ?: directories.firstOrNull { !physicalPaths.contains(it.toLowerCase()) } ?: ""
+        ?: directories.firstOrNull { !physicalPaths.contains(it.lowercase()) } ?: ""
 
     // on some devices no method retrieved any SD card path, so test if its not sdcard1 by any chance. It happened on an Android 5.1
     if (sdCardPath.trimEnd('/').isEmpty()) {
@@ -1012,36 +939,20 @@ fun Context.getSDCardPath(): String {
     }
 
     if (sdCardPath.isEmpty()) {
-        val SDpattern = Pattern.compile(SD_OTG_SHORT)
+        val sdPattern = Pattern.compile(SD_OTG_SHORT)
         try {
             File("/storage").listFiles()?.forEach {
-                if (SDpattern.matcher(it.name).matches()) {
+                if (sdPattern.matcher(it.name).matches()) {
                     sdCardPath = "/storage/${it.name}"
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 
     val finalPath = sdCardPath.trimEnd('/')
     baseConfig.sdCardPath = finalPath
     return finalPath
-}
-
-fun Context.getLatestMediaByDateId(uri: Uri = Files.getContentUri("external")): Long {
-    val projection = arrayOf(
-        BaseColumns._ID
-    )
-    try {
-        val cursor = queryCursorDesc(uri, projection, Images.ImageColumns.DATE_TAKEN, 1)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                return cursor.getLongValue(BaseColumns._ID)
-            }
-        }
-    } catch (ignored: Exception) {
-    }
-    return 0
 }
 
 // some helper functions were taken from https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
@@ -1106,7 +1017,7 @@ fun Context.getDataColumn(
                 }
             }
         }
-    } catch (e: Exception) {
+    } catch (_: Exception) {
     }
     return null
 }
@@ -1119,14 +1030,17 @@ private fun isDownloadsDocument(uri: Uri) =
 private fun isExternalStorageDocument(uri: Uri) =
     uri.authority == "com.android.externalstorage.documents"
 
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 fun Context.hasPermission(permId: Int) = ContextCompat.checkSelfPermission(
     this,
     getPermissionString(permId)
 ) == PackageManager.PERMISSION_GRANTED
 
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 fun Context.hasAllPermissions(permIds: Collection<Int>) = permIds.all(this::hasPermission)
 
-fun Context.getPermissionString(id: Int) = when (id) {
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+fun getPermissionString(id: Int) = when (id) {
     PERMISSION_READ_STORAGE -> Manifest.permission.READ_EXTERNAL_STORAGE
     PERMISSION_WRITE_STORAGE -> Manifest.permission.WRITE_EXTERNAL_STORAGE
     PERMISSION_CAMERA -> Manifest.permission.CAMERA
@@ -1271,21 +1185,10 @@ fun getInternalStoragePath() =
         '/'
     )
 
-fun Context.scanFileRecursively(file: File, callback: (() -> Unit)? = null) {
-    scanFilesRecursively(arrayListOf(file), callback)
-}
-
 fun Context.scanPathRecursively(path: String, callback: (() -> Unit)? = null) {
     scanPathsRecursively(arrayListOf(path), callback)
 }
 
-fun Context.scanFilesRecursively(files: List<File>, callback: (() -> Unit)? = null) {
-    val allPaths = java.util.ArrayList<String>()
-    for (file in files) {
-        allPaths.addAll(getPaths(file))
-    }
-    rescanPaths(allPaths, callback)
-}
 
 fun Context.createDirectorySync(directory: String): Boolean {
     if (getDoesFilePathExist(directory)) {
@@ -1312,58 +1215,6 @@ fun Context.createDirectorySync(directory: String): Boolean {
     return File(directory).mkdirs()
 }
 
-fun Context.launchActivityIntent(intent: Intent) {
-    try {
-        startActivity(intent)
-    } catch (e: ActivityNotFoundException) {
-        toast(R.string.no_app_found)
-    } catch (e: Exception) {
-        showErrorToast(e)
-    }
-}
-
-fun Context.getFilePublicUri(file: File, applicationId: String): Uri {
-    // for images/videos/gifs try getting a media content uri first, like content://media/external/images/media/438
-    // if media content uri is null, get our custom uri like content://com.simplemobiletools.gallery.provider/external_files/emulated/0/DCIM/IMG_20171104_233915.jpg
-    var uri = if (file.isMediaFile()) {
-        getMediaContentUri(file.absolutePath)
-    } else {
-        getMediaContent(file.absolutePath, Files.getContentUri("external"))
-    }
-
-    if (uri == null) {
-        uri = FileProvider.getUriForFile(this, "$applicationId.provider", file)
-    }
-
-    return uri!!
-}
-
-fun Context.getMediaContentUri(path: String): Uri? {
-    val uri = when {
-        path.isImageFast() -> Images.Media.EXTERNAL_CONTENT_URI
-        path.isVideoFast() -> Video.Media.EXTERNAL_CONTENT_URI
-        else -> Files.getContentUri("external")
-    }
-
-    return getMediaContent(path, uri)
-}
-
-fun Context.getMediaContent(path: String, uri: Uri): Uri? {
-    val projection = arrayOf(Images.Media._ID)
-    val selection = Images.Media.DATA + "= ?"
-    val selectionArgs = arrayOf(path)
-    try {
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                val id = cursor.getIntValue(Images.Media._ID).toString()
-                return Uri.withAppendedPath(uri, id)
-            }
-        }
-    } catch (e: Exception) {
-    }
-    return null
-}
 
 fun Context.queryCursor(
     uri: Uri,
@@ -1390,85 +1241,6 @@ fun Context.queryCursor(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-fun Context.queryCursor(
-    uri: Uri,
-    projection: Array<String>,
-    queryArgs: Bundle,
-    showErrors: Boolean = false,
-    callback: (cursor: Cursor) -> Unit
-) {
-    try {
-        val cursor = contentResolver.query(uri, projection, queryArgs, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                do {
-                    callback(cursor)
-                } while (cursor.moveToNext())
-            }
-        }
-    } catch (e: Exception) {
-        if (showErrors) {
-            showErrorToast(e)
-        }
-    }
-}
-
-fun Context.getFilenameFromUri(uri: Uri): String {
-    return if (uri.scheme == "file") {
-        File(uri.toString()).name
-    } else {
-        getFilenameFromContentUri(uri) ?: uri.lastPathSegment ?: ""
-    }
-}
-
-fun Context.getMimeTypeFromUri(uri: Uri): String {
-    var mimetype = uri.path?.getMimeType() ?: ""
-    if (mimetype.isEmpty()) {
-        try {
-            mimetype = contentResolver.getType(uri) ?: ""
-        } catch (e: IllegalStateException) {
-        }
-    }
-    return mimetype
-}
-
-fun Context.ensurePublicUri(path: String, applicationId: String): Uri? {
-    return when {
-        hasProperStoredAndroidTreeUri(path) && isRestrictedSAFOnlyRoot(path) -> {
-            getAndroidSAFUri(path)
-        }
-
-        hasProperStoredDocumentUriSdk30(path) && isAccessibleWithSAFSdk30(path) -> {
-            createDocumentUriUsingFirstParentTreeUri(path)
-        }
-
-        isPathOnOTG(path) -> {
-            getDocumentFile(path)?.uri
-        }
-
-        else -> {
-            val uri = Uri.parse(path)
-            if (uri.scheme == "content") {
-                uri
-            } else {
-                val newPath = if (uri.toString().startsWith("/")) uri.toString() else uri.path
-                val file = File(newPath)
-                getFilePublicUri(file, applicationId)
-            }
-        }
-    }
-}
-
-fun Context.ensurePublicUri(uri: Uri, applicationId: String): Uri {
-    return if (uri.scheme == "content") {
-        uri
-    } else {
-        val file = File(uri.path)
-        getFilePublicUri(file, applicationId)
-    }
-}
-
 fun Context.isPathOnInternalStorage(path: String) =
     internalStoragePath.isNotEmpty() && path.startsWith(internalStoragePath)
 
@@ -1484,7 +1256,7 @@ fun Context.getFilenameFromContentUri(uri: Uri): String? {
                 return cursor.getStringValue(OpenableColumns.DISPLAY_NAME)
             }
         }
-    } catch (e: Exception) {
+    } catch (_: Exception) {
     }
     return null
 }
@@ -1519,7 +1291,7 @@ fun Context.getSizeFromContentUri(uri: Uri): Long {
                 return cursor.getLongValue(OpenableColumns.SIZE)
             }
         }
-    } catch (e: Exception) {
+    } catch (_: Exception) {
     }
     return 0L
 }
@@ -1527,23 +1299,7 @@ fun Context.getSizeFromContentUri(uri: Uri): Long {
 fun Context.getMyContentProviderCursorLoader() =
     CursorLoader(this, MyContentProvider.MY_CONTENT_URI, null, null, null, null)
 
-fun Context.getMyContactsCursor(favoritesOnly: Boolean, withPhoneNumbersOnly: Boolean) = try {
-    val getFavoritesOnly = if (favoritesOnly) "1" else "0"
-    val getWithPhoneNumbersOnly = if (withPhoneNumbersOnly) "1" else "0"
-    val args = arrayOf(getFavoritesOnly, getWithPhoneNumbersOnly)
-    CursorLoader(
-        this,
-        MyContactsContentProvider.CONTACTS_CONTENT_URI,
-        null,
-        null,
-        args,
-        null
-    ).loadInBackground()
-} catch (e: Exception) {
-    null
-}
-
-fun Context.getCurrentFormattedDateTime(): String {
+fun getCurrentFormattedDateTime(): String {
     val simpleDateFormat = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
     return simpleDateFormat.format(Date(System.currentTimeMillis()))
 }
@@ -1558,39 +1314,13 @@ fun Context.updateSDCardPath() {
     }
 }
 
-fun Context.getUriMimeType(path: String, newUri: Uri): String {
-    var mimeType = path.getMimeType()
-    if (mimeType.isEmpty()) {
-        mimeType = getMimeTypeFromUri(newUri)
-    }
-    return mimeType
-}
-
 fun Context.isThankYouInstalled() = isPackageInstalled("com.simplemobiletools.thankyou")
 
-fun Context.isOrWasThankYouInstalled() = true
+fun isOrWasThankYouInstalled() = true
 
 fun Context.isAProApp() =
     packageName.startsWith("com.simplemobiletools.") && packageName.removeSuffix(".debug")
         .endsWith(".pro")
-
-fun Context.getCustomizeColorsString(): String {
-    val textId = if (isOrWasThankYouInstalled()) {
-        R.string.customize_colors
-    } else {
-        R.string.customize_colors_locked
-    }
-
-    return getString(textId)
-}
-
-fun Context.addLockedLabelIfNeeded(stringId: Int): String {
-    return if (isOrWasThankYouInstalled()) {
-        getString(stringId)
-    } else {
-        "${getString(stringId)} (${getString(R.string.feature_locked)})"
-    }
-}
 
 fun Context.isPackageInstalled(pkgName: String): Boolean {
     return try {
@@ -1601,214 +1331,10 @@ fun Context.isPackageInstalled(pkgName: String): Boolean {
     }
 }
 
-// format day bits to strings like "Mon, Tue, Wed"
-fun Context.getSelectedDaysString(bitMask: Int): String {
-    val dayBits = arrayListOf(
-        MONDAY_BIT,
-        TUESDAY_BIT,
-        WEDNESDAY_BIT,
-        THURSDAY_BIT,
-        FRIDAY_BIT,
-        SATURDAY_BIT,
-        SUNDAY_BIT
-    )
-    val weekDays =
-        resources.getStringArray(R.array.week_days_short).toList() as ArrayList<String>
-
-    if (baseConfig.isSundayFirst) {
-        dayBits.moveLastItemToFront()
-        weekDays.moveLastItemToFront()
-    }
-
-    var days = ""
-    dayBits.forEachIndexed { index, bit ->
-        if (bitMask and bit != 0) {
-            days += "${weekDays[index]}, "
-        }
-    }
-    return days.trim().trimEnd(',')
-}
-
-fun Context.formatMinutesToTimeString(totalMinutes: Int) =
-    formatSecondsToTimeString(totalMinutes * 60)
-
 fun Context.getPrivateContactSource() = ContactSource(
     SMT_PRIVATE,
     SMT_PRIVATE, getString(R.string.phone_storage_hidden)
 )
-
-fun Context.formatSecondsToTimeString(totalSeconds: Int): String {
-    val days = totalSeconds / DAY_SECONDS
-    val hours = (totalSeconds % DAY_SECONDS) / HOUR_SECONDS
-    val minutes = (totalSeconds % HOUR_SECONDS) / MINUTE_SECONDS
-    val seconds = totalSeconds % MINUTE_SECONDS
-    val timesString = StringBuilder()
-    if (days > 0) {
-        val daysString =
-            String.format(resources.getQuantityString(R.plurals.days, days, days))
-        timesString.append("$daysString, ")
-    }
-
-    if (hours > 0) {
-        val hoursString =
-            String.format(resources.getQuantityString(R.plurals.hours, hours, hours))
-        timesString.append("$hoursString, ")
-    }
-
-    if (minutes > 0) {
-        val minutesString =
-            String.format(resources.getQuantityString(R.plurals.minutes, minutes, minutes))
-        timesString.append("$minutesString, ")
-    }
-
-    if (seconds > 0) {
-        val secondsString =
-            String.format(resources.getQuantityString(R.plurals.seconds, seconds, seconds))
-        timesString.append(secondsString)
-    }
-
-    var result = timesString.toString().trim().trimEnd(',')
-    if (result.isEmpty()) {
-        result = String.format(resources.getQuantityString(R.plurals.minutes, 0, 0))
-    }
-    return result
-}
-
-fun Context.getFormattedMinutes(minutes: Int, showBefore: Boolean = true) =
-    getFormattedSeconds(if (minutes == -1) minutes else minutes * 60, showBefore)
-
-fun Context.getFormattedSeconds(seconds: Int, showBefore: Boolean = true) = when (seconds) {
-    -1 -> getString(R.string.no_reminder)
-    0 -> getString(R.string.at_start)
-    else -> {
-        when {
-            seconds < 0 && seconds > -60 * 60 * 24 -> {
-                val minutes = -seconds / 60
-                getString(R.string.during_day_at).format(minutes / 60, minutes % 60)
-            }
-
-            seconds % YEAR_SECONDS == 0 -> {
-                val base =
-                    if (showBefore) R.plurals.years_before else R.plurals.by_years
-                resources.getQuantityString(base, seconds / YEAR_SECONDS, seconds / YEAR_SECONDS)
-            }
-
-            seconds % MONTH_SECONDS == 0 -> {
-                val base =
-                    if (showBefore) R.plurals.months_before else R.plurals.by_months
-                resources.getQuantityString(base, seconds / MONTH_SECONDS, seconds / MONTH_SECONDS)
-            }
-
-            seconds % WEEK_SECONDS == 0 -> {
-                val base =
-                    if (showBefore) R.plurals.weeks_before else R.plurals.by_weeks
-                resources.getQuantityString(base, seconds / WEEK_SECONDS, seconds / WEEK_SECONDS)
-            }
-
-            seconds % DAY_SECONDS == 0 -> {
-                val base = if (showBefore) R.plurals.days_before else R.plurals.by_days
-                resources.getQuantityString(base, seconds / DAY_SECONDS, seconds / DAY_SECONDS)
-            }
-
-            seconds % HOUR_SECONDS == 0 -> {
-                val base =
-                    if (showBefore) R.plurals.hours_before else R.plurals.by_hours
-                resources.getQuantityString(base, seconds / HOUR_SECONDS, seconds / HOUR_SECONDS)
-            }
-
-            seconds % MINUTE_SECONDS == 0 -> {
-                val base =
-                    if (showBefore) R.plurals.minutes_before else R.plurals.by_minutes
-                resources.getQuantityString(
-                    base,
-                    seconds / MINUTE_SECONDS,
-                    seconds / MINUTE_SECONDS
-                )
-            }
-
-            else -> {
-                val base =
-                    if (showBefore) R.plurals.seconds_before else R.plurals.by_seconds
-                resources.getQuantityString(base, seconds, seconds)
-            }
-        }
-    }
-}
-
-fun Context.getDefaultAlarmTitle(type: Int): String {
-    val alarmString = getString(R.string.alarm)
-    return try {
-        RingtoneManager.getRingtone(this, RingtoneManager.getDefaultUri(type))?.getTitle(this)
-            ?: alarmString
-    } catch (e: Exception) {
-        alarmString
-    }
-}
-
-fun Context.getDefaultAlarmSound(type: Int) =
-    AlarmSound(0, getDefaultAlarmTitle(type), RingtoneManager.getDefaultUri(type).toString())
-
-fun Context.grantReadUriPermission(uriString: String) {
-    try {
-        // ensure custom reminder sounds play well
-        grantUriPermission(
-            "com.android.systemui",
-            Uri.parse(uriString),
-            Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
-    } catch (ignored: Exception) {
-    }
-}
-
-fun Context.storeNewYourAlarmSound(resultData: Intent): AlarmSound {
-    val uri = resultData.data
-    var filename = getFilenameFromUri(uri!!)
-    if (filename.isEmpty()) {
-        filename = getString(R.string.alarm)
-    }
-
-    val token = object : TypeToken<ArrayList<AlarmSound>>() {}.type
-    val yourAlarmSounds = Gson().fromJson<ArrayList<AlarmSound>>(baseConfig.yourAlarmSounds, token)
-        ?: ArrayList()
-    val newAlarmSoundId =
-        (yourAlarmSounds.maxByOrNull { it.id }?.id ?: YOUR_ALARM_SOUNDS_MIN_ID) + 1
-    val newAlarmSound = AlarmSound(newAlarmSoundId, filename, uri.toString())
-    if (yourAlarmSounds.firstOrNull { it.uri == uri.toString() } == null) {
-        yourAlarmSounds.add(newAlarmSound)
-    }
-
-    baseConfig.yourAlarmSounds = Gson().toJson(yourAlarmSounds)
-
-    val takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-    contentResolver.takePersistableUriPermission(uri, takeFlags)
-
-    return newAlarmSound
-}
-
-@RequiresApi(Build.VERSION_CODES.N)
-fun Context.saveImageRotation(path: String, degrees: Int): Boolean {
-    if (!needsStupidWritePermissions(path)) {
-        saveExifRotation(ExifInterface(path), degrees)
-        return true
-    } else if (isNougatPlus()) {
-        val documentFile = getSomeDocumentFile(path)
-        if (documentFile != null) {
-            val parcelFileDescriptor = contentResolver.openFileDescriptor(documentFile.uri, "rw")
-            val fileDescriptor = parcelFileDescriptor!!.fileDescriptor
-            saveExifRotation(ExifInterface(fileDescriptor), degrees)
-            return true
-        }
-    }
-    return false
-}
-
-fun Context.saveExifRotation(exif: ExifInterface, degrees: Int) {
-    val orientation =
-        exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-    val orientationDegrees = (orientation.degreesFromOrientation() + degrees) % 360
-    exif.setAttribute(ExifInterface.TAG_ORIENTATION, orientationDegrees.orientationFromDegrees())
-    exif.saveAttributes()
-}
 
 fun Context.getLaunchIntent() = packageManager.getLaunchIntentForPackage(baseConfig.appId)
 
@@ -1819,9 +1345,6 @@ fun Context.isSAFOnlyRoot(path: String): Boolean {
 fun Context.getCanAppBeUpgraded() = proPackages.contains(
     baseConfig.appId.removeSuffix(".debug").removePrefix("com.simplemobiletools.")
 )
-
-fun Context.getProUrl() =
-    "https://play.google.com/store/apps/details?id=${baseConfig.appId.removeSuffix(".debug")}.pro"
 
 fun Context.getStoreUrl() =
     "https://play.google.com/store/apps/details?id=${packageName.removeSuffix(".debug")}"
@@ -1862,7 +1385,6 @@ fun Context.getImageResolution(path: String): Point? {
 
 fun Context.getAppIconColors() =
     resources.getIntArray(R.array.md_app_icon_colors).toCollection(ArrayList())
-
 
 fun Context.getVideoResolution(path: String): Point? {
     var point = try {
@@ -2045,20 +1567,12 @@ fun Context.getMediaStoreLastModified(path: String): Long {
     return 0
 }
 
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 fun Context.hasContactPermissions() = hasPermission(PERMISSION_READ_CONTACTS) && hasPermission(
     PERMISSION_WRITE_CONTACTS
 )
 
 fun Context.getStringsPackageName() = getString(R.string.package_name)
-
-fun Context.getFontSizeText() = getString(
-    when (baseConfig.fontSize) {
-        FONT_SIZE_SMALL -> R.string.small
-        FONT_SIZE_MEDIUM -> R.string.medium
-        FONT_SIZE_LARGE -> R.string.large
-        else -> R.string.extra_large
-    }
-)
 
 fun Context.getTextSize() = when (baseConfig.fontSize) {
     FONT_SIZE_SMALL -> resources.getDimension(R.dimen.smaller_text_size)
@@ -2074,11 +1588,10 @@ val Context.shortcutManager: ShortcutManager
     @RequiresApi(Build.VERSION_CODES.N_MR1)
     get() = getSystemService(ShortcutManager::class.java) as ShortcutManager
 
-val Context.portrait get() = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+
 val Context.navigationBarOnSide: Boolean get() = usableScreenSize.x < realScreenSize.x && usableScreenSize.x > usableScreenSize.y
 val Context.navigationBarOnBottom: Boolean get() = usableScreenSize.y < realScreenSize.y
 val Context.navigationBarHeight: Int get() = if (navigationBarOnBottom && navigationBarSize.y != usableScreenSize.y) navigationBarSize.y else 0
-val Context.navigationBarWidth: Int get() = if (navigationBarOnSide) navigationBarSize.x else 0
 
 val Context.navigationBarSize: Point
     get() = when {
@@ -2088,6 +1601,7 @@ val Context.navigationBarSize: Point
     }
 
 val Context.newNavigationBarHeight: Int
+    @SuppressLint("InternalInsetResource")
     get() {
         var navigationBarHeight = 0
         val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
@@ -2098,6 +1612,7 @@ val Context.newNavigationBarHeight: Int
     }
 
 val Context.statusBarHeight: Int
+    @SuppressLint("InternalInsetResource")
     get() {
         var statusBarHeight = 0
         val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
@@ -2105,15 +1620,6 @@ val Context.statusBarHeight: Int
             statusBarHeight = resources.getDimensionPixelSize(resourceId)
         }
         return statusBarHeight
-    }
-
-val Context.actionBarHeight: Int
-    get() {
-        val styledAttributes =
-            theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
-        val actionBarHeight = styledAttributes.getDimension(0, 0f)
-        styledAttributes.recycle()
-        return actionBarHeight.toInt()
     }
 
 val Context.usableScreenSize: Point
@@ -2159,186 +1665,12 @@ fun Context.isDefaultDialer(): Boolean {
     }
 }
 
-fun Context.getContactsHasMap(
-    withComparableNumbers: Boolean = false,
-    callback: (HashMap<String, String>) -> Unit
-) {
-    ContactsHelper(this).getContacts(showOnlyContactsWithNumbers = true) { contactList ->
-        val privateContacts: HashMap<String, String> = HashMap()
-        for (contact in contactList) {
-            for (phoneNumber in contact.phoneNumbers) {
-                var number = PhoneNumberUtils.stripSeparators(phoneNumber.value)
-                if (withComparableNumbers) {
-                    number = number.trimToComparableNumber()
-                }
-
-                privateContacts[number] = contact.name
-            }
-        }
-        callback(privateContacts)
-    }
-}
-
-@TargetApi(Build.VERSION_CODES.N)
-fun Context.getBlockedNumbersWithContact(callback: (ArrayList<BlockedNumber>) -> Unit) {
-    getContactsHasMap(true) { contacts ->
-        val blockedNumbers = ArrayList<BlockedNumber>()
-        if (!isNougatPlus() || !isDefaultDialer()) {
-            callback(blockedNumbers)
-        }
-
-        val uri = BlockedNumbers.CONTENT_URI
-        val projection = arrayOf(
-            BlockedNumbers.COLUMN_ID,
-            BlockedNumbers.COLUMN_ORIGINAL_NUMBER,
-            BlockedNumbers.COLUMN_E164_NUMBER,
-        )
-
-        queryCursor(uri, projection) { cursor ->
-            val id = cursor.getLongValue(BlockedNumbers.COLUMN_ID)
-            val number = cursor.getStringValue(BlockedNumbers.COLUMN_ORIGINAL_NUMBER) ?: ""
-            val normalizedNumber =
-                cursor.getStringValue(BlockedNumbers.COLUMN_E164_NUMBER) ?: number
-            val comparableNumber = normalizedNumber.trimToComparableNumber()
-
-            val contactName = contacts[comparableNumber]
-            val blockedNumber =
-                BlockedNumber(id, number, normalizedNumber, comparableNumber, contactName)
-            blockedNumbers.add(blockedNumber)
-        }
-
-        val blockedNumbersPair = blockedNumbers.partition { it.contactName != null }
-        val blockedNumbersWithNameSorted = blockedNumbersPair.first.sortedBy { it.contactName }
-        val blockedNumbersNoNameSorted = blockedNumbersPair.second.sortedBy { it.number }
-
-        callback(ArrayList(blockedNumbersWithNameSorted + blockedNumbersNoNameSorted))
-    }
-}
-
-@TargetApi(Build.VERSION_CODES.N)
-fun Context.getBlockedNumbers(): ArrayList<BlockedNumber> {
-    val blockedNumbers = ArrayList<BlockedNumber>()
-    if (!isNougatPlus() || !isDefaultDialer()) {
-        return blockedNumbers
-    }
-
-    val uri = BlockedNumbers.CONTENT_URI
-    val projection = arrayOf(
-        BlockedNumbers.COLUMN_ID,
-        BlockedNumbers.COLUMN_ORIGINAL_NUMBER,
-        BlockedNumbers.COLUMN_E164_NUMBER
-    )
-
-    queryCursor(uri, projection) { cursor ->
-        val id = cursor.getLongValue(BlockedNumbers.COLUMN_ID)
-        val number = cursor.getStringValue(BlockedNumbers.COLUMN_ORIGINAL_NUMBER) ?: ""
-        val normalizedNumber = cursor.getStringValue(BlockedNumbers.COLUMN_E164_NUMBER) ?: number
-        val comparableNumber = normalizedNumber.trimToComparableNumber()
-        val blockedNumber = BlockedNumber(id, number, normalizedNumber, comparableNumber)
-        blockedNumbers.add(blockedNumber)
-    }
-
-    return blockedNumbers
-}
-
-@TargetApi(Build.VERSION_CODES.N)
-fun Context.addBlockedNumber(number: String): Boolean {
-    ContentValues().apply {
-        put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number)
-        if (number.isPhoneNumber()) {
-            put(BlockedNumbers.COLUMN_E164_NUMBER, PhoneNumberUtils.normalizeNumber(number))
-        }
-        try {
-            contentResolver.insert(BlockedNumbers.CONTENT_URI, this)
-        } catch (e: Exception) {
-            showErrorToast(e)
-            return false
-        }
-    }
-    return true
-}
-
-@TargetApi(Build.VERSION_CODES.N)
-fun Context.deleteBlockedNumber(number: String): Boolean {
-    val selection = "${BlockedNumbers.COLUMN_ORIGINAL_NUMBER} = ?"
-    val selectionArgs = arrayOf(number)
-
-    return if (isNumberBlocked(number)) {
-        val deletedRowCount =
-            contentResolver.delete(BlockedNumbers.CONTENT_URI, selection, selectionArgs)
-
-        deletedRowCount > 0
-    } else {
-        true
-    }
-}
-
-fun Context.isNumberBlocked(
-    number: String,
-    blockedNumbers: ArrayList<BlockedNumber> = getBlockedNumbers()
-): Boolean {
-    if (!isNougatPlus()) {
-        return false
-    }
-
-    val numberToCompare = number.trimToComparableNumber()
-
-    return blockedNumbers.any {
-        numberToCompare == it.numberToCompare ||
-                numberToCompare == it.number ||
-                PhoneNumberUtils.stripSeparators(number) == it.number
-    } || isNumberBlockedByPattern(number, blockedNumbers)
-}
-
-fun Context.isNumberBlockedByPattern(
-    number: String,
-    blockedNumbers: ArrayList<BlockedNumber> = getBlockedNumbers()
-): Boolean {
-    for (blockedNumber in blockedNumbers) {
-        val num = blockedNumber.number
-        if (num.isBlockedNumberPattern()) {
-            val pattern = num.replace("+", "\\+").replace("*", ".*")
-            if (number.matches(pattern.toRegex())) {
-                return true
-            }
-        }
-    }
-    return false
-}
-
 fun Context.copyToClipboard(text: String) {
     val clip = ClipData.newPlainText(getString(R.string.simple_commons), text)
     (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(clip)
     val toastText = String.format(getString(R.string.value_copied_to_clipboard_show), text)
     toast(toastText)
 }
-
-fun Context.getPhoneNumberTypeText(type: Int, label: String): String {
-    return if (type == BaseTypes.TYPE_CUSTOM) {
-        label
-    } else {
-        getString(
-            when (type) {
-                Phone.TYPE_MOBILE -> R.string.mobile
-                Phone.TYPE_HOME -> R.string.home
-                Phone.TYPE_WORK -> R.string.work
-                Phone.TYPE_MAIN -> R.string.main_number
-                Phone.TYPE_FAX_WORK -> R.string.work_fax
-                Phone.TYPE_FAX_HOME -> R.string.home_fax
-                Phone.TYPE_PAGER -> R.string.pager
-                else -> R.string.other
-            }
-        )
-    }
-}
-
-fun Context.sendEmailIntent(recipient: String) {
-    Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.fromParts(KEY_MAILTO, recipient, null)
-        launchActivityIntent(this)
-    }
-}
-
 
 fun Context.updateTextColors(viewGroup: ViewGroup) {
     val textColor = when {
@@ -2355,16 +1687,16 @@ fun Context.updateTextColors(viewGroup: ViewGroup) {
     val cnt = viewGroup.childCount
     (0 until cnt).map { viewGroup.getChildAt(it) }.forEach {
         when (it) {
-            is MyTextView -> it.setColors(textColor, accentColor, backgroundColor)
-            is MyAppCompatSpinner -> it.setColors(textColor, accentColor, backgroundColor)
-            is MyCompatRadioButton -> it.setColors(textColor, accentColor, backgroundColor)
-            is MyAppCompatCheckbox -> it.setColors(textColor, accentColor, backgroundColor)
-            is MyEditText -> it.setColors(textColor, accentColor, backgroundColor)
-            is MyAutoCompleteTextView -> it.setColors(textColor, accentColor, backgroundColor)
-            is MyFloatingActionButton -> it.setColors(textColor, accentColor, backgroundColor)
-            is MySeekBar -> it.setColors(textColor, accentColor, backgroundColor)
-            is MyButton -> it.setColors(textColor, accentColor, backgroundColor)
-            is MyTextInputLayout -> it.setColors(textColor, accentColor, backgroundColor)
+            is MyTextView -> it.setColors(textColor, accentColor)
+            is MyAppCompatSpinner -> it.setColors(textColor, backgroundColor)
+            is MyCompatRadioButton -> it.setColors(textColor, accentColor)
+            is MyAppCompatCheckbox -> it.setColors(textColor, accentColor)
+            is MyEditText -> it.setColors(textColor, accentColor)
+            is MyAutoCompleteTextView -> it.setColors(textColor, accentColor)
+            is MyFloatingActionButton -> it.setColors(accentColor)
+            is MySeekBar -> it.setColors(accentColor)
+            is MyButton -> it.setColors(textColor)
+            is MyTextInputLayout -> it.setColors(textColor, accentColor)
             is ViewGroup -> updateTextColors(it)
         }
     }
@@ -2398,18 +1730,6 @@ fun Context.openNotificationSettings() {
     }
 }
 
-fun Context.getTempFile(folderName: String, filename: String): File? {
-    val folder = File(cacheDir, folderName)
-    if (!folder.exists()) {
-        if (!folder.mkdir()) {
-            toast(R.string.unknown_error_occurred)
-            return null
-        }
-    }
-
-    return File(folder, filename)
-}
-
 fun Context.openDeviceSettings() {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
         data = Uri.fromParts("package", packageName, null)
@@ -2419,30 +1739,6 @@ fun Context.openDeviceSettings() {
         startActivity(intent)
     } catch (e: Exception) {
         showErrorToast(e)
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.S)
-fun Context.openRequestExactAlarmSettings(appId: String) {
-    if (isSPlus()) {
-        val uri = Uri.fromParts("package", appId, null)
-        val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-        intent.data = uri
-        startActivity(intent)
-    }
-}
-
-fun Context.canUseFullScreenIntent(): Boolean {
-    return !isUpsideDownCakePlus() || notificationManager.canUseFullScreenIntent()
-}
-
-@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-fun Context.openFullScreenIntentSettings(appId: String) {
-    if (isUpsideDownCakePlus()) {
-        val uri = Uri.fromParts("package", appId, null)
-        val intent = Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT)
-        intent.data = uri
-        startActivity(intent)
     }
 }
 
@@ -2484,12 +1780,6 @@ fun Context.getFastAndroidSAFDocument(path: String): DocumentFile? {
 
     val uri = getAndroidSAFUri(path)
     return DocumentFile.fromSingleUri(this, uri)
-}
-
-fun Context.getAndroidSAFChildrenUri(path: String): Uri {
-    val treeUri = getAndroidTreeUri(path).toUri()
-    val documentId = createAndroidSAFDocumentId(path)
-    return DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, documentId)
 }
 
 fun Context.renameAndroidSAFDocument(oldPath: String, newPath: String): Boolean {
@@ -2563,14 +1853,6 @@ fun Context.isAStorageRootFolder(path: String): Boolean {
     ) || trimmed.equals(otgPath, true)
 }
 
-fun Context.getMyFileUri(file: File): Uri {
-    return if (isNougatPlus()) {
-        FileProvider.getUriForFile(this, "$packageName.provider", file)
-    } else {
-        Uri.fromFile(file)
-    }
-}
-
 fun Context.tryFastDocumentDelete(path: String, allowDeleteFolder: Boolean): Boolean {
     val document = getFastDocumentFile(path)
     return if (document?.isFile == true || allowDeleteFolder) {
@@ -2601,19 +1883,19 @@ fun Context.getFastDocumentFile(path: String): DocumentFile? {
 }
 
 fun Context.getOTGFastDocumentFile(path: String, otgPathToUse: String? = null): DocumentFile? {
-    if (baseConfig.OTGTreeUri.isEmpty()) {
+    if (baseConfig.otgTreeUri.isEmpty()) {
         return null
     }
 
-    val otgPath = otgPathToUse ?: baseConfig.OTGPath
-    if (baseConfig.OTGPartition.isEmpty()) {
-        baseConfig.OTGPartition =
-            baseConfig.OTGTreeUri.removeSuffix("%3A").substringAfterLast('/').trimEnd('/')
+    val otgPath = otgPathToUse ?: baseConfig.otgPath
+    if (baseConfig.otgPartition.isEmpty()) {
+        baseConfig.otgPartition =
+            baseConfig.otgTreeUri.removeSuffix("%3A").substringAfterLast('/').trimEnd('/')
         updateOTGPathFromPartition()
     }
 
     val relativePath = Uri.encode(path.substring(otgPath.length).trim('/'))
-    val fullUri = "${baseConfig.OTGTreeUri}/document/${baseConfig.OTGPartition}%3A$relativePath"
+    val fullUri = "${baseConfig.otgTreeUri}/document/${baseConfig.otgPartition}%3A$relativePath"
     return DocumentFile.fromSingleUri(this, Uri.parse(fullUri))
 }
 
@@ -2630,7 +1912,7 @@ fun getPaths(file: File): java.util.ArrayList<String> {
     return paths
 }
 
-fun Context.getFileUri(path: String) = when {
+fun getFileUri(path: String): Uri = when {
     path.isImageSlow() -> Images.Media.EXTERNAL_CONTENT_URI
     path.isVideoSlow() -> Video.Media.EXTERNAL_CONTENT_URI
     path.isAudioSlow() -> Audio.Media.EXTERNAL_CONTENT_URI
@@ -2638,17 +1920,17 @@ fun Context.getFileUri(path: String) = when {
 }
 
 fun Context.rescanAndDeletePath(path: String, callback: () -> Unit) {
-    val SCAN_FILE_MAX_DURATION = 1000L
+    val scanFileMaxDuration = 1000L
     val scanFileHandler = Handler(Looper.getMainLooper())
     scanFileHandler.postDelayed({
         callback()
-    }, SCAN_FILE_MAX_DURATION)
+    }, scanFileMaxDuration)
 
-    MediaScannerConnection.scanFile(applicationContext, arrayOf(path), null) { path, uri ->
+    MediaScannerConnection.scanFile(applicationContext, arrayOf(path), null) { _, uri ->
         scanFileHandler.removeCallbacksAndMessages(null)
         try {
             applicationContext.contentResolver.delete(uri, null, null)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
         callback()
     }
@@ -2694,14 +1976,14 @@ fun Context.getOTGItems(
     callback: (java.util.ArrayList<FileDirItem>) -> Unit
 ) {
     val items = java.util.ArrayList<FileDirItem>()
-    val OTGTreeUri = baseConfig.OTGTreeUri
+    val otgTreeUri = baseConfig.otgTreeUri
     var rootUri = try {
-        DocumentFile.fromTreeUri(applicationContext, Uri.parse(OTGTreeUri))
+        DocumentFile.fromTreeUri(applicationContext, Uri.parse(otgTreeUri))
     } catch (e: Exception) {
         showErrorToast(e)
-        baseConfig.OTGPath = ""
-        baseConfig.OTGTreeUri = ""
-        baseConfig.OTGPartition = ""
+        baseConfig.otgPath = ""
+        baseConfig.otgTreeUri = ""
+        baseConfig.otgPartition = ""
         null
     }
 
@@ -2728,7 +2010,7 @@ fun Context.getOTGItems(
 
     val files = rootUri!!.listFiles().filter { it.exists() }
 
-    val basePath = "${baseConfig.OTGTreeUri}/document/${baseConfig.OTGPartition}%3A"
+    val basePath = "${baseConfig.otgTreeUri}/document/${baseConfig.otgPartition}%3A"
     for (file in files) {
         val name = file.name ?: continue
         if (!shouldShowHidden && name.startsWith(".")) {
@@ -3005,16 +2287,16 @@ fun Context.getFileInputStreamSync(path: String): InputStream? {
 }
 
 fun Context.updateOTGPathFromPartition() {
-    val otgPath = "/storage/${baseConfig.OTGPartition}"
-    baseConfig.OTGPath = if (getOTGFastDocumentFile(otgPath, otgPath)?.exists() == true) {
-        "/storage/${baseConfig.OTGPartition}"
+    val otgPath = "/storage/${baseConfig.otgPartition}"
+    baseConfig.otgPath = if (getOTGFastDocumentFile(otgPath, otgPath)?.exists() == true) {
+        "/storage/${baseConfig.otgPartition}"
     } else {
-        "/mnt/media_rw/${baseConfig.OTGPartition}"
+        "/mnt/media_rw/${baseConfig.otgPartition}"
     }
 }
 
 fun Context.getDoesFilePathExist(path: String, otgPathToUse: String? = null): Boolean {
-    val otgPath = otgPathToUse ?: baseConfig.OTGPath
+    val otgPath = otgPathToUse ?: baseConfig.otgPath
     return when {
         isRestrictedSAFOnlyRoot(path) -> getFastAndroidSAFDocument(path)?.exists() ?: false
         otgPath.isNotEmpty() && path.startsWith(otgPath) -> getOTGFastDocumentFile(path)?.exists()
@@ -3055,12 +2337,12 @@ fun Context.getFolderLastModifieds(folder: String): java.util.HashMap<String, Lo
                             val name = cursor.getStringValue(Images.Media.DISPLAY_NAME)
                             lastModifieds["$folder/$name"] = lastModified
                         }
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                     }
                 } while (cursor.moveToNext())
             }
         }
-    } catch (e: Exception) {
+    } catch (_: Exception) {
     }
 
     return lastModifieds
@@ -3123,10 +2405,10 @@ fun getMediaStoreIds(context: Context): java.util.HashMap<String, Long> {
                     val path = cursor.getStringValue(Images.Media.DATA)
                     ids[path] = id
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
         }
-    } catch (e: Exception) {
+    } catch (_: Exception) {
     }
 
     return ids
@@ -3141,23 +2423,6 @@ fun Context.getFileUrisFromFileDirItems(fileDirItems: List<FileDirItem>): List<U
     }
 
     return fileUris
-}
-
-fun Context.getDefaultCopyDestinationPath(showHidden: Boolean, currentPath: String): String {
-    val lastCopyPath = baseConfig.lastCopyPath
-
-    return if (getDoesFilePathExist(lastCopyPath)) {
-        val isLastCopyPathVisible =
-            !lastCopyPath.split(File.separator).any { it.startsWith(".") && it.length > 1 }
-
-        if (showHidden || isLastCopyPathVisible) {
-            lastCopyPath
-        } else {
-            currentPath
-        }
-    } else {
-        currentPath
-    }
 }
 
 fun Context.getProperBackgroundColor() = if (baseConfig.isUsingSystemTheme) {
@@ -3177,7 +2442,7 @@ fun Context.getProperStatusBarColor() = when {
     else -> getProperBackgroundColor()
 }
 
-// get the color of the statusbar with material activity, if the layout is scrolled down a bit
+// get the color of the StatusBar with material activity, if the layout is scrolled down a bit
 fun Context.getColoredMaterialStatusBarColor(): Int {
     return if (baseConfig.isUsingSystemTheme) {
         resources.getColor(R.color.you_status_bar_color, theme)
@@ -3186,6 +2451,7 @@ fun Context.getColoredMaterialStatusBarColor(): Int {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 fun Context.getEmptyContact(): Contact {
     val originalContactSource =
         if (hasContactPermissions()) baseConfig.lastUsedContactSource else SMT_PRIVATE
@@ -3236,33 +2502,6 @@ fun Context.isWhiteTheme() =
 fun Context.isUsingSystemDarkTheme() =
     resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_YES != 0
 
-fun Context.getTimePickerDialogTheme() = when {
-    baseConfig.isUsingSystemTheme -> if (isUsingSystemDarkTheme()) {
-        R.style.MyTimePickerMaterialTheme_Dark
-    } else {
-        R.style.MyDateTimePickerMaterialTheme
-    }
-
-    baseConfig.backgroundColor.getContrastColor() == Color.WHITE -> R.style.MyDialogTheme_Dark
-    else -> R.style.MyDialogTheme
-}
-
-fun Context.getDatePickerDialogTheme() = when {
-    baseConfig.isUsingSystemTheme -> R.style.MyDateTimePickerMaterialTheme
-    baseConfig.backgroundColor.getContrastColor() == Color.WHITE -> R.style.MyDialogTheme_Dark
-    else -> R.style.MyDialogTheme
-}
-
-fun Context.getPopupMenuTheme(): Int {
-    return if (isSPlus() && baseConfig.isUsingSystemTheme) {
-        R.style.AppTheme_YouPopupMenuStyle
-    } else if (isWhiteTheme()) {
-        R.style.AppTheme_PopupMenuLightStyle
-    } else {
-        R.style.AppTheme_PopupMenuDarkStyle
-    }
-}
-
 fun Context.getSharedTheme(callback: (sharedTheme: SharedTheme?) -> Unit) {
     if (!isThankYouInstalled()) {
         callback(null)
@@ -3274,7 +2513,7 @@ fun Context.getSharedTheme(callback: (sharedTheme: SharedTheme?) -> Unit) {
     }
 }
 
-fun Context.getSharedThemeSync(cursorLoader: CursorLoader): SharedTheme? {
+fun getSharedThemeSync(cursorLoader: CursorLoader): SharedTheme? {
     val cursor = cursorLoader.loadInBackground()
     cursor?.use {
         if (cursor.moveToFirst()) {
@@ -3293,7 +2532,7 @@ fun Context.getSharedThemeSync(cursorLoader: CursorLoader): SharedTheme? {
                     lastUpdatedTS,
                     accentColor
                 )
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
         }
     }
@@ -3314,17 +2553,6 @@ fun Context.toggleAppIconColor(appId: String, colorIndex: Int, color: Int, enabl
         if (enable) {
             baseConfig.lastIconColor = color
         }
-    } catch (e: Exception) {
+    } catch (_: Exception) {
     }
-}
-
-@SuppressLint("NewApi")
-fun Context.getBottomNavigationBackgroundColor(): Int {
-    val baseColor = baseConfig.backgroundColor
-    val bottomColor = when {
-        baseConfig.isUsingSystemTheme -> resources.getColor(R.color.you_status_bar_color, theme)
-        baseColor == Color.WHITE -> resources.getColor(R.color.bottom_tabs_light_background)
-        else -> baseConfig.backgroundColor.lightenColor(4)
-    }
-    return bottomColor
 }

@@ -12,10 +12,6 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.simplemobiletools.notes.pro.interfaces.ItemMoveCallback
-import com.simplemobiletools.notes.pro.interfaces.ItemTouchHelperContract
-import com.simplemobiletools.notes.pro.interfaces.StartReorderDragListener
-import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.databinding.ItemChecklistBinding
@@ -29,7 +25,11 @@ import com.simplemobiletools.notes.pro.extensions.removeBit
 import com.simplemobiletools.notes.pro.helpers.DONE_CHECKLIST_ITEM_ALPHA
 import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.notes.pro.interfaces.ChecklistItemsListener
+import com.simplemobiletools.notes.pro.interfaces.ItemMoveCallback
+import com.simplemobiletools.notes.pro.interfaces.ItemTouchHelperContract
+import com.simplemobiletools.notes.pro.interfaces.StartReorderDragListener
 import com.simplemobiletools.notes.pro.models.ChecklistItem
+import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import java.util.Collections
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -105,7 +105,7 @@ class ChecklistAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.bindView(item, true, true) { itemView, layoutPosition ->
+        holder.bindView(item, true, true) { itemView, _ ->
             setupView(itemView, item, holder)
         }
         bindViewHolder(holder)
@@ -227,7 +227,7 @@ class ChecklistAdapter(
 
             checklistDragHandle.beVisibleIf(selectedKeys.isNotEmpty())
             checklistDragHandle.applyColorFilter(textColor)
-            checklistDragHandle.setOnTouchListener { v, event ->
+            checklistDragHandle.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     startReorderDragListener.requestDrag(holder)
                 }

@@ -43,9 +43,14 @@ import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.view.children
 import androidx.core.view.updateLayoutParams
 import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
+import com.simplemobiletools.notes.pro.compose.alert_dialog.DialogSurface
+import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogBorder
+import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
 import com.simplemobiletools.notes.pro.compose.extensions.config
 import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.databinding.DialogColorPickerBinding
 import com.simplemobiletools.notes.pro.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.extensions.baseConfig
@@ -61,11 +66,6 @@ import com.simplemobiletools.notes.pro.extensions.toHex
 import com.simplemobiletools.notes.pro.extensions.updateTextColors
 import com.simplemobiletools.notes.pro.extensions.value
 import com.simplemobiletools.notes.pro.helpers.isQPlus
-import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
-import com.simplemobiletools.notes.pro.compose.alert_dialog.DialogSurface
-import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogBorder
-import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
-import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import java.util.LinkedList
 
 private const val RECENT_COLORS_NUMBER = 5
@@ -93,9 +93,9 @@ private value class Hsv(val value: FloatArray) {
 class ColorPickerDialog(
     val activity: Activity,
     color: Int,
-    val removeDimmedBackground: Boolean = false,
-    val addDefaultColorButton: Boolean = false,
-    val currentColorCallback: ((color: Int) -> Unit)? = null,
+    private val removeDimmedBackground: Boolean = false,
+    private val addDefaultColorButton: Boolean = false,
+    private val currentColorCallback: ((color: Int) -> Unit)? = null,
     val callback: (wasPositivePressed: Boolean, color: Int) -> Unit
 ) {
     private val baseConfig = activity.baseConfig
@@ -283,6 +283,7 @@ fun ColorPickerAlertDialog(
 
 }
 
+@SuppressLint("SetTextI18n")
 private fun DialogColorPickerBinding.init(
     color: Int,
     backgroundColor: Int,
@@ -310,7 +311,7 @@ private fun DialogColorPickerBinding.init(
     colorPickerNewHex.setText(hexCode)
     setupRecentColors(backgroundColor, recentColors)
 
-    colorPickerHue.setOnTouchListener(OnTouchListener { v, event ->
+    colorPickerHue.setOnTouchListener(OnTouchListener { _, event ->
         if (event.action == MotionEvent.ACTION_DOWN) {
             isHueBeingDragged = true
         }
@@ -340,7 +341,7 @@ private fun DialogColorPickerBinding.init(
         false
     })
 
-    colorPickerSquare.setOnTouchListener(OnTouchListener { v, event ->
+    colorPickerSquare.setOnTouchListener(OnTouchListener { _, event ->
         if (event.action == MotionEvent.ACTION_MOVE || event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_UP) {
             var x = event.x
             var y = event.y

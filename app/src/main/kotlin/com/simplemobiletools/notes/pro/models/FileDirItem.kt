@@ -7,27 +7,12 @@ import androidx.compose.runtime.Immutable
 import com.bumptech.glide.signature.ObjectKey
 import com.simplemobiletools.notes.pro.extensions.formatDate
 import com.simplemobiletools.notes.pro.extensions.formatSize
-import com.simplemobiletools.notes.pro.extensions.getAlbum
-import com.simplemobiletools.notes.pro.extensions.getAndroidSAFDirectChildrenCount
-import com.simplemobiletools.notes.pro.extensions.getAndroidSAFFileCount
 import com.simplemobiletools.notes.pro.extensions.getAndroidSAFFileSize
-import com.simplemobiletools.notes.pro.extensions.getAndroidSAFLastModified
-import com.simplemobiletools.notes.pro.extensions.getArtist
-import com.simplemobiletools.notes.pro.extensions.getDirectChildrenCount
 import com.simplemobiletools.notes.pro.extensions.getDocumentFile
-import com.simplemobiletools.notes.pro.extensions.getDuration
-import com.simplemobiletools.notes.pro.extensions.getFastDocumentFile
-import com.simplemobiletools.notes.pro.extensions.getFileCount
-import com.simplemobiletools.notes.pro.extensions.getFormattedDuration
-import com.simplemobiletools.notes.pro.extensions.getImageResolution
 import com.simplemobiletools.notes.pro.extensions.getItemSize
-import com.simplemobiletools.notes.pro.extensions.getMediaStoreLastModified
 import com.simplemobiletools.notes.pro.extensions.getParentPath
 import com.simplemobiletools.notes.pro.extensions.getProperSize
-import com.simplemobiletools.notes.pro.extensions.getResolution
 import com.simplemobiletools.notes.pro.extensions.getSizeFromContentUri
-import com.simplemobiletools.notes.pro.extensions.getTitle
-import com.simplemobiletools.notes.pro.extensions.getVideoResolution
 import com.simplemobiletools.notes.pro.extensions.isImageFast
 import com.simplemobiletools.notes.pro.extensions.isPathOnOTG
 import com.simplemobiletools.notes.pro.extensions.isRestrictedSAFOnlyRoot
@@ -106,7 +91,7 @@ open class FileDirItem(
         }
     }
 
-    fun getExtension() = if (isDirectory) name else path.substringAfterLast('.', "")
+    private fun getExtension() = if (isDirectory) name else path.substringAfterLast('.', "")
 
     fun getBubbleText(context: Context, dateFormat: String? = null, timeFormat: String? = null) =
         when {
@@ -140,68 +125,9 @@ open class FileDirItem(
         }
     }
 
-    fun getProperFileCount(context: Context, countHidden: Boolean): Int {
-        return when {
-            context.isRestrictedSAFOnlyRoot(path) -> context.getAndroidSAFFileCount(
-                path,
-                countHidden
-            )
-
-            context.isPathOnOTG(path) -> context.getDocumentFile(path)?.getFileCount(countHidden)
-                ?: 0
-
-            else -> File(path).getFileCount(countHidden)
-        }
-    }
-
-    fun getDirectChildrenCount(context: Context, countHiddenItems: Boolean): Int {
-        return when {
-            context.isRestrictedSAFOnlyRoot(path) -> context.getAndroidSAFDirectChildrenCount(
-                path,
-                countHiddenItems
-            )
-
-            context.isPathOnOTG(path) -> context.getDocumentFile(path)?.listFiles()
-                ?.filter { if (countHiddenItems) true else !it.name!!.startsWith(".") }?.size
-                ?: 0
-
-            else -> File(path).getDirectChildrenCount(context, countHiddenItems)
-        }
-    }
-
-    fun getLastModified(context: Context): Long {
-        return when {
-            context.isRestrictedSAFOnlyRoot(path) -> context.getAndroidSAFLastModified(path)
-            context.isPathOnOTG(path) -> context.getFastDocumentFile(path)?.lastModified() ?: 0L
-            isNougatPlus() && path.startsWith("content://") -> context.getMediaStoreLastModified(
-                path
-            )
-
-            else -> File(path).lastModified()
-        }
-    }
-
     fun getParentPath() = path.getParentPath()
 
-    fun getDuration(context: Context) = context.getDuration(path)?.getFormattedDuration()
-
-    fun getFileDurationSeconds(context: Context) = context.getDuration(path)
-
-    fun getArtist(context: Context) = context.getArtist(path)
-
-    fun getAlbum(context: Context) = context.getAlbum(path)
-
-    fun getTitle(context: Context) = context.getTitle(path)
-
-    fun getResolution(context: Context) = context.getResolution(path)
-
-    fun getVideoResolution(context: Context) = context.getVideoResolution(path)
-
-    fun getImageResolution(context: Context) = context.getImageResolution(path)
-
-    fun getPublicUri(context: Context) = context.getDocumentFile(path)?.uri ?: ""
-
-    fun getSignature(): String {
+    private fun getSignature(): String {
         val lastModified = if (modified > 1) {
             modified
         } else {
@@ -225,16 +151,6 @@ open class FileDirItem(
 }
 
 fun FileDirItem.asReadOnly() = FileDirItemReadOnly(
-    path = path,
-    name = name,
-    isDirectory = isDirectory,
-    children = children,
-    size = size,
-    modified = modified,
-    mediaStoreId = mediaStoreId
-)
-
-fun FileDirItemReadOnly.asFileDirItem() = FileDirItem(
     path = path,
     name = name,
     isDirectory = isDirectory,

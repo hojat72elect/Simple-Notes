@@ -1,11 +1,6 @@
 package com.simplemobiletools.notes.pro.dialogs
 
-import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
-import android.view.KeyEvent
-import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,101 +31,18 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
-import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
-import com.simplemobiletools.notes.pro.databinding.DialogCustomIntervalPickerBinding
-import com.simplemobiletools.notes.pro.extensions.beVisibleIf
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.hideKeyboard
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
-import com.simplemobiletools.notes.pro.extensions.showKeyboard
-import com.simplemobiletools.notes.pro.extensions.value
-import com.simplemobiletools.notes.pro.helpers.DAY_SECONDS
-import com.simplemobiletools.notes.pro.helpers.HOUR_SECONDS
-import com.simplemobiletools.notes.pro.helpers.MINUTE_SECONDS
 import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.notes.pro.compose.alert_dialog.DialogSurface
 import com.simplemobiletools.notes.pro.compose.alert_dialog.ShowKeyboardWhenDialogIsOpenedAndRequestFocus
 import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.notes.pro.compose.components.RadioGroupDialogComponent
+import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
+import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
+import com.simplemobiletools.notes.pro.helpers.DAY_SECONDS
+import com.simplemobiletools.notes.pro.helpers.HOUR_SECONDS
+import com.simplemobiletools.notes.pro.helpers.MINUTE_SECONDS
 import kotlinx.collections.immutable.toImmutableList
-
-class CustomIntervalPickerDialog(
-    val activity: Activity,
-    val selectedSeconds: Int = 0,
-    val showSeconds: Boolean = false,
-    val callback: (minutes: Int) -> Unit
-) {
-    private var dialog: AlertDialog? = null
-    private var view =
-        DialogCustomIntervalPickerBinding.inflate(activity.layoutInflater, null, false)
-
-    init {
-        activity.getAlertDialogBuilder()
-            .setPositiveButton(R.string.ok) { _, _ -> confirmReminder() }
-            .setNegativeButton(R.string.cancel, null)
-            .apply {
-                activity.setupDialogStuff(view.root, this) { alertDialog ->
-                    dialog = alertDialog
-                    alertDialog.showKeyboard(view.dialogCustomIntervalValue)
-                }
-            }
-
-        view.apply {
-            dialogRadioSeconds.beVisibleIf(showSeconds)
-            when {
-                selectedSeconds == 0 -> dialogRadioView.check(R.id.dialog_radio_minutes)
-                selectedSeconds % DAY_SECONDS == 0 -> {
-                    dialogRadioView.check(R.id.dialog_radio_days)
-                    dialogCustomIntervalValue.setText((selectedSeconds / DAY_SECONDS).toString())
-                }
-
-                selectedSeconds % HOUR_SECONDS == 0 -> {
-                    dialogRadioView.check(R.id.dialog_radio_hours)
-                    dialogCustomIntervalValue.setText((selectedSeconds / HOUR_SECONDS).toString())
-                }
-
-                selectedSeconds % MINUTE_SECONDS == 0 -> {
-                    dialogRadioView.check(R.id.dialog_radio_minutes)
-                    dialogCustomIntervalValue.setText((selectedSeconds / MINUTE_SECONDS).toString())
-                }
-
-                else -> {
-                    dialogRadioView.check(R.id.dialog_radio_seconds)
-                    dialogCustomIntervalValue.setText(selectedSeconds.toString())
-                }
-            }
-
-            dialogCustomIntervalValue.setOnKeyListener(object : View.OnKeyListener {
-                override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
-                    if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                        dialog?.getButton(DialogInterface.BUTTON_POSITIVE)?.performClick()
-                        return true
-                    }
-
-                    return false
-                }
-            })
-        }
-    }
-
-    private fun confirmReminder() {
-        val value = view.dialogCustomIntervalValue.value
-        val multiplier = getMultiplier(view.dialogRadioView.checkedRadioButtonId)
-        val minutes = Integer.valueOf(value.ifEmpty { "0" })
-        callback(minutes * multiplier)
-        activity.hideKeyboard()
-        dialog?.dismiss()
-    }
-
-    private fun getMultiplier(id: Int) = when (id) {
-        R.id.dialog_radio_days -> DAY_SECONDS
-        R.id.dialog_radio_hours -> HOUR_SECONDS
-        R.id.dialog_radio_minutes -> MINUTE_SECONDS
-        else -> 1
-    }
-}
 
 @Composable
 fun CustomIntervalPickerAlertDialog(
