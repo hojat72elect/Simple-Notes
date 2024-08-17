@@ -6,8 +6,6 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
-import com.simplemobiletools.commons.compose.theme.isSurfaceLitWell
-import com.simplemobiletools.commons.compose.theme.ripple_light
 
 @Immutable
 internal object DynamicThemeRipple : RippleTheme {

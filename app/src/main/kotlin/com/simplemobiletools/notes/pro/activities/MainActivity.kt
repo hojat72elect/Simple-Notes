@@ -173,7 +173,7 @@ class MainActivity : SimpleActivity() {
         val textSize = getPercentageFontSize()
         binding.pagerTabStrip.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
         binding.pagerTabStrip.layoutParams.height =
-            (textSize + resources.getDimension(com.simplemobiletools.commons.R.dimen.medium_margin) * 2).toInt()
+            (textSize + resources.getDimension(R.dimen.medium_margin) * 2).toInt()
         (binding.pagerTabStrip.layoutParams as ViewPager.LayoutParams).isDecor = true
 
         val hasNoIntent = intent.action.isNullOrEmpty() && noteToOpen == -1L
@@ -223,7 +223,7 @@ class MainActivity : SimpleActivity() {
             val textSize = getPercentageFontSize()
             setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
             layoutParams.height =
-                (textSize + resources.getDimension(com.simplemobiletools.commons.R.dimen.medium_margin) * 2).toInt()
+                (textSize + resources.getDimension(R.dimen.medium_margin) * 2).toInt()
             setGravity(Gravity.CENTER_VERTICAL)
             setNonPrimaryAlpha(0.4f)
             setTextColor(getProperPrimaryColor())
@@ -281,7 +281,7 @@ class MainActivity : SimpleActivity() {
             findItem(R.id.unlock_note).isVisible =
                 mNotes.isNotEmpty() && (::mCurrentNote.isInitialized && mCurrentNote.isLocked())
             findItem(R.id.more_apps_from_us).isVisible =
-                !resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)
+                !resources.getBoolean(R.bool.hide_google_relations)
 
             saveNoteButton = findItem(R.id.save_note)
             saveNoteButton!!.isVisible =
@@ -762,7 +762,7 @@ class MainActivity : SimpleActivity() {
             FAQItem(R.string.faq_1_title, R.string.faq_1_text)
         )
 
-        if (!resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)) {
+        if (!resources.getBoolean(R.bool.hide_google_relations)) {
             faqItems.add(
                 FAQItem(
                     R.string.faq_2_title_commons,

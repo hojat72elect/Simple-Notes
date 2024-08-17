@@ -13,9 +13,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.compose.extensions.MyDevices
-import com.simplemobiletools.commons.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
+import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.compose.theme.preferenceLabelColor
 import com.simplemobiletools.notes.pro.compose.theme.preferenceValueColor
 

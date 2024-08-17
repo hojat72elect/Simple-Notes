@@ -3,7 +3,7 @@ package com.simplemobiletools.notes.pro.dialogs
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.databinding.DialogExportSettingsBinding
 import com.simplemobiletools.notes.pro.extensions.baseConfig

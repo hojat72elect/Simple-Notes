@@ -117,11 +117,11 @@ class ChecklistAdapter(
         val res = activity.resources
         crossDrawable = res.getColoredDrawableWithColor(
             R.drawable.ic_cross_vector,
-            res.getColor(com.simplemobiletools.commons.R.color.md_red_700)
+            res.getColor(R.color.md_red_700)
         )
         checkDrawable = res.getColoredDrawableWithColor(
             R.drawable.ic_check_vector,
-            res.getColor(com.simplemobiletools.commons.R.color.md_green_700)
+            res.getColor(R.color.md_green_700)
         )
     }
 

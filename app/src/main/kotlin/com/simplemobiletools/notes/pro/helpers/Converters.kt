@@ -3,11 +3,11 @@ package com.simplemobiletools.notes.pro.helpers
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.notes.pro.models.contacts.PhoneNumber
 import com.simplemobiletools.notes.pro.models.contacts.Address
 import com.simplemobiletools.notes.pro.models.contacts.Email
 import com.simplemobiletools.notes.pro.models.contacts.Event
 import com.simplemobiletools.notes.pro.models.contacts.IM
+import com.simplemobiletools.notes.pro.models.contacts.PhoneNumber
 import com.simplemobiletools.notes.pro.models.contacts.PhoneNumberConverter
 
 class Converters {

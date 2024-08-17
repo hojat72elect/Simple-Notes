@@ -5,8 +5,8 @@ import android.util.TypedValue
 import android.view.Menu
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.databinding.FilepickerFavoriteBinding
+import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.databinding.FilepickerFavoriteBinding
 import com.simplemobiletools.notes.pro.extensions.getTextSize
 import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity

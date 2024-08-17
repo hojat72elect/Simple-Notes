@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.simplemobiletools.commons.compose.extensions.MyDevices
-import com.simplemobiletools.commons.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
+import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 
 @Composable
 fun RadioGroupDialogComponent(

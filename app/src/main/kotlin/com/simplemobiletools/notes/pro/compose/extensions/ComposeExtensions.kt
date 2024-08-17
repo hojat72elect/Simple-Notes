@@ -30,7 +30,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.LifecycleStartEffect
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.compose.system_ui_controller.rememberSystemUiController
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.compose.theme.isLitWell

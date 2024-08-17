@@ -29,7 +29,7 @@ abstract class NotesDatabase : RoomDatabase() {
 
         fun getInstance(context: Context): NotesDatabase {
             defaultWidgetBgColor =
-                context.resources.getColor(com.simplemobiletools.commons.R.color.default_widget_bg_color)
+                context.resources.getColor(R.color.default_widget_bg_color)
             if (db == null) {
                 synchronized(NotesDatabase::class) {
                     if (db == null) {

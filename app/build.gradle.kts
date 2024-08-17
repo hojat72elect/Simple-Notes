@@ -119,14 +119,19 @@ dependencies {
     debugImplementation(libs.bundles.compose.preview)
     implementation(libs.bundles.compose)
     implementation(libs.compose.view.binding)
+    implementation(libs.kotlin.immutable.collections)
+
 
     implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.biometric.ktx)
-
+    api(libs.androidx.appcompat)
+    api(libs.material)
+    implementation(libs.fastscroller)
     implementation(libs.glide.compose)
     api(libs.glide)
     ksp(libs.glide.compiler)
-
+    api(libs.gson)
+    api(libs.rtl.viewpager)
     implementation(libs.bundles.lifecycle)
 }

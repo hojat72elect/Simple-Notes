@@ -26,10 +26,20 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
+import com.simplemobiletools.notes.pro.compose.alert_dialog.ShowKeyboardWhenDialogIsOpenedAndRequestFocus
+import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogBorder
+import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogContainerColor
+import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogElevation
+import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogShape
+import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogTextColor
+import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
-import com.simplemobiletools.commons.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.databinding.DialogCreateNewFolderBinding
+import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
+import com.simplemobiletools.notes.pro.databinding.DialogCreateNewFolderBinding
 import com.simplemobiletools.notes.pro.extensions.createAndroidSAFDirectory
 import com.simplemobiletools.notes.pro.extensions.createSAFDirectorySdk30
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
@@ -48,16 +58,6 @@ import com.simplemobiletools.notes.pro.extensions.showKeyboard
 import com.simplemobiletools.notes.pro.extensions.toast
 import com.simplemobiletools.notes.pro.extensions.value
 import com.simplemobiletools.notes.pro.helpers.isRPlus
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
-import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
-import com.simplemobiletools.notes.pro.compose.alert_dialog.ShowKeyboardWhenDialogIsOpenedAndRequestFocus
-import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogBorder
-import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogContainerColor
-import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogElevation
-import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogShape
-import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogTextColor
-import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
-import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import java.io.File
 
 @RequiresApi(Build.VERSION_CODES.O)

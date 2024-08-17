@@ -3,7 +3,7 @@ package com.simplemobiletools.notes.pro.activities
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.checkAppIconColor
 import com.simplemobiletools.notes.pro.extensions.checkAppSideloading

@@ -21,8 +21,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.databinding.DialogFeatureLockedBinding
+import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.databinding.DialogFeatureLockedBinding
 import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogBorder
 import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogContainerColor

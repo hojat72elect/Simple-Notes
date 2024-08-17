@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.compose.theme.light_grey_stroke
 import com.simplemobiletools.notes.pro.compose.theme.LocalTheme
 import com.simplemobiletools.notes.pro.compose.theme.Shapes

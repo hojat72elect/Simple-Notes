@@ -68,12 +68,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.compose.menus.ActionItem
 import com.simplemobiletools.commons.compose.menus.ActionMenu
 import com.simplemobiletools.commons.compose.menus.OverflowMode
-import com.simplemobiletools.commons.compose.system_ui_controller.rememberSystemUiController
-import com.simplemobiletools.commons.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.compose.components.SimpleDropDownMenuItem
 import com.simplemobiletools.notes.pro.compose.extensions.BooleanPreviewParameterProvider
 import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
@@ -89,6 +87,8 @@ import com.simplemobiletools.notes.pro.compose.lists.topAppBarInsets
 import com.simplemobiletools.notes.pro.compose.lists.topAppBarPaddings
 import com.simplemobiletools.notes.pro.compose.settings.SettingsCheckBoxComponent
 import com.simplemobiletools.notes.pro.compose.settings.SettingsHorizontalDivider
+import com.simplemobiletools.notes.pro.compose.system_ui_controller.rememberSystemUiController
+import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.compose.theme.LocalTheme
 import com.simplemobiletools.notes.pro.compose.theme.Shapes
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme

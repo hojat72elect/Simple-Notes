@@ -1,5 +1,6 @@
 package com.simplemobiletools.notes.pro.activities
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.Intent.ACTION_SEND
@@ -19,14 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.activities.ContributorsActivity
-import com.simplemobiletools.commons.activities.FAQActivity
-import com.simplemobiletools.commons.activities.LicenseActivity
-import com.simplemobiletools.commons.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.notes.pro.compose.extensions.enableEdgeToEdgeSimple
 import com.simplemobiletools.notes.pro.compose.extensions.rateStarsRedirectAndThankYou
+import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedAlertDialog
 import com.simplemobiletools.notes.pro.dialogs.RateStarsAlertDialog
 import com.simplemobiletools.notes.pro.extensions.baseConfig
@@ -137,6 +135,7 @@ class AboutActivity : ComponentActivity() {
     private fun rememberFAQ() =
         remember { !(intent.getSerializableExtra(APP_FAQ) as? ArrayList<FAQItem>).isNullOrEmpty() }
 
+    @SuppressLint("StringFormatMatches")
     @Composable
     private fun showWebsiteAndFullVersion(
         resources: Resources,
@@ -240,6 +239,7 @@ class AboutActivity : ComponentActivity() {
         }
     }
 
+    @SuppressLint("StringFormatMatches")
     private fun launchEmailIntent() {
         val appVersion =
             String.format(getString(R.string.app_version, intent.getStringExtra(APP_VERSION_NAME)))

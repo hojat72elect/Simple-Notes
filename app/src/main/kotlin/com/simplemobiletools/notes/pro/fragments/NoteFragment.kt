@@ -1,9 +1,11 @@
 package com.simplemobiletools.notes.pro.fragments
 
+import android.os.Build
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
 import com.simplemobiletools.notes.pro.activities.MainActivity
@@ -18,6 +20,7 @@ import com.simplemobiletools.notes.pro.extensions.underlineText
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.models.Note
 
+@RequiresApi(Build.VERSION_CODES.O)
 abstract class NoteFragment : Fragment() {
     protected var note: Note? = null
     var shouldShowLockedContent = false
@@ -44,6 +47,7 @@ abstract class NoteFragment : Fragment() {
             }
         }
     }
+
 
     protected fun saveNoteValue(note: Note, content: String?) {
         if (note.path.isEmpty()) {

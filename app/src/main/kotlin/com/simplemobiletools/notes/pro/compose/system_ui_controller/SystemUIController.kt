@@ -20,7 +20,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.simplemobiletools.commons.compose.system_ui_controller.SystemUiController
+
 
 /**
  * A class which provides easy-to-use utilities for updating the System UI bar
