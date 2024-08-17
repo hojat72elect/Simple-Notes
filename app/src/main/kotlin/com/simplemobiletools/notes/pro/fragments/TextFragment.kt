@@ -21,7 +21,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.viewbinding.ViewBinding
-import com.simplemobiletools.notes.pro.views.MyEditText
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.MainActivity
 import com.simplemobiletools.notes.pro.databinding.FragmentTextBinding
@@ -43,6 +42,7 @@ import com.simplemobiletools.notes.pro.helpers.NOTE_ID
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.models.TextHistory
 import com.simplemobiletools.notes.pro.models.TextHistoryItem
+import com.simplemobiletools.notes.pro.views.MyEditText
 import java.io.File
 import kotlin.math.abs
 
@@ -72,7 +72,7 @@ class TextFragment : NoteFragment() {
         binding = FragmentTextBinding.inflate(inflater, container, false)
         noteId = requireArguments().getLong(NOTE_ID, 0L)
         moveXThreshold =
-            resources.getDimension(com.simplemobiletools.commons.R.dimen.activity_margin).toInt()
+            resources.getDimension(R.dimen.activity_margin).toInt()
         retainInstance = true
 
         innerBinding = if (config!!.enableLineWrap) {

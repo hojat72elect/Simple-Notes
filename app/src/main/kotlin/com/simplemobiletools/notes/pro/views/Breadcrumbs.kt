@@ -11,9 +11,9 @@ import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.databinding.ItemBreadcrumbBinding
-import com.simplemobiletools.commons.databinding.ItemBreadcrumbFirstBinding
+import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.databinding.ItemBreadcrumbBinding
+import com.simplemobiletools.notes.pro.databinding.ItemBreadcrumbFirstBinding
 import com.simplemobiletools.notes.pro.extensions.adjustAlpha
 import com.simplemobiletools.notes.pro.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.extensions.baseConfig
@@ -22,7 +22,7 @@ import com.simplemobiletools.notes.pro.extensions.getProperBackgroundColor
 import com.simplemobiletools.notes.pro.extensions.getProperTextColor
 import com.simplemobiletools.notes.pro.extensions.humanizePath
 import com.simplemobiletools.notes.pro.extensions.onGlobalLayout
-import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.notes.pro.models.FileDirItem
 
 class Breadcrumbs(context: Context, attrs: AttributeSet) : HorizontalScrollView(context, attrs) {
     private val inflater =

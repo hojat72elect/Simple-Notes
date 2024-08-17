@@ -21,8 +21,8 @@ class UnlockNotesDialog(
     private var dialog: AlertDialog? = null
     private val binding = DialogUnlockNotesBinding.inflate(activity.layoutInflater)
     private val view = binding.root
-    private val redColor = activity.getColor(com.simplemobiletools.commons.R.color.md_red)
-    private val greenColor = activity.getColor(com.simplemobiletools.commons.R.color.md_green)
+    private val redColor = activity.getColor(R.color.md_red)
+    private val greenColor = activity.getColor(R.color.md_green)
     private val unlockedNoteIds = mutableListOf<Long>()
 
     init {

@@ -3,7 +3,7 @@ package com.simplemobiletools.notes.pro.models
 import android.content.Context
 import android.net.Uri
 import androidx.room.*
-import com.simplemobiletools.commons.extensions.isBiometricIdAvailable
+import com.simplemobiletools.notes.pro.extensions.isBiometricIdAvailable
 import com.simplemobiletools.notes.pro.helpers.PROTECTION_FINGERPRINT
 import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
 import kotlinx.serialization.Serializable

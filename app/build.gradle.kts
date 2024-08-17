@@ -111,7 +111,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.simple.tools.commons)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.documentfile)
     implementation(libs.kotlinx.serialization.json)
@@ -121,7 +120,7 @@ dependencies {
     implementation(libs.compose.view.binding)
     implementation(libs.kotlin.immutable.collections)
 
-
+    api(libs.reprint)
     implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.biometric.ktx)
@@ -132,6 +131,8 @@ dependencies {
     api(libs.glide)
     ksp(libs.glide.compiler)
     api(libs.gson)
+    api(libs.joda.time)
+    api(libs.patternLockView)
     api(libs.rtl.viewpager)
     implementation(libs.bundles.lifecycle)
 }

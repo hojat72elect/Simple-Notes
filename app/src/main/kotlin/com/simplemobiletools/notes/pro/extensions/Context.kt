@@ -59,6 +59,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.biometric.BiometricManager
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -263,8 +264,15 @@ fun Context.isPathOnSD(path: String) = sdCardPath.isNotEmpty() && path.startsWit
 
 fun Context.isPathOnOTG(path: String) = otgPath.isNotEmpty() && path.startsWith(otgPath)
 
+fun Context.isBiometricIdAvailable(): Boolean = when (BiometricManager.from(this).canAuthenticate(
+    BiometricManager.Authenticators.BIOMETRIC_WEAK
+)) {
+    BiometricManager.BIOMETRIC_SUCCESS, BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> true
+    else -> false
+}
+
 fun Context.getPercentageFontSize() =
-    resources.getDimension(com.simplemobiletools.commons.R.dimen.middle_text_size) * (config.fontSizePercentage / 100f)
+    resources.getDimension(R.dimen.middle_text_size) * (config.fontSizePercentage / 100f)
 
 fun BaseSimpleActivity.requestUnlockNotes(
     notes: List<Note>,

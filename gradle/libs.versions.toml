@@ -29,10 +29,14 @@ glide = "4.16.0"
 glideCompose = "1.0.0-beta01"
 #Room
 room = "2.6.0-alpha02"
-#Simple tools
-simple-commons = "eceb48949e"
 #gson
 gson = "2.10.1"
+#jodaTime
+jodaTime = "2.12.5"
+#patternLockView
+patternLockView = "a90b0d4bf0"
+#reprint
+reprint = "2cb206415d"
 #Gradle
 gradlePlugins-agp = "8.1.1"
 #build
@@ -61,6 +65,9 @@ androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-runtime-co
 #Helper
 fastscroller = { module = "com.github.tibbi:RecyclerView-FastScroller", version.ref = "recyclerviewFastscroller" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+joda-time = { module = "joda-time:joda-time", version.ref = "jodaTime" }
+patternLockView = { module = "com.github.aritraroy:patternLockView", version.ref = "patternLockView" }
+reprint = { module = "com.github.tibbi:reprint", version.ref = "reprint" }
 #Room
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -82,8 +89,6 @@ compose-view-binding = { module = "androidx.compose.ui:ui-viewbinding", version.
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glideCompose" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
-#Simple Mobile Tools
-simple-tools-commons = { module = "com.github.SimpleMobileTools:Simple-Commons", version.ref = "simple-commons" }
 #Material
 material = { module = "com.google.android.material:material", version.ref = "material" }
 rtl-viewpager = { module = "com.github.duolingo:rtl-viewpager", version.ref = "rtlViewpager" }

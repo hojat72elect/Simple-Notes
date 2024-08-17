@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.biometric.auth.AuthPromptHost
 import androidx.fragment.app.FragmentActivity
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.extensions.isBiometricIdAvailable
-import com.simplemobiletools.commons.extensions.onTabSelectionChanged
+import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.extensions.isBiometricIdAvailable
+import com.simplemobiletools.notes.pro.extensions.onTabSelectionChanged
 import com.simplemobiletools.notes.pro.adapters.PasswordTypesAdapter
 import com.simplemobiletools.notes.pro.databinding.DialogSecurityBinding
 import com.simplemobiletools.notes.pro.extensions.baseConfig

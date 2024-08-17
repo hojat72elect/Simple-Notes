@@ -8,7 +8,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.os.postDelayed
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.countdown
 import com.simplemobiletools.notes.pro.extensions.getProperTextColor

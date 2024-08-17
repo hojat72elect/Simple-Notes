@@ -560,6 +560,54 @@
     <string name="grant_permission">Grant Permission</string>
     <string name="permission_required">Permission Required</string>
     <string name="rate_our_app">Rate our app please :)</string>
+    <string name="open_biometric_dialog">Open biometric ID verification dialog</string>
+    <string name="insert_pattern">Insert pattern</string>
+    <string name="wrong_pattern">Wrong pattern</string>
+    <string name="repeat_pattern">Repeat pattern</string>
+    <string name="biometrics">Biometrics</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="pattern">Pattern</string>
+    <string name="pin">PIN</string>
+    <string name="viber">Viber</string>
+    <string name="phone_storage">Phone storage</string>
+    <string name="updating">Updating…</string>
+    <string name="too_many_incorrect_attempts">Too many incorrect unlock attempts.\nTry again in %d seconds.</string>
+    <string name="enter_pin">Enter PIN</string>
+    <string name="wrong_pin">Wrong PIN</string>
+    <string name="please_enter_pin">Please enter a PIN</string>
+    <string name="pin_must_be_4_digits_long">PIN must be at least 4 digits long</string>
+    <string name="repeat_pin">Repeat PIN</string>
+    <string name="place_finger">Please place your finger on the fingerprint sensor</string>
+    <string name="no_fingerprints_registered">You have no fingerprints registered, please add some in the Settings of your device</string>
+    <string name="add_fingerprint">Add fingerprint</string>
+    <string name="authentication_blocked">Authentication blocked, please try again in a moment</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="select_storage">Select storage</string>
+    <string name="upgrade_to_pro_long">Your app version will not be updated anymore. Please upgrade to the Pro version to receive new fixes and other improvements.</string>
+    <string name="more_info">More info</string>
+    <string name="upgrade">Upgrade</string>
+    <string name="upgrade_to_pro">Upgrade to Pro</string>
+    <string name="whats_new_disclaimer">* only the bigger updates are listed here, there are always some smaller improvements too</string>
+    <string name="whats_new">What\'s new</string>
+    <string name="temporarily_show_excluded">Temporarily show excluded</string>
+    <string name="temporarily_show_hidden">Temporarily show hidden</string>
+    <string name="confirm_storage_access_title">Confirm external storage access</string>
+    <string name="confirm_usb_storage_access_text">Please choose the top folder of the USB device on the next screen, to grant access</string>
+    <string name="confirm_folder_access_title">Confirm folder access</string>
+    <string name="confirm_storage_access_android_text_specific">Please allow accessing \'&lt;b&gt;%s&lt;/b&gt;\' on the next screen by pressing \'&lt;b&gt;Use this folder&lt;/b&gt;\' at the bottom.</string>
+    <string name="confirm_create_doc_for_new_folder_text">Please press \'&lt;b&gt;Save&lt;/b&gt;\' at the bottom of the next screen to create the new folder.</string>
+    <string name="confirm_storage_access_text">Please choose the top folder of the SD card on the next screen, to grant write access</string>
+    <string name="confirm_storage_access_text_sd">If you don\'t see the SD card, try this</string>
+
+
+
+
+
+
+
+
+
+
 
 
 

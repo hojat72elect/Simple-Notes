@@ -1,5 +1,7 @@
 package com.simplemobiletools.notes.pro.dialogs
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
 import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
@@ -18,6 +20,7 @@ import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 import java.io.File
 
+@RequiresApi(Build.VERSION_CODES.O)
 class ImportFolderDialog(
     val activity: SimpleActivity,
     val path: String,
@@ -51,6 +54,7 @@ class ImportFolderDialog(
                 }
             }
     }
+
 
     private fun saveFolder(updateFilesOnEdit: Boolean) {
         val folder = File(path)

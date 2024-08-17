@@ -43,9 +43,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.simplemobiletools.commons.databinding.DialogTitleBinding
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.databinding.DialogTitleBinding
 import com.simplemobiletools.notes.pro.dialogs.AppSideloadedDialog
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.notes.pro.dialogs.CustomIntervalPickerDialog

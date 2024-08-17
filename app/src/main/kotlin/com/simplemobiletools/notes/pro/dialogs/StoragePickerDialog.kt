@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.RadioGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.databinding.DialogRadioGroupBinding
-import com.simplemobiletools.commons.databinding.RadioButtonBinding
+import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.databinding.DialogRadioGroupBinding
+import com.simplemobiletools.notes.pro.databinding.RadioButtonBinding
 import com.simplemobiletools.notes.pro.extensions.hasExternalSDCard
 import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder

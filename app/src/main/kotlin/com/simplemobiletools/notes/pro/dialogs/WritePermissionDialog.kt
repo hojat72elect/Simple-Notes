@@ -1,9 +1,11 @@
 package com.simplemobiletools.notes.pro.dialogs
 
 import android.app.Activity
+import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.clickable
@@ -35,11 +37,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.databinding.DialogWritePermissionBinding
-import com.simplemobiletools.commons.databinding.DialogWritePermissionOtgBinding
+import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.notes.pro.compose.alert_dialog.DialogSurface
 import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogTextColor
@@ -47,12 +46,16 @@ import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogS
 import com.simplemobiletools.notes.pro.compose.components.LinkifyTextComponent
 import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
 import com.simplemobiletools.notes.pro.compose.extensions.andThen
+import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
+import com.simplemobiletools.notes.pro.databinding.DialogWritePermissionBinding
+import com.simplemobiletools.notes.pro.databinding.DialogWritePermissionOtgBinding
 import com.simplemobiletools.notes.pro.extensions.fromHtml
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.extensions.humanizePath
 import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 
+@RequiresApi(Build.VERSION_CODES.O)
 class WritePermissionDialog(
     activity: Activity,
     val writePermissionDialogMode: WritePermissionDialogMode,
@@ -156,6 +159,7 @@ class WritePermissionDialog(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WritePermissionAlertDialog(
     alertDialogState: AlertDialogState,
@@ -342,6 +346,7 @@ private fun WritePermissionText(text: Spanned) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 private fun adjustDialogTitle(
     writePermissionDialogMode: WritePermissionDialog.WritePermissionDialogMode,
     dialogTitle: Int
@@ -355,6 +360,7 @@ private fun adjustDialogTitle(
 private class WritePermissionDialogModePreviewParameter :
     PreviewParameterProvider<WritePermissionDialog.WritePermissionDialogMode> {
     override val values: Sequence<WritePermissionDialog.WritePermissionDialogMode>
+        @RequiresApi(Build.VERSION_CODES.O)
         get() = sequenceOf(
             WritePermissionDialog.WritePermissionDialogMode.SdCard,
             WritePermissionDialog.WritePermissionDialogMode.Otg,
@@ -363,6 +369,7 @@ private class WritePermissionDialogModePreviewParameter :
         )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 @MyDevices
 private fun WritePermissionAlertDialogPreview(

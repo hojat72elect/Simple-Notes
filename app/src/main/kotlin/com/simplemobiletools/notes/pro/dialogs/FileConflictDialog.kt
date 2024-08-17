@@ -55,7 +55,7 @@ class FileConflictDialog(
                 String.format(activity.getString(stringBase), fileDirItem.name)
             conflictDialogApplyToAll.isChecked = activity.baseConfig.lastConflictApplyToAll
             conflictDialogApplyToAll.beVisibleIf(showApplyToAllCheckbox)
-            conflictDialogDivider.beVisibleIf(showApplyToAllCheckbox)
+            conflictDialogDivider.root.beVisibleIf(showApplyToAllCheckbox)
             conflictDialogRadioMerge.beVisibleIf(fileDirItem.isDirectory)
 
             val resolutionButton = when (activity.baseConfig.lastConflictResolution) {

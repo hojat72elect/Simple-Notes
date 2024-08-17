@@ -1,11 +1,13 @@
 package com.simplemobiletools.notes.pro.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
@@ -29,6 +31,7 @@ import com.simplemobiletools.notes.pro.models.ChecklistItem
 import com.simplemobiletools.notes.pro.models.Note
 import java.io.File
 
+@RequiresApi(Build.VERSION_CODES.O)
 class ChecklistFragment : NoteFragment(), ChecklistItemsListener {
 
     private var noteId = 0L
