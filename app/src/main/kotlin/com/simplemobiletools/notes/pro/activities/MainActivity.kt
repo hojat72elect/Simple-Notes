@@ -52,11 +52,9 @@ import com.simplemobiletools.notes.pro.extensions.appLaunched
 import com.simplemobiletools.notes.pro.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.beVisibleIf
-import com.simplemobiletools.notes.pro.extensions.checkWhatsNew
 import com.simplemobiletools.notes.pro.extensions.clearBackgroundSpans
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.convertToBitmap
-import com.simplemobiletools.notes.pro.extensions.deleteFile
 import com.simplemobiletools.notes.pro.extensions.fadeIn
 import com.simplemobiletools.notes.pro.extensions.fadeOut
 import com.simplemobiletools.notes.pro.extensions.getContrastColor

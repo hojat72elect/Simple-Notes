@@ -16,7 +16,6 @@ import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.canManageMedia
 import com.simplemobiletools.notes.pro.extensions.createDirectorySync
-import com.simplemobiletools.notes.pro.extensions.deleteFileBg
 import com.simplemobiletools.notes.pro.extensions.deleteFromMediaStore
 import com.simplemobiletools.notes.pro.extensions.getAndroidSAFFileItems
 import com.simplemobiletools.notes.pro.extensions.getDocumentFile
