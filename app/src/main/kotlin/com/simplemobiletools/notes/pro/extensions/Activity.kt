@@ -74,7 +74,7 @@ fun Activity.appLaunched(appId: String) {
             )
 
             val orangeClassName =
-                "${baseConfig.appId.removeSuffix(".debug")}.activities.SplashActivity.Orange"
+                "${baseConfig.appId.removeSuffix(".debug")}.activities.SplashActivity"
             packageManager.setComponentEnabledSetting(
                 ComponentName(baseConfig.appId, orangeClassName),
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
