@@ -1,5 +1,6 @@
 package com.simplemobiletools.notes.pro.views
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
@@ -121,11 +122,13 @@ class PinTab(context: Context, attrs: AttributeSet) : BaseSecurityTab(context, a
         performHapticFeedback()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun resetPin() {
         pin = ""
         binding.pinLockCurrentPin.text = ""
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updatePinCode() {
         binding.pinLockCurrentPin.text = "*".repeat(pin.length)
     }

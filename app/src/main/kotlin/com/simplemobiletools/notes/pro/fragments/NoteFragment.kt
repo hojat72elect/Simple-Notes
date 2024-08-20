@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
 import com.simplemobiletools.notes.pro.activities.MainActivity
 import com.simplemobiletools.notes.pro.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.extensions.beVisibleIf
@@ -18,9 +17,10 @@ import com.simplemobiletools.notes.pro.extensions.getProperTextColor
 import com.simplemobiletools.notes.pro.extensions.performSecurityCheck
 import com.simplemobiletools.notes.pro.extensions.underlineText
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
+import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
 import com.simplemobiletools.notes.pro.models.Note
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 abstract class NoteFragment : Fragment() {
     protected var note: Note? = null
     var shouldShowLockedContent = false

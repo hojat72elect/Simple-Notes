@@ -6,7 +6,6 @@ import android.app.Activity
 import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.role.RoleManager
 import android.appwidget.AppWidgetManager
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -20,20 +19,16 @@ import android.content.pm.PackageManager
 import android.content.pm.ShortcutManager
 import android.content.res.Configuration
 import android.database.Cursor
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Point
 import android.hardware.usb.UsbConstants
 import android.hardware.usb.UsbManager
-import android.media.MediaMetadataRetriever
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
-import android.provider.BaseColumns
-import android.provider.ContactsContract
 import android.provider.DocumentsContract
 import android.provider.DocumentsContract.Document
 import android.provider.MediaStore
@@ -44,7 +39,6 @@ import android.provider.MediaStore.MediaColumns
 import android.provider.MediaStore.Video
 import android.provider.OpenableColumns
 import android.provider.Settings
-import android.telecom.TelecomManager
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
@@ -66,9 +60,7 @@ import com.simplemobiletools.notes.pro.dialogs.UnlockNotesDialog
 import com.simplemobiletools.notes.pro.helpers.AUTOMATIC_BACKUP_REQUEST_CODE
 import com.simplemobiletools.notes.pro.helpers.BaseConfig
 import com.simplemobiletools.notes.pro.helpers.Config
-import com.simplemobiletools.notes.pro.helpers.ContactsHelper
 import com.simplemobiletools.notes.pro.helpers.DARK_GREY
-import com.simplemobiletools.notes.pro.helpers.DEFAULT_MIMETYPE
 import com.simplemobiletools.notes.pro.helpers.EXTERNAL_STORAGE_PROVIDER_AUTHORITY
 import com.simplemobiletools.notes.pro.helpers.ExportResult
 import com.simplemobiletools.notes.pro.helpers.ExternalStorageProviderHack
@@ -105,7 +97,6 @@ import com.simplemobiletools.notes.pro.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.notes.pro.helpers.PREFS_KEY
 import com.simplemobiletools.notes.pro.helpers.SD_OTG_PATTERN
 import com.simplemobiletools.notes.pro.helpers.SD_OTG_SHORT
-import com.simplemobiletools.notes.pro.helpers.SMT_PRIVATE
 import com.simplemobiletools.notes.pro.helpers.TIME_FORMAT_12
 import com.simplemobiletools.notes.pro.helpers.TIME_FORMAT_24
 import com.simplemobiletools.notes.pro.helpers.appIconColorStrings
@@ -118,16 +109,12 @@ import com.simplemobiletools.notes.pro.helpers.isQPlus
 import com.simplemobiletools.notes.pro.helpers.isRPlus
 import com.simplemobiletools.notes.pro.helpers.isSPlus
 import com.simplemobiletools.notes.pro.helpers.proPackages
-import com.simplemobiletools.notes.pro.interfaces.ContactsDao
 import com.simplemobiletools.notes.pro.interfaces.GroupsDao
 import com.simplemobiletools.notes.pro.interfaces.NotesDao
 import com.simplemobiletools.notes.pro.interfaces.WidgetsDao
 import com.simplemobiletools.notes.pro.models.FileDirItem
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.SharedTheme
-import com.simplemobiletools.notes.pro.models.contacts.Contact
-import com.simplemobiletools.notes.pro.models.contacts.ContactSource
-import com.simplemobiletools.notes.pro.models.contacts.Organization
 import com.simplemobiletools.notes.pro.receivers.AutomaticBackupReceiver
 import com.simplemobiletools.notes.pro.views.MyAppCompatCheckbox
 import com.simplemobiletools.notes.pro.views.MyAppCompatSpinner
@@ -1124,29 +1111,6 @@ val Context.groupsDB: GroupsDao get() = ContactsDatabase.getInstance(application
 
 fun Context.hasExternalSDCard() = sdCardPath.isNotEmpty()
 
-fun Context.getVisibleContactSources(): ArrayList<String> {
-    val sources = getAllContactSources()
-    val ignoredContactSources = baseConfig.ignoredContactSources
-    return ArrayList(sources).filter { !ignoredContactSources.contains(it.getFullIdentifier()) }
-        .map { it.name }.toMutableList() as ArrayList<String>
-}
-
-fun Context.getPhotoThumbnailSize(): Int {
-    val uri = ContactsContract.DisplayPhoto.CONTENT_MAX_DIMENSIONS_URI
-    val projection = arrayOf(ContactsContract.DisplayPhoto.THUMBNAIL_MAX_DIM)
-    var cursor: Cursor? = null
-    try {
-        cursor = contentResolver.query(uri, projection, null, null, null)
-        if (cursor?.moveToFirst() == true) {
-            return cursor.getIntValue(ContactsContract.DisplayPhoto.THUMBNAIL_MAX_DIM)
-        }
-    } catch (ignored: Exception) {
-    } finally {
-        cursor?.close()
-    }
-    return 0
-}
-
 // no need to use DocumentFile if an SD card is set as the default storage
 fun Context.needsStupidWritePermissions(path: String) =
     !isRPlus() && (isPathOnSD(path) || isPathOnOTG(path)) && !isSDCardSetAsDefaultStorage()
@@ -1331,11 +1295,6 @@ fun Context.isPackageInstalled(pkgName: String): Boolean {
     }
 }
 
-fun Context.getPrivateContactSource() = ContactSource(
-    SMT_PRIVATE,
-    SMT_PRIVATE, getString(R.string.phone_storage_hidden)
-)
-
 fun Context.getLaunchIntent() = packageManager.getLaunchIntentForPackage(baseConfig.appId)
 
 fun Context.isSAFOnlyRoot(path: String): Boolean {
@@ -1351,226 +1310,8 @@ fun Context.getStoreUrl() =
 
 fun Context.getTimeFormat() = if (baseConfig.use24HourFormat) TIME_FORMAT_24 else TIME_FORMAT_12
 
-fun Context.getResolution(path: String): Point? {
-    return if (path.isImageFast() || path.isImageSlow()) {
-        getImageResolution(path)
-    } else if (path.isVideoFast() || path.isVideoSlow()) {
-        getVideoResolution(path)
-    } else {
-        null
-    }
-}
-
-fun Context.getImageResolution(path: String): Point? {
-    val options = BitmapFactory.Options()
-    options.inJustDecodeBounds = true
-    if (isRestrictedSAFOnlyRoot(path)) {
-        BitmapFactory.decodeStream(
-            contentResolver.openInputStream(getAndroidSAFUri(path)),
-            null,
-            options
-        )
-    } else {
-        BitmapFactory.decodeFile(path, options)
-    }
-
-    val width = options.outWidth
-    val height = options.outHeight
-    return if (width > 0 && height > 0) {
-        Point(options.outWidth, options.outHeight)
-    } else {
-        null
-    }
-}
-
 fun Context.getAppIconColors() =
     resources.getIntArray(R.array.md_app_icon_colors).toCollection(ArrayList())
-
-fun Context.getVideoResolution(path: String): Point? {
-    var point = try {
-        val retriever = MediaMetadataRetriever()
-        if (isRestrictedSAFOnlyRoot(path)) {
-            retriever.setDataSource(this, getAndroidSAFUri(path))
-        } else {
-            retriever.setDataSource(path)
-        }
-
-        val width =
-            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)!!.toInt()
-        val height =
-            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)!!.toInt()
-        Point(width, height)
-    } catch (ignored: Exception) {
-        null
-    }
-
-    if (point == null && path.startsWith("content://", true)) {
-        try {
-            val fd = contentResolver.openFileDescriptor(Uri.parse(path), "r")?.fileDescriptor
-            val retriever = MediaMetadataRetriever()
-            retriever.setDataSource(fd)
-            val width =
-                retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)!!.toInt()
-            val height =
-                retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)!!
-                    .toInt()
-            point = Point(width, height)
-        } catch (ignored: Exception) {
-        }
-    }
-
-    return point
-}
-
-fun Context.getDuration(path: String): Int? {
-    val projection = arrayOf(
-        MediaColumns.DURATION
-    )
-
-    val uri = getFileUri(path)
-    val selection =
-        if (path.startsWith("content://")) "${BaseColumns._ID} = ?" else "${MediaColumns.DATA} = ?"
-    val selectionArgs =
-        if (path.startsWith("content://")) arrayOf(path.substringAfterLast("/")) else arrayOf(path)
-
-    try {
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                return Math.round(cursor.getIntValue(MediaColumns.DURATION) / 1000.toDouble())
-                    .toInt()
-            }
-        }
-    } catch (ignored: Exception) {
-    }
-
-    return try {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(path)
-        Math.round(
-            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)!!
-                .toInt() / 1000f
-        )
-    } catch (ignored: Exception) {
-        null
-    }
-}
-
-fun Context.getTitle(path: String): String? {
-    val projection = arrayOf(
-        MediaColumns.TITLE
-    )
-
-    val uri = getFileUri(path)
-    val selection =
-        if (path.startsWith("content://")) "${BaseColumns._ID} = ?" else "${MediaColumns.DATA} = ?"
-    val selectionArgs =
-        if (path.startsWith("content://")) arrayOf(path.substringAfterLast("/")) else arrayOf(path)
-
-    try {
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                return cursor.getStringValue(MediaColumns.TITLE)
-            }
-        }
-    } catch (ignored: Exception) {
-    }
-
-    return try {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(path)
-        retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-    } catch (ignored: Exception) {
-        null
-    }
-}
-
-fun Context.getArtist(path: String): String? {
-    val projection = arrayOf(
-        Audio.Media.ARTIST
-    )
-
-    val uri = getFileUri(path)
-    val selection =
-        if (path.startsWith("content://")) "${BaseColumns._ID} = ?" else "${MediaColumns.DATA} = ?"
-    val selectionArgs =
-        if (path.startsWith("content://")) arrayOf(path.substringAfterLast("/")) else arrayOf(path)
-
-    try {
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                return cursor.getStringValue(Audio.Media.ARTIST)
-            }
-        }
-    } catch (ignored: Exception) {
-    }
-
-    return try {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(path)
-        retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
-    } catch (ignored: Exception) {
-        null
-    }
-}
-
-fun Context.getAlbum(path: String): String? {
-    val projection = arrayOf(
-        Audio.Media.ALBUM
-    )
-
-    val uri = getFileUri(path)
-    val selection =
-        if (path.startsWith("content://")) "${BaseColumns._ID} = ?" else "${MediaColumns.DATA} = ?"
-    val selectionArgs =
-        if (path.startsWith("content://")) arrayOf(path.substringAfterLast("/")) else arrayOf(path)
-
-    try {
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                return cursor.getStringValue(Audio.Media.ALBUM)
-            }
-        }
-    } catch (ignored: Exception) {
-    }
-
-    return try {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(path)
-        retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
-    } catch (ignored: Exception) {
-        null
-    }
-}
-
-fun Context.getMediaStoreLastModified(path: String): Long {
-    val projection = arrayOf(
-        MediaColumns.DATE_MODIFIED
-    )
-
-    val uri = getFileUri(path)
-    val selection = "${BaseColumns._ID} = ?"
-    val selectionArgs = arrayOf(path.substringAfterLast("/"))
-
-    try {
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                return cursor.getLongValue(MediaColumns.DATE_MODIFIED) * 1000
-            }
-        }
-    } catch (ignored: Exception) {
-    }
-    return 0
-}
-
-@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-fun Context.hasContactPermissions() = hasPermission(PERMISSION_READ_CONTACTS) && hasPermission(
-    PERMISSION_WRITE_CONTACTS
-)
 
 fun Context.getStringsPackageName() = getString(R.string.package_name)
 
@@ -1581,7 +1322,6 @@ fun Context.getTextSize() = when (baseConfig.fontSize) {
     else -> resources.getDimension(R.dimen.extra_big_text_size)
 }
 
-val Context.telecomManager: TelecomManager get() = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
 val Context.windowManager: WindowManager get() = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 val Context.notificationManager: NotificationManager get() = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 val Context.shortcutManager: ShortcutManager
@@ -1647,21 +1387,6 @@ fun Context.isUsingGestureNavigation(): Boolean {
         }
     } catch (e: Exception) {
         false
-    }
-}
-
-// we need the Default Dialer functionality only in Simple Dialer and in Simple Contacts for now
-fun Context.isDefaultDialer(): Boolean {
-    return if (!packageName.startsWith("com.simplemobiletools.contacts") && !packageName.startsWith(
-            "com.simplemobiletools.dialer"
-        )
-    ) {
-        true
-    } else if ((packageName.startsWith("com.simplemobiletools.contacts") || packageName.startsWith("com.simplemobiletools.dialer")) && isQPlus()) {
-        val roleManager = getSystemService(RoleManager::class.java)
-        roleManager!!.isRoleAvailable(RoleManager.ROLE_DIALER) && roleManager.isRoleHeld(RoleManager.ROLE_DIALER)
-    } else {
-        telecomManager.defaultDialerPackage == packageName
     }
 }
 
@@ -2151,36 +1876,6 @@ fun Context.getDirectChildrenCount(
     }
 }
 
-fun Context.getProperChildrenCount(
-    rootDocId: String,
-    treeUri: Uri,
-    documentId: String,
-    shouldShowHidden: Boolean
-): Int {
-    val projection = arrayOf(Document.COLUMN_DOCUMENT_ID, Document.COLUMN_MIME_TYPE)
-    val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, documentId)
-    val rawCursor = contentResolver.query(childrenUri, projection, null, null, null)!!
-    val cursor = ExternalStorageProviderHack.transformQueryResult(rootDocId, childrenUri, rawCursor)
-    return if (cursor.count > 0) {
-        var count = 0
-        cursor.use {
-            while (cursor.moveToNext()) {
-                val docId = cursor.getStringValue(Document.COLUMN_DOCUMENT_ID)
-                val mimeType = cursor.getStringValue(Document.COLUMN_MIME_TYPE)
-                if (mimeType == Document.MIME_TYPE_DIR) {
-                    count++
-                    count += getProperChildrenCount(rootDocId, treeUri, docId, shouldShowHidden)
-                } else if (!docId.getFilenameFromPath().startsWith('.') || shouldShowHidden) {
-                    count++
-                }
-            }
-        }
-        count
-    } else {
-        1
-    }
-}
-
 fun Context.getFileSize(treeUri: Uri, documentId: String): Long {
     val projection = arrayOf(Document.COLUMN_SIZE)
     val documentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
@@ -2193,17 +1888,6 @@ fun Context.getFileSize(treeUri: Uri, documentId: String): Long {
     } ?: 0L
 }
 
-fun Context.getAndroidSAFFileCount(path: String, countHidden: Boolean): Int {
-    val treeUri = getAndroidTreeUri(path).toUri()
-    if (treeUri == Uri.EMPTY) {
-        return 0
-    }
-
-    val documentId = createAndroidSAFDocumentId(path)
-    val rootDocId = getStorageRootIdForAndroidDir(path)
-    return getProperChildrenCount(rootDocId, treeUri, documentId, countHidden)
-}
-
 fun Context.getAndroidSAFDirectChildrenCount(path: String, countHidden: Boolean): Int {
     val treeUri = getAndroidTreeUri(path).toUri()
     if (treeUri == Uri.EMPTY) {
@@ -2213,24 +1897,6 @@ fun Context.getAndroidSAFDirectChildrenCount(path: String, countHidden: Boolean)
     val documentId = createAndroidSAFDocumentId(path)
     val rootDocId = getStorageRootIdForAndroidDir(path)
     return getDirectChildrenCount(rootDocId, treeUri, documentId, countHidden)
-}
-
-fun Context.getAndroidSAFLastModified(path: String): Long {
-    val treeUri = getAndroidTreeUri(path).toUri()
-    if (treeUri == Uri.EMPTY) {
-        return 0L
-    }
-
-    val documentId = createAndroidSAFDocumentId(path)
-    val projection = arrayOf(Document.COLUMN_LAST_MODIFIED)
-    val documentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
-    return contentResolver.query(documentUri, projection, null, null, null)?.use { cursor ->
-        if (cursor.moveToFirst()) {
-            cursor.getLongValue(Document.COLUMN_LAST_MODIFIED)
-        } else {
-            0L
-        }
-    } ?: 0L
 }
 
 fun Context.trySAFFileDelete(
@@ -2451,50 +2117,8 @@ fun Context.getColoredMaterialStatusBarColor(): Int {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-fun Context.getEmptyContact(): Contact {
-    val originalContactSource =
-        if (hasContactPermissions()) baseConfig.lastUsedContactSource else SMT_PRIVATE
-    val organization = Organization("", "")
-    return Contact(
-        0,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ArrayList(),
-        ArrayList(),
-        ArrayList(),
-        ArrayList(),
-        originalContactSource,
-        0,
-        0,
-        "",
-        null,
-        "",
-        ArrayList(),
-        organization,
-        ArrayList(),
-        ArrayList(),
-        DEFAULT_MIMETYPE,
-        null
-    )
-}
-
-val Context.contactsDB: ContactsDao
-    get() = ContactsDatabase.getInstance(applicationContext).ContactsDao()
-
 fun Context.isBlackAndWhiteTheme() =
     baseConfig.textColor == Color.WHITE && baseConfig.primaryColor == Color.BLACK && baseConfig.backgroundColor == Color.BLACK
-
-fun Context.getAllContactSources(): ArrayList<ContactSource> {
-    val sources = ContactsHelper(this).getDeviceContactSources()
-    sources.add(getPrivateContactSource())
-    return sources.toMutableList() as ArrayList<ContactSource>
-}
 
 fun Context.isWhiteTheme() =
     baseConfig.textColor == DARK_GREY && baseConfig.primaryColor == Color.WHITE && baseConfig.backgroundColor == Color.WHITE

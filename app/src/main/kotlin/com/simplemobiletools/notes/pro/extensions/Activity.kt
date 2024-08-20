@@ -354,7 +354,6 @@ fun Activity.setupDialogStuff(
     }
 
     val textColor = getProperTextColor()
-    val backgroundColor = getProperBackgroundColor()
     val primaryColor = getProperPrimaryColor()
     if (view is ViewGroup) {
         updateTextColors(view)

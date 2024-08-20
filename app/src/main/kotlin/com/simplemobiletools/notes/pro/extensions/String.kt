@@ -170,8 +170,6 @@ fun String.normalizeString() = Normalizer.normalize(this, Normalizer.Form.NFD).r
     normalizeRegex, ""
 )
 
-fun String.normalizePhoneNumber(): String = PhoneNumberUtils.normalizeNumber(this)
-
 fun String.getMimeType(): String {
     val typesMap = HashMap<String, String>().apply {
         put("323", "text/h323")
