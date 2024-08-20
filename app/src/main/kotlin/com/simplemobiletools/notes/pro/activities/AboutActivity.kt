@@ -24,6 +24,8 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.notes.pro.compose.extensions.enableEdgeToEdgeSimple
 import com.simplemobiletools.notes.pro.compose.extensions.rateStarsRedirectAndThankYou
+import com.simplemobiletools.notes.pro.compose.screens.AboutScreen
+import com.simplemobiletools.notes.pro.compose.screens.HelpUsSection
 import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedAlertDialog
 import com.simplemobiletools.notes.pro.dialogs.RateStarsAlertDialog
@@ -62,19 +64,19 @@ class AboutActivity : ComponentActivity() {
             val resources = context.resources
             AppThemeSurface {
                 val showExternalLinks =
-                    remember { !resources.getBoolean(R.bool.hide_all_external_links) }
+                    remember { resources.getBoolean(R.bool.hide_all_external_links).not() }
                 val showGoogleRelations =
-                    remember { !resources.getBoolean(R.bool.hide_google_relations) }
+                    remember { resources.getBoolean(R.bool.hide_google_relations).not() }
                 val onEmailClickAlertDialogState = getOnEmailClickAlertDialogState()
                 val rateStarsAlertDialogState = getRateStarsAlertDialogState()
                 val onRateUsClickAlertDialogState =
                     getOnRateUsClickAlertDialogState(rateStarsAlertDialogState::show)
-                com.simplemobiletools.notes.pro.compose.screens.AboutScreen(
+                AboutScreen(
                     goBack = ::finish,
                     helpUsSection = {
                         val showHelpUsSection =
                             remember { showGoogleRelations || !showExternalLinks }
-                        com.simplemobiletools.notes.pro.compose.screens.HelpUsSection(
+                        HelpUsSection(
                             onRateUsClick = {
                                 onRateUsClick(
                                     showConfirmationAdvancedDialog = onRateUsClickAlertDialogState::show,
@@ -315,7 +317,6 @@ class AboutActivity : ComponentActivity() {
         startActivity(intent)
     }
 
-
     private fun onDonateClick() {
         launchViewIntent(getString(R.string.donate_url))
     }
@@ -339,11 +340,9 @@ class AboutActivity : ComponentActivity() {
         launchViewIntent("https://www.reddit.com/r/SimpleMobileTools")
     }
 
-
     private fun onTelegramClick() {
         launchViewIntent("https://t.me/SimpleMobileTools")
     }
-
 
     private fun onWebsiteClick() {
         launchViewIntent("https://simplemobiletools.com/")

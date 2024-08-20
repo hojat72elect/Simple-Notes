@@ -201,7 +201,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     var useDynamicTheme = true
     private var showTransparentTop = false
     var isMaterialActivity =
-        false      // by material activity we mean translucent navigation bar and opaque status and action bars
+        false      // by material activity we mean translucent navigation bar and opaque status and action bars.
     private var checkedDocumentPath = ""
     private var currentScrollY = 0
     private var configItemsToExport = LinkedHashMap<String, Any>()
