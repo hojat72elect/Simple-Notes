@@ -46,8 +46,8 @@ import com.simplemobiletools.notes.pro.models.RadioItem
 import com.simplemobiletools.notes.pro.models.SharedTheme
 import kotlin.math.abs
 
-@RequiresApi(Build.VERSION_CODES.O)
-class CustomizationActivity : BaseSimpleActivity() {
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+class CustomizationActivity : BaseActivity() {
 
     private var curTextColor = 0
     private var curBackgroundColor = 0

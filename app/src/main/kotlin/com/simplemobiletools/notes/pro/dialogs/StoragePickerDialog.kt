@@ -7,7 +7,7 @@ import android.widget.RadioGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogRadioGroupBinding
 import com.simplemobiletools.notes.pro.databinding.RadioButtonBinding
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
@@ -30,7 +30,7 @@ import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
  */
 @RequiresApi(Build.VERSION_CODES.O)
 class StoragePickerDialog(
-    val activity: BaseSimpleActivity,
+    val activity: BaseActivity,
     private val currPath: String,
     private val showRoot: Boolean,
     pickSingleOption: Boolean,

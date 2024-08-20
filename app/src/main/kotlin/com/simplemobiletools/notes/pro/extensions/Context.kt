@@ -59,7 +59,7 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.loader.content.CursorLoader
 import com.github.ajalt.reprint.core.Reprint
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databases.ContactsDatabase
 import com.simplemobiletools.notes.pro.databases.NotesDatabase
 import com.simplemobiletools.notes.pro.dialogs.UnlockNotesDialog
@@ -241,7 +241,7 @@ fun Context.isBiometricIdAvailable(): Boolean = when (BiometricManager.from(this
 fun Context.getPercentageFontSize() =
     resources.getDimension(R.dimen.middle_text_size) * (config.fontSizePercentage / 100f)
 
-fun BaseSimpleActivity.requestUnlockNotes(
+fun BaseActivity.requestUnlockNotes(
     notes: List<Note>,
     callback: (unlockedNotes: List<Note>) -> Unit
 ) {

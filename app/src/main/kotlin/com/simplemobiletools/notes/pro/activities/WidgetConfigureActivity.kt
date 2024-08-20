@@ -53,9 +53,9 @@ import com.simplemobiletools.notes.pro.models.NoteType
 import com.simplemobiletools.notes.pro.models.RadioItem
 import com.simplemobiletools.notes.pro.models.Widget
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @SuppressLint("RemoteViewLayout")
-class WidgetConfigureActivity : SimpleActivity() {
+class WidgetConfigureActivity : BaseActivity() {
     private var mBgAlpha = 0f
     private var mWidgetId = 0
     private var mBgColor = 0

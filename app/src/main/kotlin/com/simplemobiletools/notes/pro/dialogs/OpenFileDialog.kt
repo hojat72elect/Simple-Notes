@@ -3,21 +3,21 @@ package com.simplemobiletools.notes.pro.dialogs
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.notes.pro.extensions.getFilenameFromPath
-import com.simplemobiletools.notes.pro.extensions.humanizePath
-import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.SimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogOpenFileBinding
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.extensions.getFilenameFromPath
+import com.simplemobiletools.notes.pro.extensions.humanizePath
 import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 import java.io.File
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class OpenFileDialog(
-    val activity: SimpleActivity,
+    val activity: BaseActivity,
     val path: String,
     val callback: (note: Note) -> Unit
 ) : AlertDialog.Builder(activity) {

@@ -3,10 +3,8 @@ package com.simplemobiletools.notes.pro.dialogs
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
-import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.SimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogImportFolderBinding
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.extensions.getFilenameFromPath
@@ -16,13 +14,15 @@ import com.simplemobiletools.notes.pro.extensions.notesDB
 import com.simplemobiletools.notes.pro.extensions.parseChecklistItems
 import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
+import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
+import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.NoteType
 import java.io.File
 
 @RequiresApi(Build.VERSION_CODES.O)
 class ImportFolderDialog(
-    val activity: SimpleActivity,
+    val activity: BaseActivity,
     val path: String,
     val callback: () -> Unit
 ) :

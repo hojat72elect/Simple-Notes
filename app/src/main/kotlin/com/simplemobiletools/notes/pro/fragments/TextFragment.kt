@@ -47,7 +47,7 @@ import kotlin.math.abs
 
 // text history handling taken from https://gist.github.com/zeleven/0cfa738c1e8b65b23ff7df1fc30c9f7e
 @SuppressLint("ClickableViewAccessibility", "RestrictedApi")
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class TextFragment : NoteFragment() {
     private val text = "text"
 

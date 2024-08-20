@@ -38,7 +38,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.notes.pro.compose.alert_dialog.DialogSurface
 import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogTextColor
@@ -139,8 +139,8 @@ class WritePermissionDialog(
         activity.getAlertDialogBuilder()
             .setPositiveButton(R.string.ok) { _, _ -> dialogConfirmed() }
             .setOnCancelListener {
-                BaseSimpleActivity.funAfterSAFPermission?.invoke(false)
-                BaseSimpleActivity.funAfterSAFPermission = null
+                BaseActivity.funAfterSAFPermission?.invoke(false)
+                BaseActivity.funAfterSAFPermission = null
             }
             .apply {
                 activity.setupDialogStuff(

@@ -6,14 +6,14 @@ import android.view.Menu
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.FilepickerFavoriteBinding
 import com.simplemobiletools.notes.pro.extensions.getTextSize
 import com.simplemobiletools.notes.pro.views.MyRecyclerView
 
 @RequiresApi(Build.VERSION_CODES.O)
 class FilepickerFavoritesAdapter(
-    activity: BaseSimpleActivity,
+    activity: BaseActivity,
     private val paths: List<String>,
     recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit

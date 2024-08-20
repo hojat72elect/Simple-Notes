@@ -10,9 +10,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
-import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
-import com.simplemobiletools.notes.pro.activities.SimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.adapters.ChecklistAdapter
 import com.simplemobiletools.notes.pro.databinding.FragmentChecklistBinding
 import com.simplemobiletools.notes.pro.dialogs.NewChecklistItemDialog
@@ -25,6 +23,8 @@ import com.simplemobiletools.notes.pro.extensions.underlineText
 import com.simplemobiletools.notes.pro.extensions.updateWidgets
 import com.simplemobiletools.notes.pro.helpers.NOTE_ID
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
+import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
+import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.interfaces.ChecklistItemsListener
 import com.simplemobiletools.notes.pro.models.ChecklistItem
 import com.simplemobiletools.notes.pro.models.Note
@@ -154,7 +154,7 @@ class ChecklistFragment : NoteFragment(), ChecklistItemsListener {
     }
 
     private fun showNewItemDialog() {
-        NewChecklistItemDialog(activity as SimpleActivity) { titles ->
+        NewChecklistItemDialog(activity as BaseActivity) { titles ->
             var currentMaxId = items.maxByOrNull { item -> item.id }?.id ?: 0
             val newItems = ArrayList<ChecklistItem>()
 
@@ -193,7 +193,7 @@ class ChecklistFragment : NoteFragment(), ChecklistItemsListener {
             }
         }
         ChecklistAdapter(
-            activity = activity as SimpleActivity,
+            activity = activity as BaseActivity,
             items = items,
             listener = this,
             recyclerView = binding.checklistList,

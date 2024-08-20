@@ -35,7 +35,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import com.google.android.material.appbar.MaterialToolbar
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.notes.pro.compose.alert_dialog.DialogSurface
 import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogTextColor
@@ -55,7 +55,7 @@ import com.simplemobiletools.notes.pro.interfaces.LineColorPickerListener
 
 @RequiresApi(Build.VERSION_CODES.O)
 class LineColorPickerDialog(
-    val activity: BaseSimpleActivity,
+    val activity: BaseActivity,
     val color: Int,
     private val isPrimaryColorPicker: Boolean,
     private val primaryColors: Int = R.array.md_primary_colors,

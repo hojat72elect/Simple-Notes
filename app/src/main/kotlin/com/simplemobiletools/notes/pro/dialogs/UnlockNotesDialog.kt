@@ -2,7 +2,7 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.extensions.performSecurityCheck
@@ -14,7 +14,7 @@ import com.simplemobiletools.notes.pro.databinding.ItemLockedNoteBinding
 import com.simplemobiletools.notes.pro.models.Note
 
 class UnlockNotesDialog(
-    val activity: BaseSimpleActivity,
+    val activity: BaseActivity,
     val notes: List<Note>,
     callback: (unlockedNotes: List<Note>) -> Unit
 ) {

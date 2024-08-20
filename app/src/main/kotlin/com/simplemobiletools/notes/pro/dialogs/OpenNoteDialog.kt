@@ -6,7 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.simplemobiletools.notes.pro.views.AutoStaggeredGridLayoutManager
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.adapters.OpenNoteAdapter
 import com.simplemobiletools.notes.pro.databinding.DialogOpenNoteBinding
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
@@ -16,7 +16,7 @@ import com.simplemobiletools.notes.pro.models.Note
 
 @RequiresApi(Build.VERSION_CODES.O)
 class OpenNoteDialog(
-    val activity: BaseSimpleActivity,
+    val activity: BaseActivity,
     val callback: (checkedId: Long, newNote: Note?) -> Unit
 ) {
     private var dialog: AlertDialog? = null

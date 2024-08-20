@@ -4,7 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogExportSettingsBinding
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.beGone
@@ -20,7 +20,7 @@ import com.simplemobiletools.notes.pro.extensions.value
 
 @RequiresApi(Build.VERSION_CODES.O)
 class ExportSettingsDialog(
-    val activity: BaseSimpleActivity,
+    val activity: BaseActivity,
     private val defaultFilename: String,
     private val hidePath: Boolean,
     callback: (path: String, filename: String) -> Unit

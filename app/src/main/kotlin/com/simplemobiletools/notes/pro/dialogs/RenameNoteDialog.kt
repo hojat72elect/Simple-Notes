@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.SimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogRenameNoteBinding
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
@@ -23,7 +23,7 @@ import java.io.File
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class RenameNoteDialog(
-    val activity: SimpleActivity,
+    val activity: BaseActivity,
     val note: Note,
     private val currentNoteText: String?,
     val callback: (note: Note) -> Unit

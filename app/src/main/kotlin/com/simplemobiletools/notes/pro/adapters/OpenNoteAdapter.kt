@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.OpenNoteItemBinding
 import com.simplemobiletools.notes.pro.extensions.beGoneIf
 import com.simplemobiletools.notes.pro.extensions.beVisibleIf
@@ -28,7 +28,7 @@ import com.simplemobiletools.notes.pro.views.MyRecyclerView
 
 @RequiresApi(Build.VERSION_CODES.O)
 class OpenNoteAdapter(
-    activity: BaseSimpleActivity, var items: List<Note>,
+    activity: BaseActivity, var items: List<Note>,
     recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick) {
     override fun getActionMenuId() = 0

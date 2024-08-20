@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.notes.pro.compose.alert_dialog.ShowKeyboardWhenDialogIsOpenedAndRequestFocus
 import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogBorder
@@ -64,7 +64,7 @@ import java.io.File
 @SuppressLint("SetTextI18n")
 @RequiresApi(Build.VERSION_CODES.O)
 class CreateNewFolderDialog(
-    val activity: BaseSimpleActivity,
+    val activity: BaseActivity,
     val path: String,
     val callback: (path: String) -> Unit
 ) {

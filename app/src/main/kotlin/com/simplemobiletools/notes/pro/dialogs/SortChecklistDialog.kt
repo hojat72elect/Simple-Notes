@@ -1,18 +1,18 @@
 package com.simplemobiletools.notes.pro.dialogs
 
+import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.databinding.DialogSortChecklistBinding
 import com.simplemobiletools.notes.pro.extensions.beGoneIf
+import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.notes.pro.helpers.SORT_BY_DATE_CREATED
 import com.simplemobiletools.notes.pro.helpers.SORT_BY_TITLE
 import com.simplemobiletools.notes.pro.helpers.SORT_DESCENDING
-import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.SimpleActivity
-import com.simplemobiletools.notes.pro.databinding.DialogSortChecklistBinding
-import com.simplemobiletools.notes.pro.extensions.config
 
-class SortChecklistDialog(private val activity: SimpleActivity, private val callback: () -> Unit) {
+class SortChecklistDialog(private val activity: BaseActivity, private val callback: () -> Unit) {
     private val binding = DialogSortChecklistBinding.inflate(activity.layoutInflater)
     private val view = binding.root
     private val config = activity.config

@@ -118,8 +118,8 @@ import com.simplemobiletools.notes.pro.views.MyEditText
 import java.io.File
 import java.nio.charset.Charset
 
-@RequiresApi(Build.VERSION_CODES.O)
-class MainActivity : SimpleActivity() {
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+class MainActivity : BaseActivity() {
 
 
     private lateinit var mCurrentNote: Note
@@ -690,6 +690,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun currentNotesView() = mAdapter?.getCurrentNotesView(binding.viewPager.currentItem)
+
 
     private fun displayRenameDialog() {
         RenameNoteDialog(this, mCurrentNote, getCurrentNoteText()) {

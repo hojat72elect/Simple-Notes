@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.notesDB
 import com.simplemobiletools.notes.pro.models.Note
@@ -89,7 +89,7 @@ class NotesHelper(val context: Context) {
     }
 
     fun importNotes(
-        activity: BaseSimpleActivity,
+        activity: BaseActivity,
         notes: List<Note>,
         callback: (ImportResult) -> Unit
     ) {

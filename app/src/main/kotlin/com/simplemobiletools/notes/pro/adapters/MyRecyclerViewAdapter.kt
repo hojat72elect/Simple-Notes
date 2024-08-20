@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.getContrastColor
@@ -28,7 +28,7 @@ import kotlin.math.min
 
 @RequiresApi(Build.VERSION_CODES.O)
 abstract class MyRecyclerViewAdapter(
-    val activity: BaseSimpleActivity,
+    val activity: BaseActivity,
     private val recyclerView: MyRecyclerView,
     val itemClick: (Any) -> Unit
 ) :

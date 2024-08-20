@@ -193,7 +193,7 @@ import java.io.OutputStream
 import java.util.regex.Pattern
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-abstract class BaseSimpleActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
     private var materialScrollColorAnimation: ValueAnimator? = null
     var copyMoveCallback: ((destinationPath: String) -> Unit)? = null
     private var actionOnPermission: ((granted: Boolean) -> Unit)? = null
@@ -230,9 +230,9 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         private const val TRASH_FILE_SDK_30_HANDLER = 304
     }
 
-    abstract fun getAppIconIDs(): ArrayList<Int>
+    open fun getAppIconIDs() = arrayListOf(R.mipmap.ic_launcher)
 
-    abstract fun getAppLauncherName(): String
+    open fun getAppLauncherName() = getString(R.string.app_launcher_name)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (useDynamicTheme) {
@@ -2473,7 +2473,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     }
 
     private fun createCasualFileOutputStream(
-        activity: BaseSimpleActivity,
+        activity: BaseActivity,
         targetFile: File
     ): OutputStream? {
         if (targetFile.parentFile?.exists() == false) {

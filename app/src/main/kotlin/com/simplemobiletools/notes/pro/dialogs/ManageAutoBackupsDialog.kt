@@ -4,7 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.SimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogManageAutomaticBackupsBinding
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
@@ -17,8 +17,8 @@ import com.simplemobiletools.notes.pro.extensions.value
 import com.simplemobiletools.notes.pro.helpers.ensureBackgroundThread
 import java.io.File
 
-@RequiresApi(Build.VERSION_CODES.O)
-class ManageAutoBackupsDialog(private val activity: SimpleActivity, onSuccess: () -> Unit) {
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+class ManageAutoBackupsDialog(private val activity: BaseActivity, onSuccess: () -> Unit) {
     private val binding = DialogManageAutomaticBackupsBinding.inflate(activity.layoutInflater)
     private val view = binding.root
     private val config = activity.config

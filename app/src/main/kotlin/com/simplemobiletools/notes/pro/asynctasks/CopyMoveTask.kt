@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.util.Pair
 import androidx.documentfile.provider.DocumentFile
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.canManageMedia
 import com.simplemobiletools.notes.pro.extensions.createDirectorySync
@@ -51,7 +51,7 @@ import java.lang.ref.WeakReference
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CopyMoveTask(
-    val activity: BaseSimpleActivity,
+    val activity: BaseActivity,
     private val copyOnly: Boolean,
     private val copyMediaOnly: Boolean,
     private val conflictResolutions: LinkedHashMap<String, Int>,

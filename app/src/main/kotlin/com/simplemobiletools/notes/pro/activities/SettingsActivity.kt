@@ -63,7 +63,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class SettingsActivity : SimpleActivity() {
+class SettingsActivity : BaseActivity() {
     private val notesFileType = "application/json"
     private val binding by viewBinding(ActivitySettingsBinding::inflate)
 

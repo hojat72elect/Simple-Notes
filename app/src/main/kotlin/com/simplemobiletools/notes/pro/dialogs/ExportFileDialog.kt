@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.SimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogExportFileBinding
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
@@ -21,7 +21,7 @@ import java.io.File
 @SuppressLint("StringFormatMatches")
 @RequiresApi(Build.VERSION_CODES.O)
 class ExportFileDialog(
-    val activity: SimpleActivity,
+    val activity: BaseActivity,
     val note: Note,
     val callback: (exportPath: String) -> Unit
 ) {

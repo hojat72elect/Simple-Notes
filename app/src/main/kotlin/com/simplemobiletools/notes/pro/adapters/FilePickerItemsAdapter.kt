@@ -15,7 +15,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.ItemFilepickerListBinding
 import com.simplemobiletools.notes.pro.extensions.baseConfig
 import com.simplemobiletools.notes.pro.extensions.formatSize
@@ -35,7 +35,7 @@ import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 class FilePickerItemsAdapter(
-    activity: BaseSimpleActivity,
+    activity: BaseActivity,
     private val fileDirItems: List<FileDirItem>,
     recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit

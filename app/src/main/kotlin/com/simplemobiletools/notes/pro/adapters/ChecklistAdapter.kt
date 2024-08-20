@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseSimpleActivity
+import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.ItemChecklistBinding
 import com.simplemobiletools.notes.pro.dialogs.RenameChecklistItemDialog
 import com.simplemobiletools.notes.pro.extensions.applyColorFilter
@@ -35,7 +35,7 @@ import java.util.Collections
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("ClickableViewAccessibility")
 class ChecklistAdapter(
-    activity: BaseSimpleActivity,
+    activity: BaseActivity,
     var items: MutableList<ChecklistItem>,
     val listener: ChecklistItemsListener?,
     recyclerView: MyRecyclerView,
