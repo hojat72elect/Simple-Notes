@@ -9,9 +9,9 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.adapters.OpenNoteAdapter
 import com.simplemobiletools.notes.pro.databinding.DialogOpenNoteBinding
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
-import com.simplemobiletools.notes.pro.helpers.NotesHelper
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.models.Note
 
 @RequiresApi(Build.VERSION_CODES.O)

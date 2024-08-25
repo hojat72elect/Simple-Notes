@@ -3,8 +3,8 @@ package com.simplemobiletools.notes.pro.views
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
-import com.simplemobiletools.notes.pro.extensions.adjustAlpha
-import com.simplemobiletools.notes.pro.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.adjustAlpha
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
 
 class MyAutoCompleteTextView : AppCompatAutoCompleteTextView {
     constructor(context: Context) : super(context)

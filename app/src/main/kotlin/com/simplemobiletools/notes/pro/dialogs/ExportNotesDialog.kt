@@ -4,12 +4,12 @@ import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogExportNotesBinding
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.getCurrentFormattedDateTime
-import com.simplemobiletools.notes.pro.extensions.isAValidFilename
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
-import com.simplemobiletools.notes.pro.extensions.toast
-import com.simplemobiletools.notes.pro.extensions.value
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getCurrentFormattedDateTime
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isAValidFilename
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.toast
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.value
 
 class ExportNotesDialog(val activity: BaseActivity, callback: (filename: String) -> Unit) {
 

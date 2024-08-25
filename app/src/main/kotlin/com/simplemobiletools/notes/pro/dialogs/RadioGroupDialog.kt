@@ -38,9 +38,9 @@ import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
 import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.databinding.DialogRadioGroupBinding
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.onGlobalLayout
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.onGlobalLayout
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.models.RadioItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

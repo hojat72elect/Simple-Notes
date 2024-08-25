@@ -44,13 +44,13 @@ import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
 import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.databinding.DialogLineColorPickerBinding
-import com.simplemobiletools.notes.pro.extensions.beGoneIf
-import com.simplemobiletools.notes.pro.extensions.beVisibleIf
-import com.simplemobiletools.notes.pro.extensions.copyToClipboard
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
-import com.simplemobiletools.notes.pro.extensions.toHex
-import com.simplemobiletools.notes.pro.extensions.value
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beGoneIf
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beVisibleIf
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.copyToClipboard
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.toHex
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.value
 import com.simplemobiletools.notes.pro.interfaces.LineColorPickerListener
 
 @RequiresApi(Build.VERSION_CODES.O)

@@ -6,9 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTION_NONE
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.helpers.DEFAULT_WIDGET_TEXT_COLOR
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.DEFAULT_WIDGET_TEXT_COLOR
 import com.simplemobiletools.notes.pro.interfaces.NotesDao
 import com.simplemobiletools.notes.pro.interfaces.WidgetsDao
 import com.simplemobiletools.notes.pro.models.Note

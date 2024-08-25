@@ -27,11 +27,11 @@ import com.simplemobiletools.notes.pro.compose.extensions.getActivity
 import com.simplemobiletools.notes.pro.compose.extensions.rememberMutableInteractionSource
 import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.databinding.DialogDonateBinding
-import com.simplemobiletools.notes.pro.extensions.applyColorFilter
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.getProperTextColor
-import com.simplemobiletools.notes.pro.extensions.launchViewIntent
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperTextColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.launchViewIntent
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogBorder
 import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogContainerColor
@@ -41,7 +41,7 @@ import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogTextColor
 import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.notes.pro.compose.components.LinkifyTextComponent
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
-import com.simplemobiletools.notes.pro.extensions.fromHtml
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.fromHtml
 
 class DonateDialog(val activity: Activity) {
     init {

@@ -50,10 +50,10 @@ import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.databinding.DialogWritePermissionBinding
 import com.simplemobiletools.notes.pro.databinding.DialogWritePermissionOtgBinding
-import com.simplemobiletools.notes.pro.extensions.fromHtml
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.humanizePath
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.fromHtml
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.humanizePath
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
 
 @RequiresApi(Build.VERSION_CODES.O)
 class WritePermissionDialog(

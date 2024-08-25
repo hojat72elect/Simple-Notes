@@ -43,13 +43,13 @@ import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogS
 import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
 import com.simplemobiletools.notes.pro.compose.theme.Shapes
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
-import com.simplemobiletools.notes.pro.extensions.applyColorFilter
-import com.simplemobiletools.notes.pro.extensions.baseConfig
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
-import com.simplemobiletools.notes.pro.extensions.redirectToRateUs
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
-import com.simplemobiletools.notes.pro.extensions.toast
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperPrimaryColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.redirectToRateUs
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.toast
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

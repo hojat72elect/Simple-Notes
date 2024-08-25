@@ -19,8 +19,8 @@ import com.simplemobiletools.notes.pro.compose.theme.Shapes
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.compose.theme.light_grey_stroke
 import com.simplemobiletools.notes.pro.compose.theme.model.Theme
-import com.simplemobiletools.notes.pro.extensions.baseConfig
-import com.simplemobiletools.notes.pro.helpers.isSPlus
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isSPlus
 import kotlinx.coroutines.android.awaitFrame
 
 val dialogContainerColor

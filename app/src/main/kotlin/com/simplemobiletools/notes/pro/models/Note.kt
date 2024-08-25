@@ -3,9 +3,9 @@ package com.simplemobiletools.notes.pro.models
 import android.content.Context
 import android.net.Uri
 import androidx.room.*
-import com.simplemobiletools.notes.pro.extensions.isBiometricIdAvailable
-import com.simplemobiletools.notes.pro.helpers.PROTECTION_FINGERPRINT
-import com.simplemobiletools.notes.pro.helpers.PROTECTION_NONE
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isBiometricIdAvailable
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTION_FINGERPRINT
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTION_NONE
 import kotlinx.serialization.Serializable
 import java.io.File
 

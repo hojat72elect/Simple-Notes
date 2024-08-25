@@ -52,20 +52,20 @@ import com.simplemobiletools.notes.pro.compose.extensions.config
 import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.databinding.DialogColorPickerBinding
-import com.simplemobiletools.notes.pro.extensions.applyColorFilter
-import com.simplemobiletools.notes.pro.extensions.baseConfig
-import com.simplemobiletools.notes.pro.extensions.beVisible
-import com.simplemobiletools.notes.pro.extensions.copyToClipboard
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.getProperTextColor
-import com.simplemobiletools.notes.pro.extensions.onGlobalLayout
-import com.simplemobiletools.notes.pro.extensions.onTextChangeListener
-import com.simplemobiletools.notes.pro.extensions.setFillWithStroke
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
-import com.simplemobiletools.notes.pro.extensions.toHex
-import com.simplemobiletools.notes.pro.extensions.updateTextColors
-import com.simplemobiletools.notes.pro.extensions.value
-import com.simplemobiletools.notes.pro.helpers.isQPlus
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beVisible
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.copyToClipboard
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperTextColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.onGlobalLayout
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.onTextChangeListener
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setFillWithStroke
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.toHex
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.updateTextColors
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.value
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isQPlus
 import java.util.LinkedList
 
 private const val RECENT_COLORS_NUMBER = 5

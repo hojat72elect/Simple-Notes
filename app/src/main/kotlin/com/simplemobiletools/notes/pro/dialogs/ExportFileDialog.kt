@@ -7,14 +7,14 @@ import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogExportFileBinding
-import com.simplemobiletools.notes.pro.extensions.config
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.humanizePath
-import com.simplemobiletools.notes.pro.extensions.isAValidFilename
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
-import com.simplemobiletools.notes.pro.extensions.showKeyboard
-import com.simplemobiletools.notes.pro.extensions.toast
-import com.simplemobiletools.notes.pro.extensions.value
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.config
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.humanizePath
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isAValidFilename
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.showKeyboard
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.toast
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.value
 import com.simplemobiletools.notes.pro.models.Note
 import java.io.File
 

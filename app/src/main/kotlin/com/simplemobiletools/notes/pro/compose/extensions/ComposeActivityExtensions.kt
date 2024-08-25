@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.extensions.launchViewIntent
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.launchViewIntent
 import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationAlertDialog
 

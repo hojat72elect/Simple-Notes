@@ -16,8 +16,8 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
 import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
-import com.simplemobiletools.notes.pro.extensions.fromHtml
-import com.simplemobiletools.notes.pro.extensions.removeUnderlines
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.fromHtml
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.removeUnderlines
 
 @Composable
 fun LinkifyTextComponent(

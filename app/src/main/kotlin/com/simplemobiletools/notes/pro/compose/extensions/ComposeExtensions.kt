@@ -31,8 +31,8 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.compose.system_ui_controller.rememberSystemUiController
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.compose.theme.isLitWell
-import com.simplemobiletools.notes.pro.extensions.darkenColor
-import com.simplemobiletools.notes.pro.extensions.launchViewIntent
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.darkenColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.launchViewIntent
 
 fun Context.getActivity(): Activity {
     return when (this) {

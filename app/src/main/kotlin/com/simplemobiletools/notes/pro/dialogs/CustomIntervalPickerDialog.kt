@@ -39,9 +39,9 @@ import com.simplemobiletools.notes.pro.compose.components.RadioGroupDialogCompon
 import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
 import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
-import com.simplemobiletools.notes.pro.helpers.DAY_SECONDS
-import com.simplemobiletools.notes.pro.helpers.HOUR_SECONDS
-import com.simplemobiletools.notes.pro.helpers.MINUTE_SECONDS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.DAY_SECONDS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.HOUR_SECONDS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.MINUTE_SECONDS
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable

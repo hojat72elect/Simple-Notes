@@ -13,12 +13,12 @@ import com.andrognito.patternlockview.listener.PatternLockViewListener
 import com.andrognito.patternlockview.utils.PatternLockUtils
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.TabPatternBinding
-import com.simplemobiletools.notes.pro.extensions.applyColorFilter
-import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
-import com.simplemobiletools.notes.pro.extensions.getProperTextColor
-import com.simplemobiletools.notes.pro.extensions.performHapticFeedback
-import com.simplemobiletools.notes.pro.extensions.updateTextColors
-import com.simplemobiletools.notes.pro.helpers.PROTECTION_PATTERN
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperPrimaryColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperTextColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.performHapticFeedback
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.updateTextColors
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTION_PATTERN
 import com.simplemobiletools.notes.pro.interfaces.BaseSecurityTab
 import com.simplemobiletools.notes.pro.interfaces.HashListener
 

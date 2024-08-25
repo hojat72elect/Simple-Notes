@@ -5,9 +5,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.simplemobiletools.notes.pro.compose.extensions.config
 import com.simplemobiletools.notes.pro.compose.theme.model.Theme
-import com.simplemobiletools.notes.pro.extensions.getProperTextColor
-import com.simplemobiletools.notes.pro.extensions.isBlackAndWhiteTheme
-import com.simplemobiletools.notes.pro.extensions.isWhiteTheme
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperTextColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isBlackAndWhiteTheme
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isWhiteTheme
 
 fun getTheme(context: Context, materialYouTheme: Theme.SystemDefaultMaterialYou): Theme {
     val baseConfig = context.config

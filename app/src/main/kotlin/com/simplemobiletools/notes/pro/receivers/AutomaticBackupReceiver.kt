@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
-import com.simplemobiletools.notes.pro.extensions.backupNotes
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.backupNotes
 
 class AutomaticBackupReceiver : BroadcastReceiver() {
 

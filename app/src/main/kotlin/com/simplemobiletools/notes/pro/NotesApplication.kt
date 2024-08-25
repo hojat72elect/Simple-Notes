@@ -1,8 +1,8 @@
 package com.simplemobiletools.notes.pro
 
 import android.app.Application
-import com.simplemobiletools.notes.pro.extensions.baseConfig
-import com.simplemobiletools.notes.pro.helpers.isNougatPlus
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isNougatPlus
 import java.util.Locale
 
 /**

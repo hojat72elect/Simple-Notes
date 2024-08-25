@@ -6,22 +6,22 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatEditText
-import com.simplemobiletools.notes.pro.helpers.DARK_GREY
-import com.simplemobiletools.notes.pro.helpers.SORT_BY_CUSTOM
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.DARK_GREY
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.DialogNewChecklistItemBinding
 import com.simplemobiletools.notes.pro.databinding.ItemAddChecklistBinding
-import com.simplemobiletools.notes.pro.extensions.applyColorFilter
-import com.simplemobiletools.notes.pro.extensions.beVisibleIf
-import com.simplemobiletools.notes.pro.extensions.config
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.getContrastColor
-import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
-import com.simplemobiletools.notes.pro.extensions.isWhiteTheme
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
-import com.simplemobiletools.notes.pro.extensions.showKeyboard
-import com.simplemobiletools.notes.pro.extensions.toast
-import com.simplemobiletools.notes.pro.extensions.updateTextColors
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beVisibleIf
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.config
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getContrastColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperPrimaryColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isWhiteTheme
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.showKeyboard
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.toast
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.updateTextColors
 
 class NewChecklistItemDialog(
     val activity: Activity,

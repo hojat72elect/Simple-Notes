@@ -6,10 +6,10 @@ import android.text.method.LinkMovementMethod
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.DialogTextviewBinding
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.getStringsPackageName
-import com.simplemobiletools.notes.pro.extensions.launchViewIntent
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getStringsPackageName
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.launchViewIntent
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
 
 class AppSideLoadedDialog(val activity: Activity, val callback: () -> Unit) {
     private var dialog: AlertDialog? = null

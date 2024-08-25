@@ -1,8 +1,8 @@
 package com.simplemobiletools.notes.pro.models
 
-import com.simplemobiletools.notes.pro.helpers.SORT_BY_TITLE
-import com.simplemobiletools.notes.pro.helpers.SORT_DESCENDING
-import com.simplemobiletools.notes.pro.helpers.CollatorBasedComparator
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SORT_BY_TITLE
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SORT_DESCENDING
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.CollatorBasedComparator
 import kotlinx.serialization.Serializable
 
 @Serializable

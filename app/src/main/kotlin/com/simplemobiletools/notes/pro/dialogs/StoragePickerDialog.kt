@@ -10,14 +10,14 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogRadioGroupBinding
 import com.simplemobiletools.notes.pro.databinding.RadioButtonBinding
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.getBasePath
-import com.simplemobiletools.notes.pro.extensions.hasExternalSDCard
-import com.simplemobiletools.notes.pro.extensions.hasOTGConnected
-import com.simplemobiletools.notes.pro.extensions.internalStoragePath
-import com.simplemobiletools.notes.pro.extensions.otgPath
-import com.simplemobiletools.notes.pro.extensions.sdCardPath
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getBasePath
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.hasExternalSDCard
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.hasOTGConnected
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.internalStoragePath
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.otgPath
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.sdCardPath
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
 
 /**
  * A dialog for choosing between internal, root, SD card (optional) storage

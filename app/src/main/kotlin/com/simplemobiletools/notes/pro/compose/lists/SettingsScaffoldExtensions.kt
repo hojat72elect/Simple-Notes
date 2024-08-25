@@ -27,8 +27,8 @@ import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.compose.theme.isNotLitWell
 import com.simplemobiletools.notes.pro.compose.theme.isSurfaceLitWell
 import com.simplemobiletools.notes.pro.compose.theme.model.Theme
-import com.simplemobiletools.notes.pro.extensions.getColoredMaterialStatusBarColor
-import com.simplemobiletools.notes.pro.extensions.getContrastColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getColoredMaterialStatusBarColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getContrastColor
 
 @Composable
 internal fun SystemUISettingsScaffoldStatusBarColor(scrolledColor: Color) {

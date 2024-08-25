@@ -9,11 +9,11 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.os.postDelayed
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.extensions.baseConfig
-import com.simplemobiletools.notes.pro.extensions.countdown
-import com.simplemobiletools.notes.pro.extensions.getProperTextColor
-import com.simplemobiletools.notes.pro.helpers.DEFAULT_PASSWORD_COUNTDOWN
-import com.simplemobiletools.notes.pro.helpers.MAX_PASSWORD_RETRY_COUNT
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.countdown
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperTextColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.DEFAULT_PASSWORD_COUNTDOWN
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.MAX_PASSWORD_RETRY_COUNT
 
 abstract class BaseSecurityTab(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs),
     SecurityTab {

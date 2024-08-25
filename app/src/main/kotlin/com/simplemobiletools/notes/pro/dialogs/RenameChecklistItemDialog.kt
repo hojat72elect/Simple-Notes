@@ -4,11 +4,11 @@ import android.app.Activity
 import android.content.DialogInterface.BUTTON_POSITIVE
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.DialogRenameChecklistItemBinding
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
-import com.simplemobiletools.notes.pro.extensions.showKeyboard
-import com.simplemobiletools.notes.pro.extensions.toast
-import com.simplemobiletools.notes.pro.extensions.value
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.showKeyboard
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.toast
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.value
 
 class RenameChecklistItemDialog(
     val activity: Activity,

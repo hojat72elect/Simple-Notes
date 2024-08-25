@@ -26,12 +26,12 @@ import com.simplemobiletools.notes.pro.compose.extensions.composeDonateIntent
 import com.simplemobiletools.notes.pro.compose.extensions.config
 import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.databinding.DialogPurchaseThankYouBinding
-import com.simplemobiletools.notes.pro.extensions.baseConfig
-import com.simplemobiletools.notes.pro.extensions.fromHtml
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.launchPurchaseThankYouIntent
-import com.simplemobiletools.notes.pro.extensions.removeUnderlines
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.fromHtml
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.launchPurchaseThankYouIntent
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.removeUnderlines
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
 
 class PurchaseThankYouDialog(val activity: Activity) {
     init {

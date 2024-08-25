@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.LinearLayout
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.extensions.isRTLLayout
-import com.simplemobiletools.notes.pro.extensions.onGlobalLayout
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isRTLLayout
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.onGlobalLayout
 import com.simplemobiletools.notes.pro.interfaces.LineColorPickerListener
 import kotlin.math.max
 import kotlin.math.min

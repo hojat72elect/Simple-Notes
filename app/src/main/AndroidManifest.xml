@@ -77,7 +77,7 @@
         </activity>
 
         <activity
-            android:name="com.simplemobiletools.notes.pro.activities.AboutActivity"
+            android:name="com.simplemobiletools.notes.pro.new_architecture.feature_about.AboutActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/about"
@@ -104,25 +104,25 @@
         </activity>
 
         <activity
-            android:name=".activities.FAQActivity"
+            android:name=".new_architecture.feature_about.FAQActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="Frequently asked Questions"
-            android:parentActivityName=".activities.AboutActivity" />
+            android:parentActivityName=".new_architecture.feature_about.AboutActivity" />
 
         <activity
-            android:name=".activities.ContributorsActivity"
+            android:name=".new_architecture.feature_about.ContributorsActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/contributors"
-            android:parentActivityName=".activities.AboutActivity" />
+            android:parentActivityName=".new_architecture.feature_about.AboutActivity" />
 
         <activity
-            android:name=".activities.LicenseActivity"
+            android:name=".new_architecture.feature_about.LicenseActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/third_party_licences"
-            android:parentActivityName=".activities.AboutActivity" />
+            android:parentActivityName=".new_architecture.feature_about.AboutActivity" />
 
 
         <service
@@ -131,7 +131,7 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <receiver
-            android:name=".helpers.MyWidgetProvider"
+            android:name=".new_architecture.shared.helpers.MyWidgetProvider"
             android:exported="true"
             android:icon="@drawable/img_widget_preview">
             <intent-filter>

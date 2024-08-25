@@ -5,16 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.extensions.baseConfig
-import com.simplemobiletools.notes.pro.extensions.checkAppIconColor
-import com.simplemobiletools.notes.pro.extensions.checkAppSideloading
-import com.simplemobiletools.notes.pro.extensions.getSharedTheme
-import com.simplemobiletools.notes.pro.extensions.isThankYouInstalled
-import com.simplemobiletools.notes.pro.extensions.isUsingSystemDarkTheme
-import com.simplemobiletools.notes.pro.extensions.showSideloadingDialog
-import com.simplemobiletools.notes.pro.helpers.OPEN_NOTE_ID
-import com.simplemobiletools.notes.pro.helpers.SIDELOADING_TRUE
-import com.simplemobiletools.notes.pro.helpers.SIDELOADING_UNCHECKED
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.checkAppIconColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.checkAppSideloading
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getSharedTheme
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isThankYouInstalled
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isUsingSystemDarkTheme
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.showSideloadingDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.OPEN_NOTE_ID
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SIDELOADING_TRUE
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SIDELOADING_UNCHECKED
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {

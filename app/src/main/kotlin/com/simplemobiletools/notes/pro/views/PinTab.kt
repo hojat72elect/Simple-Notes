@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.biometric.auth.AuthPromptHost
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.TabPinBinding
-import com.simplemobiletools.notes.pro.extensions.*
-import com.simplemobiletools.notes.pro.helpers.MINIMUM_PIN_LENGTH
-import com.simplemobiletools.notes.pro.helpers.PROTECTION_PIN
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.*
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.MINIMUM_PIN_LENGTH
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTION_PIN
 import com.simplemobiletools.notes.pro.interfaces.BaseSecurityTab
 import com.simplemobiletools.notes.pro.interfaces.HashListener
 import java.math.BigInteger

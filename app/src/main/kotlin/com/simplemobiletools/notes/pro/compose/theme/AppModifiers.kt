@@ -6,11 +6,13 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.compose.extensions.getActivity
-import com.simplemobiletools.notes.pro.helpers.APP_ICON_IDS
-import com.simplemobiletools.notes.pro.helpers.APP_LAUNCHER_NAME
-import com.simplemobiletools.notes.pro.helpers.BaseConfig
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.APP_ICON_IDS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.APP_LAUNCHER_NAME
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.BaseConfig
 
-fun Activity.getAppIconIds(): ArrayList<Int> = ArrayList(intent.getIntegerArrayListExtra(APP_ICON_IDS).orEmpty())
+fun Activity.getAppIconIds(): ArrayList<Int> = ArrayList(intent.getIntegerArrayListExtra(
+    APP_ICON_IDS
+).orEmpty())
 fun Activity.getAppLauncherName(): String = intent.getStringExtra(APP_LAUNCHER_NAME).orEmpty()
 internal fun updateRecentsAppIcon(baseConfig: BaseConfig, context: Context) {
     if (baseConfig.isUsingModifiedAppIcon) {

@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatCheckBox
-import com.simplemobiletools.notes.pro.extensions.adjustAlpha
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.adjustAlpha
 
 class MyAppCompatCheckbox : AppCompatCheckBox {
     constructor(context: Context) : super(context)

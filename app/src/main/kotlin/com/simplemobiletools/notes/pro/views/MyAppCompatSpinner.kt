@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatSpinner
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.adapters.MyArrayAdapter
-import com.simplemobiletools.notes.pro.extensions.applyColorFilter
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
 
 class MyAppCompatSpinner : AppCompatSpinner {
     constructor(context: Context) : super(context)

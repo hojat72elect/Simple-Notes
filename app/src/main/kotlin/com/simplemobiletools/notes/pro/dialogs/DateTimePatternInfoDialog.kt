@@ -3,8 +3,8 @@ package com.simplemobiletools.notes.pro.dialogs
 import android.annotation.SuppressLint
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseActivity
-import com.simplemobiletools.notes.pro.extensions.getAlertDialogBuilder
-import com.simplemobiletools.notes.pro.extensions.setupDialogStuff
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
 
 @SuppressLint("InflateParams")
 class DateTimePatternInfoDialog(activity: BaseActivity) {

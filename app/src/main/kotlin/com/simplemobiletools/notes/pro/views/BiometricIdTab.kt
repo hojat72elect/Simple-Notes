@@ -5,12 +5,12 @@ import android.util.AttributeSet
 import androidx.biometric.auth.AuthPromptHost
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.simplemobiletools.notes.pro.databinding.TabBiometricIdBinding
-import com.simplemobiletools.notes.pro.extensions.getContrastColor
-import com.simplemobiletools.notes.pro.extensions.getProperPrimaryColor
-import com.simplemobiletools.notes.pro.extensions.isWhiteTheme
-import com.simplemobiletools.notes.pro.extensions.showBiometricPrompt
-import com.simplemobiletools.notes.pro.extensions.updateTextColors
-import com.simplemobiletools.notes.pro.helpers.DARK_GREY
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getContrastColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperPrimaryColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isWhiteTheme
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.showBiometricPrompt
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.updateTextColors
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.DARK_GREY
 import com.simplemobiletools.notes.pro.interfaces.HashListener
 import com.simplemobiletools.notes.pro.interfaces.SecurityTab
 

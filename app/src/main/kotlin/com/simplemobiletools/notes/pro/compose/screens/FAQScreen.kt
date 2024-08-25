@@ -20,7 +20,7 @@ import com.simplemobiletools.notes.pro.compose.components.LinkifyTextComponent
 import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
 import com.simplemobiletools.notes.pro.compose.lists.SimpleLazyListScaffold
 import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
-import com.simplemobiletools.notes.pro.extensions.fromHtml
+import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.fromHtml
 import com.simplemobiletools.notes.pro.models.FAQItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
