@@ -81,21 +81,6 @@
                 android:text="@string/general_settings" />
 
             <RelativeLayout
-                android:id="@+id/settings_use_english_holder"
-                style="@style/SettingsHolderCheckboxStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.simplemobiletools.notes.pro.views.MyAppCompatCheckbox
-                    android:id="@+id/settings_use_english"
-                    style="@style/SettingsCheckboxStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/use_english_language" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/settings_language_holder"
                 style="@style/SettingsHolderTextViewStyle"
                 android:layout_width="match_parent"

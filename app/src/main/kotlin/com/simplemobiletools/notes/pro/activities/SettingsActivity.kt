@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.text.TextUtilsCompat
@@ -62,7 +63,7 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class SettingsActivity : BaseActivity() {
     private val notesFileType = "application/json"
     private val binding by viewBinding(ActivitySettingsBinding::inflate)
@@ -86,7 +87,6 @@ class SettingsActivity : BaseActivity() {
         setupToolbar(binding.settingsToolbar, NavigationIcon.Arrow)
 
         setupCustomizeColors()
-        setupUseEnglish()
         setupLanguage()
         setupAutosaveNotes()
         setupDisplaySuccess()
@@ -153,22 +153,10 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
-    private fun setupUseEnglish() {
-        binding.settingsUseEnglishHolder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
-        binding.settingsUseEnglish.isChecked = config.useEnglish
-        binding.settingsUseEnglishHolder.setOnClickListener {
-            binding.settingsUseEnglish.toggle()
-            config.useEnglish = binding.settingsUseEnglish.isChecked
-            exitProcess(0)
-        }
-    }
-
-
     private fun setupLanguage() {
-        binding.settingsLanguage.text = Locale.getDefault().displayLanguage
-        binding.settingsLanguageHolder.beVisibleIf(isTiramisuPlus())
+        binding.settingsLanguage.text = "English" // right now we don't support other languages.
         binding.settingsLanguageHolder.setOnClickListener {
-            launchChangeAppLanguageIntent()
+            toast("This feature is not available right now.", Toast.LENGTH_SHORT)
         }
     }
 
