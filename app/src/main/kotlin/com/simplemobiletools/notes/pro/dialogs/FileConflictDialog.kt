@@ -48,7 +48,6 @@ import com.simplemobiletools.notes.pro.helpers.CONFLICT_OVERWRITE
 import com.simplemobiletools.notes.pro.helpers.CONFLICT_SKIP
 import com.simplemobiletools.notes.pro.models.FileDirItem
 import com.simplemobiletools.notes.pro.models.FileDirItemReadOnly
-import com.simplemobiletools.notes.pro.models.asReadOnly
 import kotlinx.collections.immutable.toImmutableList
 
 class FileConflictDialog(

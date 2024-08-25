@@ -168,7 +168,6 @@ inline fun <T : ViewBinding> Activity.viewBinding(crossinline bindingInflater: (
         bindingInflater.invoke(layoutInflater)
     }
 
-
 fun Activity.performSecurityCheck(
     protectionType: Int,
     requiredHash: String,
@@ -192,7 +191,6 @@ fun Activity.performSecurityCheck(
         )
     }
 }
-
 
 fun Activity.scanPathRecursively(path: String, callback: (() -> Unit)? = null) {
     applicationContext.scanPathRecursively(path, callback)

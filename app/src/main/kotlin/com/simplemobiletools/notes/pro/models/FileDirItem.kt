@@ -148,17 +148,18 @@ open class FileDirItem(
 
         return Uri.withAppendedPath(uri, mediaStoreId.toString())
     }
-}
 
-fun FileDirItem.asReadOnly() = FileDirItemReadOnly(
-    path = path,
-    name = name,
-    isDirectory = isDirectory,
-    children = children,
-    size = size,
-    modified = modified,
-    mediaStoreId = mediaStoreId
-)
+    fun asReadOnly() = FileDirItemReadOnly(
+        path = path,
+        name = name,
+        isDirectory = isDirectory,
+        children = children,
+        size = size,
+        modified = modified,
+        mediaStoreId = mediaStoreId
+    )
+
+}
 
 @Immutable
 class FileDirItemReadOnly(

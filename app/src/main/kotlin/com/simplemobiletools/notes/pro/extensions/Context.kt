@@ -54,7 +54,6 @@ import androidx.loader.content.CursorLoader
 import com.github.ajalt.reprint.core.Reprint
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.BaseActivity
-import com.simplemobiletools.notes.pro.databases.ContactsDatabase
 import com.simplemobiletools.notes.pro.databases.NotesDatabase
 import com.simplemobiletools.notes.pro.dialogs.UnlockNotesDialog
 import com.simplemobiletools.notes.pro.helpers.AUTOMATIC_BACKUP_REQUEST_CODE
@@ -109,12 +108,68 @@ import com.simplemobiletools.notes.pro.helpers.isQPlus
 import com.simplemobiletools.notes.pro.helpers.isRPlus
 import com.simplemobiletools.notes.pro.helpers.isSPlus
 import com.simplemobiletools.notes.pro.helpers.proPackages
-import com.simplemobiletools.notes.pro.interfaces.GroupsDao
 import com.simplemobiletools.notes.pro.interfaces.NotesDao
 import com.simplemobiletools.notes.pro.interfaces.WidgetsDao
 import com.simplemobiletools.notes.pro.models.FileDirItem
 import com.simplemobiletools.notes.pro.models.Note
 import com.simplemobiletools.notes.pro.models.SharedTheme
+import com.simplemobiletools.notes.pro.interfaces.NotesDao
+import com.simplemobiletools.notes.pro.interfaces.WidgetsDao
+import com.simplemobiletools.notes.pro.models.FileDirItem
+import com.simplemobiletools.notes.pro.models.Note
+import com.simplemobiletools.notes.pro.models.SharedTheme
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.AUTOMATIC_BACKUP_REQUEST_CODE
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.BaseConfig
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.Config
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.DARK_GREY
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.EXTERNAL_STORAGE_PROVIDER_AUTHORITY
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.ExportResult
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.ExternalStorageProviderHack
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.FONT_SIZE_LARGE
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.FONT_SIZE_MEDIUM
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.FONT_SIZE_SMALL
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.MyContentProvider
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.MyWidgetProvider
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.NotesHelper
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_ACCESS_COARSE_LOCATION
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_ACCESS_FINE_LOCATION
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_CALL_PHONE
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_CAMERA
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_GET_ACCOUNTS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_MEDIA_LOCATION
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_POST_NOTIFICATIONS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_CALENDAR
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_CALL_LOG
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_CONTACTS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_MEDIA_AUDIO
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_MEDIA_IMAGES
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_MEDIA_VIDEO
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_PHONE_STATE
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_SMS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_STORAGE
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_READ_SYNC_SETTINGS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_RECORD_AUDIO
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_SEND_SMS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_WRITE_CALENDAR
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_WRITE_CALL_LOG
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_WRITE_CONTACTS
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PERMISSION_WRITE_STORAGE
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PREFS_KEY
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SD_OTG_PATTERN
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SD_OTG_SHORT
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.TIME_FORMAT_12
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.TIME_FORMAT_24
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.appIconColorStrings
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.ensureBackgroundThread
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.getNextAutoBackupTime
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.getPreviousAutoBackupTime
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isOnMainThread
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isOreoPlus
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isQPlus
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isRPlus
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isSPlus
+import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.proPackages
 import com.simplemobiletools.notes.pro.receivers.AutomaticBackupReceiver
 import com.simplemobiletools.notes.pro.views.MyAppCompatCheckbox
 import com.simplemobiletools.notes.pro.views.MyAppCompatSpinner
@@ -242,6 +297,9 @@ fun BaseActivity.requestUnlockNotes(
     }
 }
 
+/**
+ * Fires an intent to automatically backup notes.
+ */
 fun Context.getAutomaticBackupIntent(): PendingIntent {
     val intent = Intent(this, AutomaticBackupReceiver::class.java)
     return PendingIntent.getBroadcast(
@@ -287,6 +345,9 @@ fun Context.checkAndBackupNotesOnBoot() {
     }
 }
 
+/**
+ * This function is used to save the notes to the device. It is called by the `AutomaticBackupReceiver`.
+ */
 fun Context.backupNotes() {
     require(isRPlus())
     ensureBackgroundThread {
@@ -1106,8 +1167,6 @@ fun Context.scanPathsRecursively(paths: List<String>, callback: (() -> Unit)? = 
     }
     rescanPaths(allPaths, callback)
 }
-
-val Context.groupsDB: GroupsDao get() = ContactsDatabase.getInstance(applicationContext).GroupsDao()
 
 fun Context.hasExternalSDCard() = sdCardPath.isNotEmpty()
 

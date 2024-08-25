@@ -6,11 +6,9 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Looper
-import android.provider.ContactsContract
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.StringRes
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.models.contacts.LocalContact
 import org.joda.time.DateTime
 
 const val NOTE_ID = "note_id"
@@ -116,10 +114,6 @@ const val SHOW_FAQ_BEFORE_MAIL = "show_faq_before_mail"
 const val SAVE_DISCARD_PROMPT_INTERVAL = 1000L
 const val SD_OTG_PATTERN = "^/storage/[A-Za-z0-9]{4}-[A-Za-z0-9]{4}$"
 const val SD_OTG_SHORT = "^[A-Za-z0-9]{4}-[A-Za-z0-9]{4}$"
-
-const val SMT_PRIVATE =
-    "smt_private"   // used at the contact source of local contacts hidden from other apps
-const val FIRST_GROUP_ID = 10000L
 
 const val SHORT_ANIMATION_DURATION = 150L
 const val DARK_GREY = 0xFF333333.toInt()
@@ -294,15 +288,10 @@ const val SORT_BY_DATE_MODIFIED = 2
 const val SORT_BY_SIZE = 4
 
 const val SORT_BY_EXTENSION = 16
-
-const val SORT_BY_FIRST_NAME = 128
-const val SORT_BY_MIDDLE_NAME = 256
-const val SORT_BY_SURNAME = 512
 const val SORT_DESCENDING = 1024
 const val SORT_BY_TITLE = 2048
 
 const val SORT_USE_NUMERIC_VALUE = 32768
-const val SORT_BY_FULL_NAME = 65536
 const val SORT_BY_CUSTOM = 131072
 const val SORT_BY_DATE_CREATED = 262144
 
@@ -547,45 +536,10 @@ fun getFilePlaceholderDrawables(context: Context): HashMap<String, Drawable> {
     return fileDrawables
 }
 
-const val FIRST_CONTACT_ID = 1000000
-
-const val DEFAULT_ORGANIZATION_TYPE = ContactsContract.CommonDataKinds.Organization.TYPE_WORK
-const val DEFAULT_WEBSITE_TYPE = ContactsContract.CommonDataKinds.Website.TYPE_HOMEPAGE
-const val DEFAULT_MIMETYPE = ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE
-
-// contact photo changes
-const val PHOTO_ADDED = 1
-const val PHOTO_REMOVED = 2
-const val PHOTO_CHANGED = 3
 
 
-// apps with special handling
-const val TELEGRAM_PACKAGE = "org.telegram.messenger"
-const val SIGNAL_PACKAGE = "org.thoughtcrime.securesms"
-const val WHATSAPP_PACKAGE = "com.whatsapp"
-const val VIBER_PACKAGE = "com.viber.voip"
-const val THREEMA_PACKAGE = "ch.threema.app"
 
-fun getEmptyLocalContact() = LocalContact(
-    0,
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    null,
-    "",
-    ArrayList(),
-    ArrayList(),
-    ArrayList(),
-    0,
-    ArrayList(),
-    "",
-    ArrayList(),
-    "",
-    "",
-    ArrayList(),
-    ArrayList(),
-    null
-)
+
+
+
+

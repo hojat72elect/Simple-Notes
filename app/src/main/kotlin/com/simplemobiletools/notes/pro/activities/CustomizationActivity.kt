@@ -535,7 +535,6 @@ class CustomizationActivity : BaseActivity() {
         binding.customizationPrimaryColor.setFillWithStroke(primaryColor, backgroundColor)
         binding.customizationAccentColor.setFillWithStroke(curAccentColor, backgroundColor)
         binding.customizationBackgroundColor.setFillWithStroke(backgroundColor, backgroundColor)
-        binding.customizationAppIconColor.setFillWithStroke(curAppIconColor, backgroundColor)
         binding.applyToAll.setTextColor(primaryColor.getContrastColor())
 
         binding.customizationTextColorHolder.setOnClickListener { pickTextColor() }
@@ -546,17 +545,6 @@ class CustomizationActivity : BaseActivity() {
         handleAccentColorLayout()
         binding.applyToAll.setOnClickListener {
             applyToAll()
-        }
-
-        binding.customizationAppIconColorHolder.setOnClickListener {
-            if (baseConfig.wasAppIconCustomizationWarningShown) {
-                pickAppIconColor()
-            } else {
-                ConfirmationDialog(this, "", R.string.app_icon_color_warning, R.string.ok, 0) {
-                    baseConfig.wasAppIconCustomizationWarningShown = true
-                    pickAppIconColor()
-                }
-            }
         }
     }
 
@@ -688,24 +676,6 @@ class CustomizationActivity : BaseActivity() {
         }
     }
 
-    private fun pickAppIconColor() {
-        LineColorPickerDialog(
-            this,
-            curAppIconColor,
-            false,
-            R.array.md_app_icon_colors,
-            getAppIconIDs()
-        ) { wasPositivePressed, color ->
-            if (wasPositivePressed) {
-                if (hasColorChanged(curAppIconColor, color)) {
-                    curAppIconColor = color
-                    colorChanged()
-                    updateColorTheme(getUpdatedTheme())
-                }
-            }
-        }
-    }
-
     private fun getUpdatedTheme() =
         if (curSelectedThemeId == THEME_SHARED) THEME_SHARED else getCurrentThemeId()
 
@@ -739,7 +709,6 @@ class CustomizationActivity : BaseActivity() {
             binding.customizationBackgroundColorLabel,
             binding.customizationPrimaryColorLabel,
             binding.customizationAccentColorLabel,
-            binding.customizationAppIconColorLabel
         ).forEach {
             it.setTextColor(textColor)
         }
