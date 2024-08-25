@@ -103,6 +103,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activities.FAQActivity"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:label="Frequently asked Questions"
+            android:parentActivityName=".activities.AboutActivity" />
+
+
         <service
             android:name=".services.WidgetService"
             android:exported="true"
