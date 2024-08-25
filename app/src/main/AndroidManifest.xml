@@ -110,6 +110,13 @@
             android:label="Frequently asked Questions"
             android:parentActivityName=".activities.AboutActivity" />
 
+        <activity
+            android:name=".activities.ContributorsActivity"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:label="@string/contributors"
+            android:parentActivityName=".activities.AboutActivity" />
+
 
         <service
             android:name=".services.WidgetService"
