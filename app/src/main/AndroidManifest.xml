@@ -117,6 +117,13 @@
             android:label="@string/contributors"
             android:parentActivityName=".activities.AboutActivity" />
 
+        <activity
+            android:name=".activities.LicenseActivity"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:label="@string/third_party_licences"
+            android:parentActivityName=".activities.AboutActivity" />
+
 
         <service
             android:name=".services.WidgetService"
