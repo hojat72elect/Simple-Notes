@@ -1,7 +1,7 @@
 package com.simplemobiletools.notes.pro.dialogs
 
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogSortChecklistBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beGoneIf
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.config

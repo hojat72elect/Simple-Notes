@@ -3,7 +3,7 @@ package com.simplemobiletools.notes.pro.new_architecture.shared.helpers
 import android.content.Context
 import android.os.Environment
 import android.view.Gravity
-import com.simplemobiletools.notes.pro.models.NoteType
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.NoteType
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {

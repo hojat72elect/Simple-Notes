@@ -22,7 +22,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getPro
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperTextColor
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.humanizePath
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.onGlobalLayout
-import com.simplemobiletools.notes.pro.models.FileDirItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FileDirItem
 
 class Breadcrumbs(context: Context, attrs: AttributeSet) : HorizontalScrollView(context, attrs) {
     private val inflater =

@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.OpenNoteItemBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beGoneIf
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beVisibleIf
@@ -21,9 +21,9 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getCol
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isBlackAndWhiteTheme
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.LOWER_ALPHA_INT
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SORT_BY_CUSTOM
-import com.simplemobiletools.notes.pro.models.ChecklistItem
-import com.simplemobiletools.notes.pro.models.Note
-import com.simplemobiletools.notes.pro.models.NoteType
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.ChecklistItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.NoteType
 import com.simplemobiletools.notes.pro.views.MyRecyclerView
 
 @RequiresApi(Build.VERSION_CODES.O)

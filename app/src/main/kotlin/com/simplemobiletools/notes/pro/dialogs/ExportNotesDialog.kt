@@ -2,7 +2,7 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogExportNotesBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getCurrentFormattedDateTime

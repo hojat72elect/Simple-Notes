@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogExportFileBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.config
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
@@ -15,7 +15,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupD
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.showKeyboard
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.toast
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.value
-import com.simplemobiletools.notes.pro.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
 import java.io.File
 
 @SuppressLint("StringFormatMatches")

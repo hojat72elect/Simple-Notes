@@ -1,4 +1,4 @@
--keep class com.simplemobiletools.notes.pro.models.* {
+-keep class com.simplemobiletools.notes.pro.new_architecture.shared.data.models.* {
     <fields>;
 }
 

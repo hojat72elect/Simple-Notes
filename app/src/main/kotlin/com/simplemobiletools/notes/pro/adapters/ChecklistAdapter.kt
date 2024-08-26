@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.ItemChecklistBinding
 import com.simplemobiletools.notes.pro.dialogs.RenameChecklistItemDialog
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
@@ -28,7 +28,7 @@ import com.simplemobiletools.notes.pro.interfaces.ChecklistItemsListener
 import com.simplemobiletools.notes.pro.interfaces.ItemMoveCallback
 import com.simplemobiletools.notes.pro.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.notes.pro.interfaces.StartReorderDragListener
-import com.simplemobiletools.notes.pro.models.ChecklistItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.ChecklistItem
 import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import java.util.Collections
 

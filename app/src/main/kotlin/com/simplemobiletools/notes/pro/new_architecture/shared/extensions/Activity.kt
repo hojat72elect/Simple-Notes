@@ -45,7 +45,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SIDELOADI
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isOnMainThread
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isRPlus
-import com.simplemobiletools.notes.pro.models.SharedTheme
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.SharedTheme
 import com.simplemobiletools.notes.pro.views.MyTextView
 import java.io.File
 

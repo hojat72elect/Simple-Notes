@@ -28,15 +28,15 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.compose.alert_dialog.AlertDialogState
-import com.simplemobiletools.notes.pro.compose.alert_dialog.DialogSurface
-import com.simplemobiletools.notes.pro.compose.alert_dialog.dialogTextColor
-import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
-import com.simplemobiletools.notes.pro.compose.components.RadioGroupDialogComponent
-import com.simplemobiletools.notes.pro.compose.extensions.MyDevices
-import com.simplemobiletools.notes.pro.compose.settings.SettingsHorizontalDivider
-import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
-import com.simplemobiletools.notes.pro.compose.theme.SimpleTheme
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.alert_dialog.AlertDialogState
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.alert_dialog.DialogSurface
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.alert_dialog.dialogTextColor
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.alert_dialog.rememberAlertDialogState
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.components.RadioGroupDialogComponent
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.MyDevices
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.settings.SettingsHorizontalDivider
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.theme.SimpleTheme
 import com.simplemobiletools.notes.pro.databinding.DialogFileConflictBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beVisibleIf
@@ -46,8 +46,8 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.CONFLICT_
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.CONFLICT_MERGE
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.CONFLICT_OVERWRITE
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.CONFLICT_SKIP
-import com.simplemobiletools.notes.pro.models.FileDirItem
-import com.simplemobiletools.notes.pro.models.FileDirItemReadOnly
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FileDirItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FileDirItemReadOnly
 import kotlinx.collections.immutable.toImmutableList
 
 class FileConflictDialog(

@@ -5,10 +5,9 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.remember
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.compose.extensions.enableEdgeToEdgeSimple
-import com.simplemobiletools.notes.pro.compose.screens.ContributorsScreen
-import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
-import com.simplemobiletools.notes.pro.models.LanguageContributor
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.enableEdgeToEdgeSimple
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.LanguageContributor
 import kotlinx.collections.immutable.toImmutableList
 
 class ContributorsActivity : AppCompatActivity() {

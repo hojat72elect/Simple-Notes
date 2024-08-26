@@ -4,11 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.remember
-import com.simplemobiletools.notes.pro.compose.extensions.enableEdgeToEdgeSimple
-import com.simplemobiletools.notes.pro.compose.screens.FAQScreen
-import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.enableEdgeToEdgeSimple
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.APP_FAQ
-import com.simplemobiletools.notes.pro.models.FAQItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FAQItem
 import kotlinx.collections.immutable.toImmutableList
 
 class FAQActivity : ComponentActivity() {

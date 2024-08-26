@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.simplemobiletools.notes.pro.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
 
 @Dao
 interface NotesDao {

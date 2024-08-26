@@ -14,7 +14,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.normalize
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.photoExtensions
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.rawExtensions
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.videoExtensions
-import com.simplemobiletools.notes.pro.models.ChecklistItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.ChecklistItem
 import java.io.File
 import java.text.Normalizer
 

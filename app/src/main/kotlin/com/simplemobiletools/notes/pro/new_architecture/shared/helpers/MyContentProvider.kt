@@ -2,7 +2,7 @@ package com.simplemobiletools.notes.pro.new_architecture.shared.helpers
 
 import android.content.ContentValues
 import android.net.Uri
-import com.simplemobiletools.notes.pro.models.SharedTheme
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.SharedTheme
 
 class MyContentProvider {
     companion object {

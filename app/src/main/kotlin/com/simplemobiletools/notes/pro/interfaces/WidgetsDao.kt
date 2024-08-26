@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.simplemobiletools.notes.pro.models.Widget
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Widget
 
 @Dao
 interface WidgetsDao {

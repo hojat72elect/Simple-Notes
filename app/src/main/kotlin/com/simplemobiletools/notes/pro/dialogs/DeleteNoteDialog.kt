@@ -2,12 +2,12 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogDeleteNoteBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beVisible
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
-import com.simplemobiletools.notes.pro.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
 
 class DeleteNoteDialog(
     val activity: BaseActivity,

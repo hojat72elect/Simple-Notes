@@ -4,7 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogExportSettingsBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beGone

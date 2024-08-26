@@ -4,11 +4,11 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.config
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.notesDB
-import com.simplemobiletools.notes.pro.models.Note
-import com.simplemobiletools.notes.pro.models.NoteType
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.NoteType
 import java.io.File
 import java.io.OutputStream
 import kotlinx.serialization.encodeToString

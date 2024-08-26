@@ -13,8 +13,8 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupD
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.showKeyboard
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.toast
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.value
-import com.simplemobiletools.notes.pro.models.Note
-import com.simplemobiletools.notes.pro.models.NoteType
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.NoteType
 
 class NewNoteDialog(
     val activity: Activity,

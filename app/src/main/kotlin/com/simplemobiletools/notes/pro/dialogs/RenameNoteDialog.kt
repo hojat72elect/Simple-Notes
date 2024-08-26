@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogRenameNoteBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.config
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
@@ -18,7 +18,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.update
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.value
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.ensureBackgroundThread
-import com.simplemobiletools.notes.pro.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
 import java.io.File
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)

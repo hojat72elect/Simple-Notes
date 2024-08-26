@@ -7,9 +7,8 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.compose.extensions.enableEdgeToEdgeSimple
-import com.simplemobiletools.notes.pro.compose.screens.LicenseScreen
-import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.enableEdgeToEdgeSimple
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.launchViewIntent
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.APP_LICENSES
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.LICENSE_ANDROID_LAME
@@ -46,7 +45,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.LICENSE_S
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.LICENSE_STETHO
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.LICENSE_SUBSAMPLING
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.LICENSE_ZIP4J
-import com.simplemobiletools.notes.pro.models.License
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.License
 import kotlinx.collections.immutable.toImmutableList
 
 class LicenseActivity : ComponentActivity() {

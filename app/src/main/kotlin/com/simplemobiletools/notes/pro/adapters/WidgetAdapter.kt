@@ -22,9 +22,9 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.NOTE_ID
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.OPEN_NOTE_ID
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.WIDGET_TEXT_COLOR
-import com.simplemobiletools.notes.pro.models.ChecklistItem
-import com.simplemobiletools.notes.pro.models.Note
-import com.simplemobiletools.notes.pro.models.NoteType
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.ChecklistItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.NoteType
 import kotlinx.serialization.json.Json
 
 class WidgetAdapter(val context: Context, val intent: Intent) :

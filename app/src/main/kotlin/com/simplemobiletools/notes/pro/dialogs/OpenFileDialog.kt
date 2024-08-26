@@ -4,15 +4,15 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.DialogOpenFileBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getFilenameFromPath
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.humanizePath
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTION_NONE
-import com.simplemobiletools.notes.pro.models.Note
-import com.simplemobiletools.notes.pro.models.NoteType
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.NoteType
 import java.io.File
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)

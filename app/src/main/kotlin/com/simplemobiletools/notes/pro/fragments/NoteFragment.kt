@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.simplemobiletools.notes.pro.activities.MainActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.MainActivity
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beVisibleIf
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.config
@@ -18,7 +18,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.perfor
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.underlineText
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTION_NONE
-import com.simplemobiletools.notes.pro.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 abstract class NoteFragment : Fragment() {

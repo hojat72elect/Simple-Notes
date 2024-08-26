@@ -22,7 +22,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.viewbinding.ViewBinding
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.MainActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.MainActivity
 import com.simplemobiletools.notes.pro.databinding.FragmentTextBinding
 import com.simplemobiletools.notes.pro.databinding.NoteViewHorizScrollableBinding
 import com.simplemobiletools.notes.pro.databinding.NoteViewStaticBinding
@@ -39,8 +39,8 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.update
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.MyMovementMethod
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.NOTE_ID
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.NotesHelper
-import com.simplemobiletools.notes.pro.models.TextHistory
-import com.simplemobiletools.notes.pro.models.TextHistoryItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.TextHistory
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.TextHistoryItem
 import com.simplemobiletools.notes.pro.views.MyEditText
 import java.io.File
 import kotlin.math.abs

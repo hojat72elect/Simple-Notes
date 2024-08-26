@@ -2,7 +2,7 @@ package com.simplemobiletools.notes.pro.dialogs
 
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.performSecurityCheck
@@ -11,7 +11,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.update
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.DialogUnlockNotesBinding
 import com.simplemobiletools.notes.pro.databinding.ItemLockedNoteBinding
-import com.simplemobiletools.notes.pro.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
 
 class UnlockNotesDialog(
     val activity: BaseActivity,

@@ -12,8 +12,8 @@ import com.simplemobiletools.notes.pro.fragments.ChecklistFragment
 import com.simplemobiletools.notes.pro.fragments.NoteFragment
 import com.simplemobiletools.notes.pro.fragments.TextFragment
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.NOTE_ID
-import com.simplemobiletools.notes.pro.models.Note
-import com.simplemobiletools.notes.pro.models.NoteType
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.NoteType
 
 @RequiresApi(Build.VERSION_CODES.O)
 class NotesPagerAdapter(fm: FragmentManager, val notes: List<Note>, val activity: Activity) :

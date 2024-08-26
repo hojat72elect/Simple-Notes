@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.adapters.ChecklistAdapter
 import com.simplemobiletools.notes.pro.databinding.FragmentChecklistBinding
 import com.simplemobiletools.notes.pro.dialogs.NewChecklistItemDialog
@@ -26,8 +26,8 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.NotesHelp
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SORT_BY_CUSTOM
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.ensureBackgroundThread
 import com.simplemobiletools.notes.pro.interfaces.ChecklistItemsListener
-import com.simplemobiletools.notes.pro.models.ChecklistItem
-import com.simplemobiletools.notes.pro.models.Note
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.ChecklistItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
 import java.io.File
 
 @RequiresApi(Build.VERSION_CODES.O)

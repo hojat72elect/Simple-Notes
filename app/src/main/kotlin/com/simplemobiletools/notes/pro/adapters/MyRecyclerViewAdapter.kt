@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getContrastColor
@@ -26,7 +26,7 @@ import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import kotlin.math.max
 import kotlin.math.min
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 abstract class MyRecyclerViewAdapter(
     val activity: BaseActivity,
     private val recyclerView: MyRecyclerView,

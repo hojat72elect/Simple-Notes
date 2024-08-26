@@ -12,8 +12,8 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.BaseActivity
-import com.simplemobiletools.notes.pro.adapters.FilepickerFavoritesAdapter
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
+import com.simplemobiletools.notes.pro.adapters.FilePickerFavoritesAdapter
 import com.simplemobiletools.notes.pro.adapters.FilePickerItemsAdapter
 import com.simplemobiletools.notes.pro.databinding.DialogFilepickerBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.areSystemAnimationsEnabled
@@ -50,7 +50,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isVisi
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.toast
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.ensureBackgroundThread
-import com.simplemobiletools.notes.pro.models.FileDirItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FileDirItem
 import com.simplemobiletools.notes.pro.views.Breadcrumbs
 import java.io.File
 
@@ -363,7 +363,7 @@ class FilePickerDialog(
     private fun containsDirectory(items: List<FileDirItem>) = items.any { it.isDirectory }
 
     private fun setupFavorites() {
-        FilepickerFavoritesAdapter(
+        FilePickerFavoritesAdapter(
             activity,
             activity.baseConfig.favorites.toMutableList(),
             mDialogView.filepickerFavoritesList

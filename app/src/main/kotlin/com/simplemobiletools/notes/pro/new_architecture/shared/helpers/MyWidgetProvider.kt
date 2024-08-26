@@ -8,14 +8,14 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.RemoteViews
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.activities.SplashActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.SplashActivity
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getLaunchIntent
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.notesDB
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setText
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setVisibleIf
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.widgetsDB
-import com.simplemobiletools.notes.pro.models.Widget
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Widget
 import com.simplemobiletools.notes.pro.services.WidgetService
 
 class MyWidgetProvider : AppWidgetProvider() {

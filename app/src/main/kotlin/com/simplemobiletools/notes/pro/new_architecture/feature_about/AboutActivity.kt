@@ -21,12 +21,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.compose.alert_dialog.rememberAlertDialogState
-import com.simplemobiletools.notes.pro.compose.extensions.enableEdgeToEdgeSimple
-import com.simplemobiletools.notes.pro.compose.extensions.rateStarsRedirectAndThankYou
-import com.simplemobiletools.notes.pro.compose.screens.AboutScreen
-import com.simplemobiletools.notes.pro.compose.screens.HelpUsSection
-import com.simplemobiletools.notes.pro.compose.theme.AppThemeSurface
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.alert_dialog.rememberAlertDialogState
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.enableEdgeToEdgeSimple
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.rateStarsRedirectAndThankYou
+import com.simplemobiletools.notes.pro.new_architecture.shared.compose.theme.AppThemeSurface
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedAlertDialog
 import com.simplemobiletools.notes.pro.dialogs.RateStarsAlertDialog
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
@@ -43,7 +41,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.APP_LICEN
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.APP_NAME
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.APP_VERSION_NAME
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SHOW_FAQ_BEFORE_MAIL
-import com.simplemobiletools.notes.pro.models.FAQItem
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FAQItem
 
 class AboutActivity : ComponentActivity() {
     private val appName get() = intent.getStringExtra(APP_NAME) ?: ""
@@ -94,7 +92,7 @@ class AboutActivity : ComponentActivity() {
                     aboutSection = {
                         val setupFAQ = rememberFAQ()
                         if (!showExternalLinks || setupFAQ) {
-                            com.simplemobiletools.notes.pro.compose.screens.AboutSection(
+                            AboutSection(
                                 setupFAQ = setupFAQ,
                                 onFAQClick = ::launchFAQActivity,
                                 onEmailClick = {
@@ -104,7 +102,7 @@ class AboutActivity : ComponentActivity() {
                     },
                     socialSection = {
                         if (showExternalLinks) {
-                            com.simplemobiletools.notes.pro.compose.screens.SocialSection(
+                            SocialSection(
                                 onFacebookClick = ::onFacebookClick,
                                 onGithubClick = ::onGithubClick,
                                 onRedditClick = ::onRedditClick,
@@ -117,7 +115,7 @@ class AboutActivity : ComponentActivity() {
                         resources,
                         showExternalLinks
                     )
-                    com.simplemobiletools.notes.pro.compose.screens.OtherSection(
+                    OtherSection(
                         showMoreApps = showGoogleRelations,
                         onMoreAppsClick = ::launchMoreAppsFromUsIntent,
                         showWebsite = showWebsite,
