@@ -1,4 +1,4 @@
-package com.simplemobiletools.notes.pro.adapters
+package com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters
 
 import android.content.Context
 import android.content.Intent

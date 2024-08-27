@@ -41,7 +41,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.asynctasks.CopyMoveTask
+import com.simplemobiletools.notes.pro.new_architecture.shared.asynctasks.CopyMoveTask
 import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.DEVELOPER_PLAY_STORE_URL
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationDialog

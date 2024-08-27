@@ -1,4 +1,4 @@
-package com.simplemobiletools.notes.pro.adapters
+package com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters
 
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
@@ -15,8 +15,9 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.ItemFilepickerListBinding
+import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FileDirItem
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.formatSize
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAndroidSAFUri
@@ -29,11 +30,10 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isGif
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isPathOnOTG
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isRestrictedSAFOnlyRoot
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.getFilePlaceholderDrawables
-import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FileDirItem
 import com.simplemobiletools.notes.pro.views.MyRecyclerView
 import java.util.Locale
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class FilePickerItemsAdapter(
     activity: BaseActivity,
     private val fileDirItems: List<FileDirItem>,

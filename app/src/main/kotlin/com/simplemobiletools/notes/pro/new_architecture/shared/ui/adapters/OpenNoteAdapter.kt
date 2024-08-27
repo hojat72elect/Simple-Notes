@@ -1,4 +1,4 @@
-package com.simplemobiletools.notes.pro.adapters
+package com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters
 
 import android.content.Context
 import android.graphics.Color
@@ -26,7 +26,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
 import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.NoteType
 import com.simplemobiletools.notes.pro.views.MyRecyclerView
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class OpenNoteAdapter(
     activity: BaseActivity, var items: List<Note>,
     recyclerView: MyRecyclerView, itemClick: (Any) -> Unit

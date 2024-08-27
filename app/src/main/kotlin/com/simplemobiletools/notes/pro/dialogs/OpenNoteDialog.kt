@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.simplemobiletools.notes.pro.views.AutoStaggeredGridLayoutManager
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
-import com.simplemobiletools.notes.pro.adapters.OpenNoteAdapter
+import com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters.OpenNoteAdapter
 import com.simplemobiletools.notes.pro.databinding.DialogOpenNoteBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getAlertDialogBuilder
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setupDialogStuff

@@ -1,4 +1,4 @@
-package com.simplemobiletools.notes.pro.asynctasks
+package com.simplemobiletools.notes.pro.new_architecture.shared.asynctasks
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,7 +12,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.util.Pair
 import androidx.documentfile.provider.DocumentFile
 import com.simplemobiletools.notes.pro.R
+import com.simplemobiletools.notes.pro.interfaces.CopyMoveListener
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
+import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FileDirItem
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.canManageMedia
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.createDirectorySync
@@ -42,14 +44,12 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.CONFLICT_
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.CONFLICT_SKIP
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.getConflictResolution
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isOreoPlus
-import com.simplemobiletools.notes.pro.interfaces.CopyMoveListener
-import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FileDirItem
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.ref.WeakReference
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class CopyMoveTask(
     val activity: BaseActivity,
     private val copyOnly: Boolean,

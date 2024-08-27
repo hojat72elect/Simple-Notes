@@ -17,7 +17,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
-import com.simplemobiletools.notes.pro.adapters.ChecklistAdapter
+import com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters.ChecklistAdapter
 import com.simplemobiletools.notes.pro.databinding.WidgetConfigBinding
 import com.simplemobiletools.notes.pro.dialogs.ColorPickerDialog
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.adjustAlpha

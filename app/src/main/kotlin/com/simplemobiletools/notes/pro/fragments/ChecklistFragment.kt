@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
-import com.simplemobiletools.notes.pro.adapters.ChecklistAdapter
+import com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters.ChecklistAdapter
 import com.simplemobiletools.notes.pro.databinding.FragmentChecklistBinding
 import com.simplemobiletools.notes.pro.dialogs.NewChecklistItemDialog
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beVisibleIf

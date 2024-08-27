@@ -32,7 +32,7 @@ import androidx.annotation.RequiresApi
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.notes.pro.BuildConfig
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.adapters.NotesPagerAdapter
+import com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters.NotesPagerAdapter
 import com.simplemobiletools.notes.pro.new_architecture.shared.data.databases.NotesDatabase
 import com.simplemobiletools.notes.pro.databinding.ActivityMainBinding
 import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedDialog

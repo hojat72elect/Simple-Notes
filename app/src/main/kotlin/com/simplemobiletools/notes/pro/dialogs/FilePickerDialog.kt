@@ -13,8 +13,8 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
-import com.simplemobiletools.notes.pro.adapters.FilePickerFavoritesAdapter
-import com.simplemobiletools.notes.pro.adapters.FilePickerItemsAdapter
+import com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters.FilePickerFavoritesAdapter
+import com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters.FilePickerItemsAdapter
 import com.simplemobiletools.notes.pro.databinding.DialogFilepickerBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig

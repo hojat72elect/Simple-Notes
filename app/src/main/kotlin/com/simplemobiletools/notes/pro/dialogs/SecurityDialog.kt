@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isBiometricIdAvailable
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.onTabSelectionChanged
-import com.simplemobiletools.notes.pro.adapters.PasswordTypesAdapter
+import com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters.PasswordTypesAdapter
 import com.simplemobiletools.notes.pro.databinding.DialogSecurityBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beGone
