@@ -9,7 +9,7 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.FilepickerFavoriteBinding
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getTextSize
-import com.simplemobiletools.notes.pro.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.new_architecture.shared.views.MyRecyclerView
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class FilePickerFavoritesAdapter(

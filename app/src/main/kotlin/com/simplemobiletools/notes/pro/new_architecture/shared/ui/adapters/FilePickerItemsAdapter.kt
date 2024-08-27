@@ -30,7 +30,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isGif
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isPathOnOTG
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.isRestrictedSAFOnlyRoot
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.getFilePlaceholderDrawables
-import com.simplemobiletools.notes.pro.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.new_architecture.shared.views.MyRecyclerView
 import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)

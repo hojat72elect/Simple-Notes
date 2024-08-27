@@ -13,9 +13,9 @@ import androidx.core.view.ViewCompat
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.databinding.ActivitySettingsBinding
-import com.simplemobiletools.notes.pro.dialogs.ExportNotesDialog
-import com.simplemobiletools.notes.pro.dialogs.ManageAutoBackupsDialog
-import com.simplemobiletools.notes.pro.dialogs.RadioGroupDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.ExportNotesDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.ManageAutoBackupsDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.RadioGroupDialog
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beVisibleIf
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.cancelScheduledAutomaticBackup
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.config

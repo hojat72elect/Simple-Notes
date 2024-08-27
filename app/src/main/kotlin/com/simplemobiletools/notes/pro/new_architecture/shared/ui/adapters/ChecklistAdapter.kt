@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.ItemChecklistBinding
-import com.simplemobiletools.notes.pro.dialogs.RenameChecklistItemDialog
-import com.simplemobiletools.notes.pro.interfaces.ChecklistItemsListener
-import com.simplemobiletools.notes.pro.interfaces.ItemMoveCallback
-import com.simplemobiletools.notes.pro.interfaces.ItemTouchHelperContract
-import com.simplemobiletools.notes.pro.interfaces.StartReorderDragListener
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.RenameChecklistItemDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.interfaces.ChecklistItemsListener
+import com.simplemobiletools.notes.pro.new_architecture.shared.interfaces.ItemMoveCallback
+import com.simplemobiletools.notes.pro.new_architecture.shared.interfaces.ItemTouchHelperContract
+import com.simplemobiletools.notes.pro.new_architecture.shared.interfaces.StartReorderDragListener
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.ChecklistItem
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
@@ -29,7 +29,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getPer
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.removeBit
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.DONE_CHECKLIST_ITEM_ALPHA
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SORT_BY_CUSTOM
-import com.simplemobiletools.notes.pro.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.new_architecture.shared.views.MyRecyclerView
 import java.util.Collections
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)

@@ -24,9 +24,9 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.new_architecture.shared.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.enableEdgeToEdgeSimple
 import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.rateStarsRedirectAndThankYou
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.ConfirmationAdvancedAlertDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.RateStarsAlertDialog
 import com.simplemobiletools.notes.pro.new_architecture.shared.compose.theme.AppThemeSurface
-import com.simplemobiletools.notes.pro.dialogs.ConfirmationAdvancedAlertDialog
-import com.simplemobiletools.notes.pro.dialogs.RateStarsAlertDialog
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getStoreUrl
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.launchMoreAppsFromUsIntent

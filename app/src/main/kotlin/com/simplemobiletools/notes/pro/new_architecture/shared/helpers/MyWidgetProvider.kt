@@ -16,7 +16,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setTex
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.setVisibleIf
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.widgetsDB
 import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Widget
-import com.simplemobiletools.notes.pro.services.WidgetService
+import com.simplemobiletools.notes.pro.new_architecture.shared.services.WidgetService
 
 class MyWidgetProvider : AppWidgetProvider() {
     private fun setupAppOpenIntent(context: Context, views: RemoteViews, id: Int, widget: Widget) {

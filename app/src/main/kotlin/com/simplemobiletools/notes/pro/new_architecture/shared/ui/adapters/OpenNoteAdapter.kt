@@ -24,7 +24,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.SORT_BY_C
 import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.ChecklistItem
 import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.Note
 import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.NoteType
-import com.simplemobiletools.notes.pro.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.new_architecture.shared.views.MyRecyclerView
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class OpenNoteAdapter(

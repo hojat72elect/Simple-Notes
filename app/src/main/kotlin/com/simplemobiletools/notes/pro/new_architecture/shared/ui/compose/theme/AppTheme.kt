@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
-import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.FakeVersionCheck
+import com.simplemobiletools.notes.pro.new_architecture.shared.ui.compose.extensions.FakeVersionCheck
 import com.simplemobiletools.notes.pro.new_architecture.shared.compose.extensions.TransparentSystemBars
 import com.simplemobiletools.notes.pro.new_architecture.shared.compose.theme.model.Theme
 import com.simplemobiletools.notes.pro.new_architecture.shared.compose.theme.model.Theme.Companion.systemDefaultMaterialYou

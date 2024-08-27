@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.interfaces.MyActionModeCallback
+import com.simplemobiletools.notes.pro.new_architecture.shared.interfaces.MyActionModeCallback
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.applyColorFilter
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig
@@ -22,7 +22,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getPro
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperPrimaryColor
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.getProperTextColor
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.onGlobalLayout
-import com.simplemobiletools.notes.pro.views.MyRecyclerView
+import com.simplemobiletools.notes.pro.new_architecture.shared.views.MyRecyclerView
 import kotlin.math.max
 import kotlin.math.min
 

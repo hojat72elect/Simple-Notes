@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.util.Pair
 import androidx.documentfile.provider.DocumentFile
 import com.simplemobiletools.notes.pro.R
-import com.simplemobiletools.notes.pro.interfaces.CopyMoveListener
+import com.simplemobiletools.notes.pro.new_architecture.shared.interfaces.CopyMoveListener
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.FileDirItem
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.baseConfig

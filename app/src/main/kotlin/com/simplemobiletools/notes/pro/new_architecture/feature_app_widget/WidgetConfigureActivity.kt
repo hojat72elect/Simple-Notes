@@ -19,7 +19,7 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.new_architecture.shared.activities.BaseActivity
 import com.simplemobiletools.notes.pro.new_architecture.shared.ui.adapters.ChecklistAdapter
 import com.simplemobiletools.notes.pro.databinding.WidgetConfigBinding
-import com.simplemobiletools.notes.pro.dialogs.ColorPickerDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.ColorPickerDialog
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.adjustAlpha
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beGone
 import com.simplemobiletools.notes.pro.new_architecture.shared.extensions.beGoneIf
@@ -167,7 +167,7 @@ class WidgetConfigureActivity : BaseActivity() {
             items.add(RadioItem(it.id!!.toInt(), it.title))
         }
 
-        com.simplemobiletools.notes.pro.dialogs.RadioGroupDialog(
+        com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.RadioGroupDialog(
             this,
             items,
             mCurrentNoteId.toInt()

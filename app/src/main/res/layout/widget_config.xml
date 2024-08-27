@@ -25,7 +25,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:padding="@dimen/activity_margin">
 
-                <com.simplemobiletools.notes.pro.views.MyAppCompatCheckbox
+                <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyAppCompatCheckbox
                     android:id="@+id/show_note_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
 
             </RelativeLayout>
 
-            <com.simplemobiletools.notes.pro.views.MyTextView
+            <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyTextView
                 android:id="@+id/notes_picker_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:paddingStart="@dimen/activity_margin"
                 android:text="@string/note_shown_widget" />
 
-            <com.simplemobiletools.notes.pro.views.MyTextView
+            <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyTextView
                 android:id="@+id/notes_picker_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
 
         </RelativeLayout>
 
-        <com.simplemobiletools.notes.pro.views.MyTextView
+        <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyTextView
             android:id="@+id/text_note_view_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             android:padding="@dimen/activity_margin"
             android:text="@string/widget_config" />
 
-        <com.simplemobiletools.notes.pro.views.MyRecyclerView
+        <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyRecyclerView
             android:id="@+id/checklist_note_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -95,7 +95,7 @@
             android:overScrollMode="never"
             android:paddingTop="@dimen/small_margin"
             android:visibility="gone"
-            app:layoutManager="com.simplemobiletools.notes.pro.views.MyLinearLayoutManager" />
+            app:layoutManager=".new_architecture.shared.views.MyLinearLayoutManager" />
 
         <ImageView
             android:id="@+id/config_bg_color"
@@ -114,7 +114,7 @@
             android:layout_toEndOf="@+id/config_bg_color"
             android:background="@drawable/widget_config_seekbar_background">
 
-            <com.simplemobiletools.notes.pro.views.MySeekBar
+            <com.simplemobiletools.notes.pro.new_architecture.shared.views.MySeekBar
                 android:id="@+id/config_bg_seekbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

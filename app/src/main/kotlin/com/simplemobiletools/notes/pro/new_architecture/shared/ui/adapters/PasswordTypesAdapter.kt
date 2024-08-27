@@ -12,9 +12,9 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTIO
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTION_PATTERN
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTION_PIN
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isRPlus
-import com.simplemobiletools.notes.pro.interfaces.HashListener
-import com.simplemobiletools.notes.pro.interfaces.SecurityTab
-import com.simplemobiletools.notes.pro.views.MyScrollView
+import com.simplemobiletools.notes.pro.new_architecture.shared.interfaces.HashListener
+import com.simplemobiletools.notes.pro.new_architecture.shared.interfaces.SecurityTab
+import com.simplemobiletools.notes.pro.new_architecture.shared.views.MyScrollView
 
 class PasswordTypesAdapter(
     private val context: Context,

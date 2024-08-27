@@ -32,11 +32,11 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.databinding.DialogTitleBinding
-import com.simplemobiletools.notes.pro.dialogs.AppSideLoadedDialog
-import com.simplemobiletools.notes.pro.dialogs.DonateDialog
-import com.simplemobiletools.notes.pro.dialogs.RateStarsDialog
-import com.simplemobiletools.notes.pro.dialogs.SecurityDialog
-import com.simplemobiletools.notes.pro.dialogs.UpgradeToProDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.AppSideLoadedDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.DonateDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.RateStarsDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.SecurityDialog
+import com.simplemobiletools.notes.pro.new_architecture.shared.dialogs.UpgradeToProDialog
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.DARK_GREY
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.MyContentProvider
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.PROTECTION_FINGERPRINT
@@ -46,7 +46,7 @@ import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.ensureBac
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isOnMainThread
 import com.simplemobiletools.notes.pro.new_architecture.shared.helpers.isRPlus
 import com.simplemobiletools.notes.pro.new_architecture.shared.data.models.SharedTheme
-import com.simplemobiletools.notes.pro.views.MyTextView
+import com.simplemobiletools.notes.pro.new_architecture.shared.views.MyTextView
 import java.io.File
 
 

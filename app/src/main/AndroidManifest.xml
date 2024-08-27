@@ -22,7 +22,7 @@
     </queries>
 
     <application
-        android:name=".NotesApplication"
+        android:name=".new_architecture.NotesApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_launcher_name"
@@ -126,7 +126,7 @@
 
 
         <service
-            android:name=".services.WidgetService"
+            android:name=".new_architecture.shared.services.WidgetService"
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
@@ -144,7 +144,7 @@
         </receiver>
 
         <receiver
-            android:name=".receivers.BootCompletedReceiver"
+            android:name=".new_architecture.shared.receivers.BootCompletedReceiver"
             android:exported="true">
 
             <intent-filter>
@@ -156,7 +156,7 @@
         </receiver>
 
         <receiver
-            android:name=".receivers.AutomaticBackupReceiver"
+            android:name=".new_architecture.shared.receivers.AutomaticBackupReceiver"
             android:exported="false" />
 
     </application>
