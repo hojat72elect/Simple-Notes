@@ -20,7 +20,7 @@
             android:layout_marginTop="@dimen/activity_margin"
             android:src="@drawable/ic_lock_vector" />
 
-        <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyTextView
+        <ca.hojat.messenger.niki.shared.views.MyTextView
             android:id="@+id/note_locked_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
 
     </ScrollView>
 
-    <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyTextView
+    <ca.hojat.messenger.niki.shared.views.MyTextView
         android:id="@+id/notes_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

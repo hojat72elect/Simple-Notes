@@ -25,7 +25,7 @@
                 android:layout_marginTop="@dimen/activity_margin"
                 android:src="@drawable/ic_lock_vector" />
 
-            <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyTextView
+            <ca.hojat.messenger.niki.shared.views.MyTextView
                 android:id="@+id/note_locked_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyRecyclerView
+            <ca.hojat.messenger.niki.shared.views.MyRecyclerView
                 android:id="@+id/checklist_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -63,9 +63,9 @@
                 android:overScrollMode="never"
                 android:paddingBottom="@dimen/secondary_fab_bottom_margin"
                 android:visibility="gone"
-                app:layoutManager=".new_architecture.shared.views.MyLinearLayoutManager" />
+                app:layoutManager="ca.hojat.messenger.niki.shared.views.MyLinearLayoutManager" />
 
-            <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyTextView
+            <ca.hojat.messenger.niki.shared.views.MyTextView
                 android:id="@+id/fragment_placeholder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                 android:textStyle="italic"
                 android:visibility="gone" />
 
-            <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyTextView
+            <ca.hojat.messenger.niki.shared.views.MyTextView
                 android:id="@+id/fragment_placeholder_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyFloatingActionButton
+    <ca.hojat.messenger.niki.shared.views.MyFloatingActionButton
         android:id="@+id/checklist_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -11,7 +11,7 @@
     android:foreground="@drawable/selector"
     android:paddingEnd="@dimen/normal_margin">
 
-    <com.simplemobiletools.notes.pro.new_architecture.shared.views.MyTextView
+    <ca.hojat.messenger.niki.shared.views.MyTextView
         android:id="@+id/checklist_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -22,7 +22,7 @@
     </queries>
 
     <application
-        android:name=".new_architecture.NotesApplication"
+        android:name="ca.hojat.messenger.niki.NotesApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_launcher_name"
@@ -31,7 +31,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.simplemobiletools.notes.pro.new_architecture.shared.activities.SplashActivity"
+            android:name="ca.hojat.messenger.niki.shared.activities.SplashActivity"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:launchMode="singleTask"
@@ -46,7 +46,7 @@
         </activity>
 
         <activity
-            android:name="com.simplemobiletools.notes.pro.new_architecture.shared.activities.MainActivity"
+            android:name="ca.hojat.messenger.niki.shared.activities.MainActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:launchMode="singleTask">
@@ -67,7 +67,7 @@
         </activity>
 
         <activity
-            android:name=".new_architecture.feature_app_widget.WidgetConfigureActivity"
+            android:name="ca.hojat.messenger.niki.feature_app_widget.WidgetConfigureActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/MyWidgetConfigTheme">
@@ -77,25 +77,25 @@
         </activity>
 
         <activity
-            android:name="com.simplemobiletools.notes.pro.new_architecture.feature_about.AboutActivity"
+            android:name="ca.hojat.messenger.niki.feature_about.AboutActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/about"
-            android:parentActivityName="com.simplemobiletools.notes.pro.new_architecture.shared.activities.MainActivity" />
+            android:parentActivityName="ca.hojat.messenger.niki.shared.activities.MainActivity" />
 
         <activity
-            android:name="com.simplemobiletools.notes.pro.new_architecture.feature_settings.CustomizationActivity"
+            android:name="ca.hojat.messenger.niki.feature_settings.CustomizationActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/customize_colors"
-            android:parentActivityName=".new_architecture.feature_settings.SettingsActivity" />
+            android:parentActivityName="ca.hojat.messenger.niki.feature_settings.SettingsActivity" />
 
         <activity
-            android:name=".new_architecture.feature_settings.SettingsActivity"
+            android:name="ca.hojat.messenger.niki.feature_settings.SettingsActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:label="@string/settings"
-            android:parentActivityName="com.simplemobiletools.notes.pro.new_architecture.shared.activities.MainActivity">
+            android:parentActivityName="ca.hojat.messenger.niki.shared.activities.MainActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
@@ -104,34 +104,34 @@
         </activity>
 
         <activity
-            android:name=".new_architecture.feature_about.FAQActivity"
+            android:name="ca.hojat.messenger.niki.feature_about.FAQActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="Frequently asked Questions"
-            android:parentActivityName=".new_architecture.feature_about.AboutActivity" />
+            android:parentActivityName="ca.hojat.messenger.niki.feature_about.AboutActivity" />
 
         <activity
-            android:name=".new_architecture.feature_about.ContributorsActivity"
+            android:name="ca.hojat.messenger.niki.feature_about.ContributorsActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/contributors"
-            android:parentActivityName=".new_architecture.feature_about.AboutActivity" />
+            android:parentActivityName="ca.hojat.messenger.niki.feature_about.AboutActivity" />
 
         <activity
-            android:name=".new_architecture.feature_about.LicenseActivity"
+            android:name="ca.hojat.messenger.niki.feature_about.LicenseActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/third_party_licences"
-            android:parentActivityName=".new_architecture.feature_about.AboutActivity" />
+            android:parentActivityName="ca.hojat.messenger.niki.feature_about.AboutActivity" />
 
 
         <service
-            android:name=".new_architecture.shared.services.WidgetService"
+            android:name="ca.hojat.messenger.niki.shared.services.WidgetService"
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <receiver
-            android:name=".new_architecture.shared.helpers.MyWidgetProvider"
+            android:name="ca.hojat.messenger.niki.shared.helpers.MyWidgetProvider"
             android:exported="true"
             android:icon="@drawable/img_widget_preview">
             <intent-filter>
@@ -144,7 +144,7 @@
         </receiver>
 
         <receiver
-            android:name=".new_architecture.shared.receivers.BootCompletedReceiver"
+            android:name="ca.hojat.messenger.niki.shared.receivers.BootCompletedReceiver"
             android:exported="true">
 
             <intent-filter>
@@ -156,7 +156,7 @@
         </receiver>
 
         <receiver
-            android:name=".new_architecture.shared.receivers.AutomaticBackupReceiver"
+            android:name="ca.hojat.messenger.niki.shared.receivers.AutomaticBackupReceiver"
             android:exported="false" />
 
     </application>
