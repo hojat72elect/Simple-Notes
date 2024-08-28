@@ -23,7 +23,7 @@ import ca.hojat.messenger.niki.shared.extensions.getAlertDialogBuilder
 import ca.hojat.messenger.niki.shared.extensions.setupDialogStuff
 
 /**
- * A simple dialog without any view, just a messageId, a positive button and optionally a negative button
+ * A simple dialog without any view, just a messageId, a positive button and optionally a negative button.
  *
  * @param activity has to be activity context to avoid some Theme.AppCompat issues
  * @param message the dialogs message, can be any String. If empty, messageId is used
