@@ -19,7 +19,7 @@
         android:paddingTop="@dimen/small_margin"
         android:paddingBottom="@dimen/small_margin">
 
-        <ca.hojat.messenger.niki.shared.views.MyEditText
+        <ca.hojat.notes.niki.shared.views.MyEditText
             android:id="@+id/search_query"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

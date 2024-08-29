@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_margin"
     android:paddingEnd="@dimen/activity_margin">
 
-    <ca.hojat.messenger.niki.shared.views.MyTextInputLayout
+    <ca.hojat.notes.niki.shared.views.MyTextInputLayout
         android:id="@+id/open_file_filename_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,14 +21,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </ca.hojat.messenger.niki.shared.views.MyTextInputLayout>
+    </ca.hojat.notes.niki.shared.views.MyTextInputLayout>
 
     <RadioGroup
         android:id="@+id/open_file_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ca.hojat.messenger.niki.shared.views.MyCompatRadioButton
+        <ca.hojat.notes.niki.shared.views.MyCompatRadioButton
             android:id="@+id/open_file_update_file"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:paddingBottom="@dimen/normal_margin"
             android:text="@string/update_file_at_note" />
 
-        <ca.hojat.messenger.niki.shared.views.MyCompatRadioButton
+        <ca.hojat.notes.niki.shared.views.MyCompatRadioButton
             android:id="@+id/open_file_content_only"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

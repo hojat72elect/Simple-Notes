@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ca.hojat.messenger.niki.shared.views.PatternTab xmlns:android="http://schemas.android.com/apk/res/android"
+<ca.hojat.notes.niki.shared.views.PatternTab xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pattern_lock_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -12,7 +12,7 @@
         android:layout_marginTop="@dimen/activity_margin"
         android:src="@drawable/ic_lock_outlined_vector" />
 
-    <ca.hojat.messenger.niki.shared.views.MyTextView
+    <ca.hojat.notes.niki.shared.views.MyTextView
         android:id="@+id/pattern_lock_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,4 +35,4 @@
         android:layout_below="@+id/pattern_lock_title"
         android:layout_centerInParent="true" />
 
-</ca.hojat.messenger.niki.shared.views.PatternTab>
+</ca.hojat.notes.niki.shared.views.PatternTab>

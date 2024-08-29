@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ca.hojat.messenger.niki.shared.views.MyTextView
+    <ca.hojat.notes.niki.shared.views.MyTextView
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

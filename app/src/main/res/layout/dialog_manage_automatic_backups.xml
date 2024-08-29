@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:paddingTop="@dimen/activity_margin">
 
-        <ca.hojat.messenger.niki.shared.views.MyTextInputLayout
+        <ca.hojat.notes.niki.shared.views.MyTextInputLayout
             android:id="@+id/backup_notes_folder_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,9 +27,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-        </ca.hojat.messenger.niki.shared.views.MyTextInputLayout>
+        </ca.hojat.notes.niki.shared.views.MyTextInputLayout>
 
-        <ca.hojat.messenger.niki.shared.views.MyTextInputLayout
+        <ca.hojat.notes.niki.shared.views.MyTextInputLayout
             android:id="@+id/backup_notes_filename_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/bigger_text_size" />
 
-        </ca.hojat.messenger.niki.shared.views.MyTextInputLayout>
+        </ca.hojat.notes.niki.shared.views.MyTextInputLayout>
 
     </LinearLayout>
 </ScrollView>
