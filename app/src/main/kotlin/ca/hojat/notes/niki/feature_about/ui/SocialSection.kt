@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ca.hojat.notes.niki.R
-import ca.hojat.notes.niki.feature_about.SocialText
 import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsGroup
 import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsHorizontalDivider
 import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsTitleTextComponent
