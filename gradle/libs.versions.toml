@@ -38,7 +38,7 @@ patternLockView = "a90b0d4bf0"
 #reprint
 reprint = "2cb206415d"
 #Gradle
-gradlePlugins-agp = "8.1.1"
+gradlePlugins-agp = "8.5.0"
 #build
 app-build-compileSDKVersion = "34"
 app-build-targetSDK = "34"
