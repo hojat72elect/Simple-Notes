@@ -8,17 +8,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ca.hojat.notes.niki.R
+import ca.hojat.notes.niki.shared.ui.compose.lists.SimpleColumnScaffold
 import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsGroup
 import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsHorizontalDivider
 import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsListItem
 import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsTitleTextComponent
-import ca.hojat.notes.niki.shared.ui.compose.lists.SimpleColumnScaffold
 import ca.hojat.notes.niki.shared.ui.compose.theme.SimpleTheme
 
 private val startingTitlePadding = Modifier.padding(start = 60.dp)
 
 @Composable
-internal fun AboutScreen(
+fun AboutScreen(
     goBack: () -> Unit,
     helpUsSection: @Composable () -> Unit,
     aboutSection: @Composable () -> Unit,
@@ -35,107 +35,7 @@ internal fun AboutScreen(
 }
 
 @Composable
-internal fun HelpUsSection(
-    onRateUsClick: () -> Unit,
-    onInviteClick: () -> Unit,
-    onContributorsClick: () -> Unit,
-    showRateUs: Boolean,
-    showInvite: Boolean,
-    showDonate: Boolean,
-    onDonateClick: () -> Unit,
-) {
-    SettingsGroup(title = {
-        SettingsTitleTextComponent(
-            text = stringResource(id = R.string.help_us),
-            modifier = startingTitlePadding
-        )
-    }) {
-        if (showRateUs) {
-            TwoLinerTextItem(
-                text = stringResource(id = R.string.rate_us),
-                icon = R.drawable.ic_star_vector,
-                click = onRateUsClick
-            )
-        }
-        if (showInvite) {
-            TwoLinerTextItem(
-                text = stringResource(id = R.string.invite_friends),
-                icon = R.drawable.ic_add_person_vector,
-                click = onInviteClick
-            )
-        }
-        TwoLinerTextItem(
-            click = onContributorsClick,
-            text = stringResource(id = R.string.contributors),
-            icon = R.drawable.ic_face_vector
-        )
-        if (showDonate) {
-            TwoLinerTextItem(
-                click = onDonateClick,
-                text = stringResource(id = R.string.donate),
-                icon = R.drawable.ic_dollar_vector
-            )
-        }
-        SettingsHorizontalDivider()
-    }
-}
-
-@Composable
-internal fun OtherSection(
-    showMoreApps: Boolean,
-    onMoreAppsClick: () -> Unit,
-    onWebsiteClick: () -> Unit,
-    showWebsite: Boolean,
-    showPrivacyPolicy: Boolean,
-    onPrivacyPolicyClick: () -> Unit,
-    onLicenseClick: () -> Unit,
-    version: String,
-    onVersionClick: () -> Unit,
-) {
-    SettingsGroup(title = {
-        SettingsTitleTextComponent(
-            text = stringResource(id = R.string.other),
-            modifier = startingTitlePadding
-        )
-    }) {
-        if (showMoreApps) {
-            TwoLinerTextItem(
-                click = onMoreAppsClick,
-                text = stringResource(id = R.string.more_apps_from_us),
-                icon = R.drawable.ic_heart_vector
-            )
-        }
-        if (showWebsite) {
-            TwoLinerTextItem(
-                click = onWebsiteClick,
-                text = stringResource(id = R.string.website),
-                icon = R.drawable.ic_link_vector
-            )
-        }
-        if (showPrivacyPolicy) {
-            TwoLinerTextItem(
-                click = onPrivacyPolicyClick,
-                text = stringResource(id = R.string.privacy_policy),
-                icon = R.drawable.ic_unhide_vector
-            )
-        }
-        TwoLinerTextItem(
-            click = onLicenseClick,
-            text = stringResource(id = R.string.third_party_licences),
-            icon = R.drawable.ic_article_vector
-        )
-        TwoLinerTextItem(
-            click = onVersionClick,
-            text = version,
-            icon = R.drawable.ic_info_vector
-        )
-        SettingsHorizontalDivider()
-    }
-}
-
-
-@Composable
-internal fun AboutSection(
+fun AboutSection(
     setupFAQ: Boolean,
     onFAQClick: () -> Unit,
     onEmailClick: () -> Unit
@@ -163,45 +63,7 @@ internal fun AboutSection(
 }
 
 @Composable
-internal fun SocialSection(
-    onFacebookClick: () -> Unit,
-    onGithubClick: () -> Unit,
-    onRedditClick: () -> Unit,
-    onTelegramClick: () -> Unit
-) {
-    SettingsGroup(title = {
-        SettingsTitleTextComponent(
-            text = stringResource(id = R.string.social),
-            modifier = startingTitlePadding
-        )
-    }) {
-        SocialText(
-            click = onFacebookClick,
-            text = stringResource(id = R.string.facebook),
-            icon = R.drawable.ic_facebook_vector,
-        )
-        SocialText(
-            click = onGithubClick,
-            text = stringResource(id = R.string.github),
-            icon = R.drawable.ic_github_vector,
-            tint = SimpleTheme.colorScheme.onSurface
-        )
-        SocialText(
-            click = onRedditClick,
-            text = stringResource(id = R.string.reddit),
-            icon = R.drawable.ic_reddit_vector,
-        )
-        SocialText(
-            click = onTelegramClick,
-            text = stringResource(id = R.string.telegram),
-            icon = R.drawable.ic_telegram_vector,
-        )
-        SettingsHorizontalDivider()
-    }
-}
-
-@Composable
-internal fun SocialText(
+fun SocialText(
     text: String,
     icon: Int,
     tint: Color? = null,
@@ -219,7 +81,7 @@ internal fun SocialText(
 }
 
 @Composable
-internal fun TwoLinerTextItem(text: String, icon: Int, click: () -> Unit) {
+fun TwoLinerTextItem(text: String, icon: Int, click: () -> Unit) {
     SettingsListItem(
         tint = SimpleTheme.colorScheme.onSurface,
         click = click,

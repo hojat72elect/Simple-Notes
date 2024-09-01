@@ -21,6 +21,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
 import ca.hojat.notes.niki.R
+import ca.hojat.notes.niki.feature_about.ui.HelpUsSection
+import ca.hojat.notes.niki.feature_about.ui.SocialSection
+import ca.hojat.notes.niki.feature_about.ui.OtherSection
 import ca.hojat.notes.niki.shared.ui.compose.alert_dialog.rememberAlertDialogState
 import ca.hojat.notes.niki.shared.ui.compose.extensions.enableEdgeToEdgeSimple
 import ca.hojat.notes.niki.shared.ui.compose.extensions.rateStarsRedirectAndThankYou
