@@ -11,11 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import ca.hojat.notes.niki.R
-import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsHorizontalDivider
-import ca.hojat.notes.niki.shared.ui.compose.theme.AppThemeSurface
-import ca.hojat.notes.niki.shared.ui.compose.extensions.MyDevices
-import ca.hojat.notes.niki.shared.ui.compose.lists.SimpleLazyListScaffold
-import ca.hojat.notes.niki.shared.ui.compose.theme.SimpleTheme
+import ca.hojat.notes.niki.shared.data.models.License
 import ca.hojat.notes.niki.shared.helpers.LICENSE_ANDROID_LAME
 import ca.hojat.notes.niki.shared.helpers.LICENSE_APNG
 import ca.hojat.notes.niki.shared.helpers.LICENSE_AUDIO_RECORD_VIEW
@@ -50,12 +46,16 @@ import ca.hojat.notes.niki.shared.helpers.LICENSE_SMS_MMS
 import ca.hojat.notes.niki.shared.helpers.LICENSE_STETHO
 import ca.hojat.notes.niki.shared.helpers.LICENSE_SUBSAMPLING
 import ca.hojat.notes.niki.shared.helpers.LICENSE_ZIP4J
-import ca.hojat.notes.niki.shared.data.models.License
+import ca.hojat.notes.niki.shared.ui.compose.extensions.MyDevices
+import ca.hojat.notes.niki.shared.ui.compose.lists.SimpleLazyListScaffold
+import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsHorizontalDivider
+import ca.hojat.notes.niki.shared.ui.compose.theme.AppThemeSurface
+import ca.hojat.notes.niki.shared.ui.compose.theme.SimpleTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-internal fun LicenseScreen(
+fun LicenseScreen(
     goBack: () -> Unit,
     thirdPartyLicenses: ImmutableList<License>,
     onLicenseClick: (urlId: Int) -> Unit,

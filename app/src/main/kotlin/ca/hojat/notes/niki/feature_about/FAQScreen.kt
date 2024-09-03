@@ -14,19 +14,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.hojat.notes.niki.R
-import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsHorizontalDivider
-import ca.hojat.notes.niki.shared.ui.compose.theme.AppThemeSurface
+import ca.hojat.notes.niki.shared.data.models.FAQItem
+import ca.hojat.notes.niki.shared.extensions.fromHtml
 import ca.hojat.notes.niki.shared.ui.compose.components.LinkifyTextComponent
 import ca.hojat.notes.niki.shared.ui.compose.extensions.MyDevices
 import ca.hojat.notes.niki.shared.ui.compose.lists.SimpleLazyListScaffold
+import ca.hojat.notes.niki.shared.ui.compose.settings.SettingsHorizontalDivider
+import ca.hojat.notes.niki.shared.ui.compose.theme.AppThemeSurface
 import ca.hojat.notes.niki.shared.ui.compose.theme.SimpleTheme
-import ca.hojat.notes.niki.shared.extensions.fromHtml
-import ca.hojat.notes.niki.shared.data.models.FAQItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-internal fun FAQScreen(
+fun FAQScreen(
     goBack: () -> Unit,
     faqItems: ImmutableList<FAQItem>,
 ) {
