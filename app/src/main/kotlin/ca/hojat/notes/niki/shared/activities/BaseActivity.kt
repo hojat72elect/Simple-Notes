@@ -5,8 +5,6 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
-import android.app.RecoverableSecurityException
-import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Context
@@ -20,12 +18,9 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.provider.Settings
-import android.telecom.TelecomManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -35,20 +30,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
-import androidx.core.util.Pair
 import androidx.core.view.ScrollingView
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import ca.hojat.notes.niki.R
-import ca.hojat.notes.niki.shared.asynctasks.CopyMoveTask
-import ca.hojat.notes.niki.shared.ui.compose.extensions.DEVELOPER_PLAY_STORE_URL
+import ca.hojat.notes.niki.feature_about.AboutActivity
+import ca.hojat.notes.niki.feature_settings.CustomizationActivity
+import ca.hojat.notes.niki.shared.data.models.Android30RenameFormat
+import ca.hojat.notes.niki.shared.data.models.FAQItem
+import ca.hojat.notes.niki.shared.data.models.FileDirItem
+import ca.hojat.notes.niki.shared.data.models.Release
 import ca.hojat.notes.niki.shared.dialogs.ConfirmationAdvancedDialog
 import ca.hojat.notes.niki.shared.dialogs.ConfirmationDialog
-import ca.hojat.notes.niki.shared.dialogs.ExportSettingsDialog
-import ca.hojat.notes.niki.shared.dialogs.FeatureLockedDialog
-import ca.hojat.notes.niki.shared.dialogs.FileConflictDialog
-import ca.hojat.notes.niki.shared.dialogs.PermissionRequiredDialog
 import ca.hojat.notes.niki.shared.dialogs.WhatsNewDialog
 import ca.hojat.notes.niki.shared.dialogs.WritePermissionDialog
 import ca.hojat.notes.niki.shared.dialogs.WritePermissionDialog.WritePermissionDialogMode
@@ -60,26 +54,18 @@ import ca.hojat.notes.niki.shared.extensions.buildDocumentUriSdk30
 import ca.hojat.notes.niki.shared.extensions.canManageMedia
 import ca.hojat.notes.niki.shared.extensions.createAndroidDataOrObbPath
 import ca.hojat.notes.niki.shared.extensions.createAndroidDataOrObbUri
-import ca.hojat.notes.niki.shared.extensions.createAndroidSAFFile
 import ca.hojat.notes.niki.shared.extensions.createDirectorySync
-import ca.hojat.notes.niki.shared.extensions.createDocumentUriUsingFirstParentTreeUri
 import ca.hojat.notes.niki.shared.extensions.createFirstParentTreeUri
 import ca.hojat.notes.niki.shared.extensions.createFirstParentTreeUriUsingRootTree
-import ca.hojat.notes.niki.shared.extensions.createSAFFileSdk30
 import ca.hojat.notes.niki.shared.extensions.deleteAndroidSAFDirectory
 import ca.hojat.notes.niki.shared.extensions.deleteDocumentWithSAFSdk30
 import ca.hojat.notes.niki.shared.extensions.deleteFromMediaStore
 import ca.hojat.notes.niki.shared.extensions.doesThisOrParentHaveNoMedia
-import ca.hojat.notes.niki.shared.extensions.formatSize
-import ca.hojat.notes.niki.shared.extensions.getAndroidSAFUri
 import ca.hojat.notes.niki.shared.extensions.getAndroidTreeUri
 import ca.hojat.notes.niki.shared.extensions.getAppIconColors
-import ca.hojat.notes.niki.shared.extensions.getAvailableStorageB
 import ca.hojat.notes.niki.shared.extensions.getColoredDrawableWithColor
 import ca.hojat.notes.niki.shared.extensions.getColoredMaterialStatusBarColor
 import ca.hojat.notes.niki.shared.extensions.getContrastColor
-import ca.hojat.notes.niki.shared.extensions.getCurrentFormattedDateTime
-import ca.hojat.notes.niki.shared.extensions.getDocumentFile
 import ca.hojat.notes.niki.shared.extensions.getDoesFilePathExist
 import ca.hojat.notes.niki.shared.extensions.getFileInputStreamSync
 import ca.hojat.notes.niki.shared.extensions.getFileOutputStreamSync
@@ -97,7 +83,6 @@ import ca.hojat.notes.niki.shared.extensions.getProperBackgroundColor
 import ca.hojat.notes.niki.shared.extensions.getProperStatusBarColor
 import ca.hojat.notes.niki.shared.extensions.getSomeDocumentFile
 import ca.hojat.notes.niki.shared.extensions.getThemeId
-import ca.hojat.notes.niki.shared.extensions.hasAllPermissions
 import ca.hojat.notes.niki.shared.extensions.hasPermission
 import ca.hojat.notes.niki.shared.extensions.hasProperStoredAndroidTreeUri
 import ca.hojat.notes.niki.shared.extensions.hasProperStoredDocumentUriSdk30
@@ -108,7 +93,6 @@ import ca.hojat.notes.niki.shared.extensions.humanizePath
 import ca.hojat.notes.niki.shared.extensions.internalStoragePath
 import ca.hojat.notes.niki.shared.extensions.isAccessibleWithSAFSdk30
 import ca.hojat.notes.niki.shared.extensions.isAppInstalledOnSDCard
-import ca.hojat.notes.niki.shared.extensions.isOrWasThankYouInstalled
 import ca.hojat.notes.niki.shared.extensions.isPathOnInternalStorage
 import ca.hojat.notes.niki.shared.extensions.isPathOnOTG
 import ca.hojat.notes.niki.shared.extensions.isPathOnSD
@@ -117,12 +101,9 @@ import ca.hojat.notes.niki.shared.extensions.isRestrictedSAFOnlyRoot
 import ca.hojat.notes.niki.shared.extensions.isRestrictedWithSAFSdk30
 import ca.hojat.notes.niki.shared.extensions.isSDCardSetAsDefaultStorage
 import ca.hojat.notes.niki.shared.extensions.isUsingGestureNavigation
-import ca.hojat.notes.niki.shared.extensions.launchViewIntent
 import ca.hojat.notes.niki.shared.extensions.navigationBarHeight
 import ca.hojat.notes.niki.shared.extensions.needsStupidWritePermissions
 import ca.hojat.notes.niki.shared.extensions.onApplyWindowInsets
-import ca.hojat.notes.niki.shared.extensions.openDeviceSettings
-import ca.hojat.notes.niki.shared.extensions.openNotificationSettings
 import ca.hojat.notes.niki.shared.extensions.removeBit
 import ca.hojat.notes.niki.shared.extensions.renameAndroidSAFDocument
 import ca.hojat.notes.niki.shared.extensions.renameDocumentSdk30
@@ -132,7 +113,6 @@ import ca.hojat.notes.niki.shared.extensions.rescanPaths
 import ca.hojat.notes.niki.shared.extensions.scanPathRecursively
 import ca.hojat.notes.niki.shared.extensions.scanPathsRecursively
 import ca.hojat.notes.niki.shared.extensions.showErrorToast
-import ca.hojat.notes.niki.shared.extensions.showFileCreateError
 import ca.hojat.notes.niki.shared.extensions.statusBarHeight
 import ca.hojat.notes.niki.shared.extensions.storeAndroidTreeUri
 import ca.hojat.notes.niki.shared.extensions.toFileDirItem
@@ -148,8 +128,6 @@ import ca.hojat.notes.niki.shared.helpers.APP_LAUNCHER_NAME
 import ca.hojat.notes.niki.shared.helpers.APP_LICENSES
 import ca.hojat.notes.niki.shared.helpers.APP_NAME
 import ca.hojat.notes.niki.shared.helpers.APP_VERSION_NAME
-import ca.hojat.notes.niki.shared.helpers.CONFLICT_KEEP_BOTH
-import ca.hojat.notes.niki.shared.helpers.CONFLICT_SKIP
 import ca.hojat.notes.niki.shared.helpers.CREATE_DOCUMENT_SDK_30
 import ca.hojat.notes.niki.shared.helpers.DARK_GREY
 import ca.hojat.notes.niki.shared.helpers.EXTERNAL_STORAGE_PROVIDER_AUTHORITY
@@ -162,32 +140,16 @@ import ca.hojat.notes.niki.shared.helpers.OPEN_DOCUMENT_TREE_FOR_ANDROID_DATA_OR
 import ca.hojat.notes.niki.shared.helpers.OPEN_DOCUMENT_TREE_FOR_SDK_30
 import ca.hojat.notes.niki.shared.helpers.OPEN_DOCUMENT_TREE_OTG
 import ca.hojat.notes.niki.shared.helpers.OPEN_DOCUMENT_TREE_SD
-import ca.hojat.notes.niki.shared.helpers.PERMISSION_POST_NOTIFICATIONS
-import ca.hojat.notes.niki.shared.helpers.PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED
-import ca.hojat.notes.niki.shared.helpers.PERMISSION_WRITE_STORAGE
-import ca.hojat.notes.niki.shared.helpers.REQUEST_CODE_SET_DEFAULT_CALLER_ID
-import ca.hojat.notes.niki.shared.helpers.REQUEST_CODE_SET_DEFAULT_DIALER
 import ca.hojat.notes.niki.shared.helpers.SD_OTG_SHORT
 import ca.hojat.notes.niki.shared.helpers.SELECT_EXPORT_SETTINGS_FILE_INTENT
 import ca.hojat.notes.niki.shared.helpers.SHOW_FAQ_BEFORE_MAIL
 import ca.hojat.notes.niki.shared.helpers.ensureBackgroundThread
-import ca.hojat.notes.niki.shared.helpers.getConflictResolution
 import ca.hojat.notes.niki.shared.helpers.isOreoPlus
 import ca.hojat.notes.niki.shared.helpers.isQPlus
 import ca.hojat.notes.niki.shared.helpers.isRPlus
 import ca.hojat.notes.niki.shared.helpers.isTiramisuPlus
-import ca.hojat.notes.niki.shared.helpers.isUpsideDownCakePlus
-import ca.hojat.notes.niki.shared.helpers.sumByLong
-import ca.hojat.notes.niki.shared.interfaces.CopyMoveListener
-import ca.hojat.notes.niki.shared.data.models.Android30RenameFormat
-import ca.hojat.notes.niki.shared.data.models.FAQItem
-import ca.hojat.notes.niki.shared.data.models.FileDirItem
-import ca.hojat.notes.niki.shared.data.models.Release
-import ca.hojat.notes.niki.feature_about.AboutActivity
-import ca.hojat.notes.niki.feature_settings.CustomizationActivity
 import java.io.File
 import java.io.FileNotFoundException
-import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -478,20 +440,6 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun updateStatusBarOnPageChange() {
-        if (scrollingView is RecyclerView || scrollingView is NestedScrollView) {
-            val scrollY = scrollingView!!.computeVerticalScrollOffset()
-            val colorFrom = window.statusBarColor
-            val colorTo = if (scrollY > 0) {
-                getColoredMaterialStatusBarColor()
-            } else {
-                getRequiredStatusBarColor()
-            }
-            animateTopBarColors(colorFrom, colorTo)
-            currentScrollY = scrollY
-        }
-    }
-
     fun setupToolbar(
         toolbar: Toolbar,
         toolbarNavigationIcon: NavigationIcon = NavigationIcon.None,
@@ -587,13 +535,6 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
         return 0
-    }
-
-    fun setTranslucentNavigation() {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
-        )
     }
 
     @Deprecated("Deprecated in Java")
@@ -843,47 +784,11 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun startCustomizationActivity() {
-        if (!packageName.contains("slootelibomelpmis".reversed(), true)) {
-            if (baseConfig.appRunCount > 100) {
-                val label =
-                    "You are using a fake version of the app. For your own safety download the original one from www.simplemobiletools.com. Thanks"
-                ConfirmationDialog(this, label, positive = R.string.ok, negative = 0) {
-                    launchViewIntent(DEVELOPER_PLAY_STORE_URL)
-                }
-                return
-            }
-        }
 
         Intent(applicationContext, CustomizationActivity::class.java).apply {
             putExtra(APP_ICON_IDS, getAppIconIDs())
             putExtra(APP_LAUNCHER_NAME, getAppLauncherName())
             startActivity(this)
-        }
-    }
-
-    fun handleCustomizeColorsClick() {
-        if (isOrWasThankYouInstalled()) {
-            startCustomizationActivity()
-        } else {
-            FeatureLockedDialog(this) {}
-        }
-    }
-
-    fun launchCustomizeNotificationsIntent() {
-        Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
-            putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-            startActivity(this)
-        }
-    }
-
-    fun launchChangeAppLanguageIntent() {
-        try {
-            Intent(Settings.ACTION_APP_LOCALE_SETTINGS).apply {
-                data = Uri.fromParts("package", packageName, null)
-                startActivity(this)
-            }
-        } catch (e: Exception) {
-            openDeviceSettings()
         }
     }
 
@@ -1006,23 +911,6 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     @SuppressLint("NewApi")
-    fun trashSDK30Uris(uris: List<Uri>, toTrash: Boolean, callback: (success: Boolean) -> Unit) {
-        hideKeyboard()
-        if (isRPlus()) {
-            funAfterTrash30File = callback
-            try {
-                val trashRequest =
-                    MediaStore.createTrashRequest(contentResolver, uris, toTrash).intentSender
-                startIntentSenderForResult(trashRequest, TRASH_FILE_SDK_30_HANDLER, null, 0, 0, 0)
-            } catch (e: Exception) {
-                showErrorToast(e)
-            }
-        } else {
-            callback(false)
-        }
-    }
-
-    @SuppressLint("NewApi")
     fun updateSDK30Uris(uris: List<Uri>, callback: (success: Boolean) -> Unit) {
         hideKeyboard()
         if (isRPlus()) {
@@ -1038,202 +926,6 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("NewApi")
-    fun handleRecoverableSecurityException(callback: (success: Boolean) -> Unit) {
-        try {
-            callback.invoke(true)
-        } catch (securityException: SecurityException) {
-            if (isQPlus()) {
-                funRecoverableSecurity = callback
-                val recoverableSecurityException =
-                    securityException as? RecoverableSecurityException ?: throw securityException
-                val intentSender = recoverableSecurityException.userAction.actionIntent.intentSender
-                startIntentSenderForResult(
-                    intentSender,
-                    RECOVERABLE_SECURITY_HANDLER,
-                    null,
-                    0,
-                    0,
-                    0
-                )
-            } else {
-                callback(false)
-            }
-        }
-    }
-
-    fun launchMediaManagementIntent(callback: () -> Unit) {
-        Intent(Settings.ACTION_REQUEST_MANAGE_MEDIA).apply {
-            data = Uri.parse("package:$packageName")
-            try {
-                startActivityForResult(this, MANAGE_MEDIA_RC)
-            } catch (e: Exception) {
-                showErrorToast(e)
-            }
-        }
-        funAfterManageMediaPermission = callback
-    }
-
-    fun copyMoveFilesTo(
-        fileDirItems: ArrayList<FileDirItem>,
-        source: String,
-        destination: String,
-        isCopyOperation: Boolean,
-        copyPhotoVideoOnly: Boolean,
-        copyHidden: Boolean,
-        callback: (destinationPath: String) -> Unit
-    ) {
-        if (source == destination) {
-            toast(R.string.source_and_destination_same)
-            return
-        }
-
-        if (!getDoesFilePathExist(destination)) {
-            toast(R.string.invalid_destination)
-            return
-        }
-
-        handleSAFDialog(destination) {
-            if (!it) {
-                copyMoveListener.copyFailed()
-                return@handleSAFDialog
-            }
-
-            handleSAFDialogSdk30(destination) {
-                if (!it) {
-                    copyMoveListener.copyFailed()
-                    return@handleSAFDialogSdk30
-                }
-
-                copyMoveCallback = callback
-                var fileCountToCopy = fileDirItems.size
-                if (isCopyOperation) {
-                    val recycleBinPath = fileDirItems.first().isRecycleBinPath(this)
-                    if (canManageMedia() && !recycleBinPath) {
-                        val fileUris = getFileUrisFromFileDirItems(fileDirItems)
-                        updateSDK30Uris(fileUris) { sdk30UriSuccess ->
-                            if (sdk30UriSuccess) {
-                                startCopyMove(
-                                    fileDirItems,
-                                    destination,
-                                    isCopyOperation,
-                                    copyPhotoVideoOnly,
-                                    copyHidden
-                                )
-                            }
-                        }
-                    } else {
-                        startCopyMove(
-                            fileDirItems,
-                            destination,
-                            isCopyOperation,
-                            copyPhotoVideoOnly,
-                            copyHidden
-                        )
-                    }
-                } else {
-                    if (isPathOnOTG(source) || isPathOnOTG(destination) || isPathOnSD(source) || isPathOnSD(
-                            destination
-                        ) ||
-                        isRestrictedSAFOnlyRoot(source) || isRestrictedSAFOnlyRoot(destination) ||
-                        isAccessibleWithSAFSdk30(source) || isAccessibleWithSAFSdk30(destination) ||
-                        fileDirItems.first().isDirectory
-                    ) {
-                        handleSAFDialog(source) { safSuccess ->
-                            if (safSuccess) {
-                                val recycleBinPath = fileDirItems.first().isRecycleBinPath(this)
-                                if (canManageMedia() && !recycleBinPath) {
-                                    val fileUris = getFileUrisFromFileDirItems(fileDirItems)
-                                    updateSDK30Uris(fileUris) { sdk30UriSuccess ->
-                                        if (sdk30UriSuccess) {
-                                            startCopyMove(
-                                                fileDirItems,
-                                                destination,
-                                                isCopyOperation,
-                                                copyPhotoVideoOnly,
-                                                copyHidden
-                                            )
-                                        }
-                                    }
-                                } else {
-                                    startCopyMove(
-                                        fileDirItems,
-                                        destination,
-                                        isCopyOperation,
-                                        copyPhotoVideoOnly,
-                                        copyHidden
-                                    )
-                                }
-                            }
-                        }
-                    } else {
-                        try {
-                            checkConflicts(fileDirItems, destination, 0, LinkedHashMap()) {
-                                toast(R.string.moving)
-                                ensureBackgroundThread {
-                                    val updatedPaths = ArrayList<String>(fileDirItems.size)
-                                    val destinationFolder = File(destination)
-                                    for (oldFileDirItem in fileDirItems) {
-                                        var newFile = File(destinationFolder, oldFileDirItem.name)
-                                        if (newFile.exists()) {
-                                            when {
-                                                getConflictResolution(
-                                                    it,
-                                                    newFile.absolutePath
-                                                ) == CONFLICT_SKIP -> fileCountToCopy--
-
-                                                getConflictResolution(
-                                                    it,
-                                                    newFile.absolutePath
-                                                ) == CONFLICT_KEEP_BOTH -> newFile =
-                                                    getAlternativeFile(newFile)
-
-                                                else ->
-                                                    // this file is guaranteed to be on the internal storage, so just delete it this way
-                                                    newFile.delete()
-                                            }
-                                        }
-
-                                        if (!newFile.exists() && File(oldFileDirItem.path).renameTo(
-                                                newFile
-                                            )
-                                        ) {
-                                            if (!baseConfig.keepLastModified) {
-                                                newFile.setLastModified(System.currentTimeMillis())
-                                            }
-                                            updatedPaths.add(newFile.absolutePath)
-                                            deleteFromMediaStore(oldFileDirItem.path)
-                                        }
-                                    }
-
-                                    runOnUiThread {
-                                        if (updatedPaths.isEmpty()) {
-                                            copyMoveListener.copySucceeded(
-                                                false,
-                                                fileCountToCopy == 0,
-                                                destination,
-                                                false
-                                            )
-                                        } else {
-                                            copyMoveListener.copySucceeded(
-                                                false,
-                                                fileCountToCopy <= updatedPaths.size,
-                                                destination,
-                                                updatedPaths.size == 1
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        } catch (e: Exception) {
-                            showErrorToast(e)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     @SuppressLint("DefaultLocale")
     fun getAlternativeFile(file: File): File {
         var fileIndex = 1
@@ -1245,100 +937,6 @@ open class BaseActivity : AppCompatActivity() {
             fileIndex++
         } while (getDoesFilePathExist(newFile!!.absolutePath))
         return newFile
-    }
-
-    private fun startCopyMove(
-        files: ArrayList<FileDirItem>,
-        destinationPath: String,
-        isCopyOperation: Boolean,
-        copyPhotoVideoOnly: Boolean,
-        copyHidden: Boolean
-    ) {
-        val availableSpace = destinationPath.getAvailableStorageB()
-        val sumToCopy = files.sumByLong { it.getProperSize(applicationContext, copyHidden) }
-        if (availableSpace == -1L || sumToCopy < availableSpace) {
-            checkConflicts(files, destinationPath, 0, LinkedHashMap()) {
-                toast(if (isCopyOperation) R.string.copying else R.string.moving)
-                val pair = Pair(files, destinationPath)
-                handleNotificationPermission { granted ->
-                    if (granted) {
-                        CopyMoveTask(
-                            this,
-                            isCopyOperation,
-                            copyPhotoVideoOnly,
-                            it,
-                            copyMoveListener,
-                            copyHidden
-                        ).execute(pair)
-                    } else {
-                        PermissionRequiredDialog(
-                            this,
-                            R.string.allow_notifications_files,
-                            { openNotificationSettings() })
-                    }
-                }
-            }
-        } else {
-            val text = String.format(
-                getString(R.string.no_space),
-                sumToCopy.formatSize(),
-                availableSpace.formatSize()
-            )
-            toast(text, Toast.LENGTH_LONG)
-        }
-    }
-
-    private fun checkConflicts(
-        files: ArrayList<FileDirItem>,
-        destinationPath: String,
-        index: Int,
-        conflictResolutions: LinkedHashMap<String, Int>,
-        callback: (resolutions: LinkedHashMap<String, Int>) -> Unit
-    ) {
-        if (index == files.size) {
-            callback(conflictResolutions)
-            return
-        }
-
-        val file = files[index]
-        val newFileDirItem =
-            FileDirItem("$destinationPath/${file.name}", file.name, file.isDirectory)
-        ensureBackgroundThread {
-            if (getDoesFilePathExist(newFileDirItem.path)) {
-                runOnUiThread {
-                    FileConflictDialog(
-                        this,
-                        newFileDirItem,
-                        files.size > 1
-                    ) { resolution, applyForAll ->
-                        if (applyForAll) {
-                            conflictResolutions.clear()
-                            conflictResolutions[""] = resolution
-                            checkConflicts(
-                                files,
-                                destinationPath,
-                                files.size,
-                                conflictResolutions,
-                                callback
-                            )
-                        } else {
-                            conflictResolutions[newFileDirItem.path] = resolution
-                            checkConflicts(
-                                files,
-                                destinationPath,
-                                index + 1,
-                                conflictResolutions,
-                                callback
-                            )
-                        }
-                    }
-                }
-            } else {
-                runOnUiThread {
-                    checkConflicts(files, destinationPath, index + 1, conflictResolutions, callback)
-                }
-            }
-        }
     }
 
     fun handlePermission(permissionId: Int, callback: (granted: Boolean) -> Unit) {
@@ -1356,49 +954,6 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun handlePartialMediaPermissions(
-        permissionIds: Collection<Int>,
-        force: Boolean = false,
-        callback: (granted: Boolean) -> Unit
-    ) {
-        actionOnPermission = null
-        if (isUpsideDownCakePlus()) {
-            if (hasPermission(PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED) && !force) {
-                callback(true)
-            } else {
-                isAskingPermissions = true
-                actionOnPermission = callback
-                ActivityCompat.requestPermissions(
-                    this,
-                    permissionIds.map { getPermissionString(it) }.toTypedArray(),
-                    GENERIC_PERM_HANDLER
-                )
-            }
-        } else {
-            if (hasAllPermissions(permissionIds)) {
-                callback(true)
-            } else {
-                isAskingPermissions = true
-                actionOnPermission = callback
-                ActivityCompat.requestPermissions(
-                    this,
-                    permissionIds.map { getPermissionString(it) }.toTypedArray(),
-                    GENERIC_PERM_HANDLER
-                )
-            }
-        }
-    }
-
-    private fun handleNotificationPermission(callback: (granted: Boolean) -> Unit) {
-        if (!isTiramisuPlus()) {
-            callback(true)
-        } else {
-            handlePermission(PERMISSION_POST_NOTIFICATIONS) { granted ->
-                callback(granted)
-            }
-        }
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -1411,90 +966,10 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    private val copyMoveListener = object : CopyMoveListener {
-        override fun copySucceeded(
-            copyOnly: Boolean,
-            copiedAll: Boolean,
-            destinationPath: String,
-            wasCopyingOneFileOnly: Boolean
-        ) {
-            if (copyOnly) {
-                toast(
-                    if (copiedAll) {
-                        if (wasCopyingOneFileOnly) {
-                            R.string.copying_success_one
-                        } else {
-                            R.string.copying_success
-                        }
-                    } else {
-                        R.string.copying_success_partial
-                    }
-                )
-            } else {
-                toast(
-                    if (copiedAll) {
-                        if (wasCopyingOneFileOnly) {
-                            R.string.moving_success_one
-                        } else {
-                            R.string.moving_success
-                        }
-                    } else {
-                        R.string.moving_success_partial
-                    }
-                )
-            }
-
-            copyMoveCallback?.invoke(destinationPath)
-            copyMoveCallback = null
-        }
-
-        override fun copyFailed() {
-            toast(R.string.copy_move_failed)
-            copyMoveCallback = null
-        }
-    }
-
     fun checkAppOnSDCard() {
         if (!baseConfig.wasAppOnSDShown && isAppInstalledOnSDCard()) {
             baseConfig.wasAppOnSDShown = true
             ConfirmationDialog(this, "", R.string.app_on_sd_card, R.string.ok, 0) {}
-        }
-    }
-
-
-    fun exportSettings(configItems: LinkedHashMap<String, Any>) {
-        if (isQPlus()) {
-            configItemsToExport = configItems
-            ExportSettingsDialog(this, getExportSettingsFilename(), true) { _, filename ->
-                Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    type = "text/plain"
-                    putExtra(Intent.EXTRA_TITLE, filename)
-                    addCategory(Intent.CATEGORY_OPENABLE)
-
-                    try {
-                        startActivityForResult(this, SELECT_EXPORT_SETTINGS_FILE_INTENT)
-                    } catch (e: ActivityNotFoundException) {
-                        toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
-                    } catch (e: Exception) {
-                        showErrorToast(e)
-                    }
-                }
-            }
-        } else {
-            handlePermission(PERMISSION_WRITE_STORAGE) {
-                if (it) {
-                    ExportSettingsDialog(
-                        this,
-                        getExportSettingsFilename(),
-                        false
-                    ) { path, _ ->
-                        val file = File(path)
-                        getFileOutputStream(file.toFileDirItem(this), true) {
-                            exportSettingsTo(it, configItems)
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -1517,51 +992,6 @@ open class BaseActivity : AppCompatActivity() {
             toast(R.string.settings_exported_successfully)
         }
     }
-
-    private fun getExportSettingsFilename(): String {
-        val appName = baseConfig.appId.removeSuffix(".debug").removeSuffix(".pro")
-            .removePrefix("com.simplemobiletools.")
-        return "$appName-settings_${getCurrentFormattedDateTime()}"
-    }
-
-    @SuppressLint("InlinedApi")
-    protected fun launchSetDefaultDialerIntent() {
-        if (isQPlus()) {
-            val roleManager = getSystemService(RoleManager::class.java)
-            if (roleManager!!.isRoleAvailable(RoleManager.ROLE_DIALER) && !roleManager.isRoleHeld(
-                    RoleManager.ROLE_DIALER
-                )
-            ) {
-                val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER)
-                startActivityForResult(intent, REQUEST_CODE_SET_DEFAULT_DIALER)
-            }
-        } else {
-            Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER).putExtra(
-                TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,
-                packageName
-            ).apply {
-                try {
-                    startActivityForResult(this, REQUEST_CODE_SET_DEFAULT_DIALER)
-                } catch (e: ActivityNotFoundException) {
-                    toast(R.string.no_app_found)
-                } catch (e: Exception) {
-                    showErrorToast(e)
-                }
-            }
-        }
-    }
-
-    fun setDefaultCallerIdApp() {
-        val roleManager = getSystemService(RoleManager::class.java)
-        if (roleManager.isRoleAvailable(RoleManager.ROLE_CALL_SCREENING) && !roleManager.isRoleHeld(
-                RoleManager.ROLE_CALL_SCREENING
-            )
-        ) {
-            val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_CALL_SCREENING)
-            startActivityForResult(intent, REQUEST_CODE_SET_DEFAULT_CALLER_ID)
-        }
-    }
-
 
     private fun isShowingSAFDialog(path: String): Boolean {
         return if ((!isRPlus() && isPathOnSD(path) && !isSDCardSetAsDefaultStorage() && (baseConfig.sdTreeUri.isEmpty() || !hasProperStoredTreeUri(
@@ -2056,7 +1486,6 @@ open class BaseActivity : AppCompatActivity() {
         baseConfig.lastVersion = currVersion
     }
 
-
     fun renameFile(
         oldPath: String,
         newPath: String,
@@ -2348,107 +1777,6 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    private fun getFileOutputStream(
-        fileDirItem: FileDirItem,
-        allowCreatingNewFile: Boolean = false,
-        callback: (outputStream: OutputStream?) -> Unit
-    ) {
-        val targetFile = File(fileDirItem.path)
-        when {
-            isRestrictedSAFOnlyRoot(fileDirItem.path) -> {
-                handleAndroidSAFDialog(fileDirItem.path) {
-                    if (!it) {
-                        return@handleAndroidSAFDialog
-                    }
-
-                    val uri = getAndroidSAFUri(fileDirItem.path)
-                    if (!getDoesFilePathExist(fileDirItem.path)) {
-                        createAndroidSAFFile(fileDirItem.path)
-                    }
-                    callback.invoke(applicationContext.contentResolver.openOutputStream(uri, "wt"))
-                }
-            }
-
-            needsStupidWritePermissions(fileDirItem.path) -> {
-                handleSAFDialog(fileDirItem.path) {
-                    if (!it) {
-                        return@handleSAFDialog
-                    }
-
-                    var document = getDocumentFile(fileDirItem.path)
-                    if (document == null && allowCreatingNewFile) {
-                        document = getDocumentFile(fileDirItem.getParentPath())
-                    }
-
-                    if (document == null) {
-                        showFileCreateError(fileDirItem.path)
-                        callback(null)
-                        return@handleSAFDialog
-                    }
-
-                    if (!getDoesFilePathExist(fileDirItem.path)) {
-                        document = getDocumentFile(fileDirItem.path) ?: document.createFile(
-                            "",
-                            fileDirItem.name
-                        )
-                    }
-
-                    if (document?.exists() == true) {
-                        try {
-                            callback(
-                                applicationContext.contentResolver.openOutputStream(
-                                    document.uri,
-                                    "wt"
-                                )
-                            )
-                        } catch (e: FileNotFoundException) {
-                            showErrorToast(e)
-                            callback(null)
-                        }
-                    } else {
-                        showFileCreateError(fileDirItem.path)
-                        callback(null)
-                    }
-                }
-            }
-
-            isAccessibleWithSAFSdk30(fileDirItem.path) -> {
-                handleSAFDialogSdk30(fileDirItem.path) {
-                    if (!it) {
-                        return@handleSAFDialogSdk30
-                    }
-
-                    callback.invoke(
-                        try {
-                            val uri = createDocumentUriUsingFirstParentTreeUri(fileDirItem.path)
-                            if (!getDoesFilePathExist(fileDirItem.path)) {
-                                createSAFFileSdk30(fileDirItem.path)
-                            }
-                            applicationContext.contentResolver.openOutputStream(uri, "wt")
-                        } catch (e: Exception) {
-                            null
-                        } ?: createCasualFileOutputStream(this, targetFile)
-                    )
-                }
-            }
-
-            isRestrictedWithSAFSdk30(fileDirItem.path) -> {
-                callback.invoke(
-                    try {
-                        val fileUri = getFileUrisFromFileDirItems(arrayListOf(fileDirItem))
-                        applicationContext.contentResolver.openOutputStream(fileUri.first(), "wt")
-                    } catch (e: Exception) {
-                        null
-                    } ?: createCasualFileOutputStream(this, targetFile)
-                )
-            }
-
-            else -> {
-                callback.invoke(createCasualFileOutputStream(this, targetFile))
-            }
-        }
-    }
-
     private fun deleteRecursively(file: File, context: Context): Boolean {
         if (file.isDirectory) {
             val files = file.listFiles() ?: return file.delete()
@@ -2464,19 +1792,4 @@ open class BaseActivity : AppCompatActivity() {
         return deleted
     }
 
-    private fun createCasualFileOutputStream(
-        activity: BaseActivity,
-        targetFile: File
-    ): OutputStream? {
-        if (targetFile.parentFile?.exists() == false) {
-            targetFile.parentFile?.mkdirs()
-        }
-
-        return try {
-            FileOutputStream(targetFile)
-        } catch (e: Exception) {
-            activity.showErrorToast(e)
-            null
-        }
-    }
 }

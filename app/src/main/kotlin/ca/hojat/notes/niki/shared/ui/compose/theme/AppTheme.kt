@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
-import ca.hojat.notes.niki.shared.ui.compose.extensions.FakeVersionCheck
 import ca.hojat.notes.niki.shared.ui.compose.extensions.TransparentSystemBars
 import ca.hojat.notes.niki.shared.ui.compose.theme.model.Theme
 import ca.hojat.notes.niki.shared.ui.compose.theme.model.Theme.Companion.systemDefaultMaterialYou
@@ -41,9 +40,6 @@ fun AppTheme(
     TransparentSystemBars()
     Theme(theme = currentTheme) {
         content()
-        if (!view.isInEditMode) {
-            OnContentDisplayed()
-        }
     }
 }
 
@@ -59,7 +55,3 @@ fun AppThemeSurface(
     }
 }
 
-@Composable
-private fun OnContentDisplayed() {
-    FakeVersionCheck()
-}
